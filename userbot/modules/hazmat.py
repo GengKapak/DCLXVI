@@ -45,8 +45,12 @@ async def _(hazmat):
         except YouBlockedUserError:
             await hazmat.reply("`Please unblock` @hazmat_suit_bot`...`")
             return
-        if response.text.startswith("Forward"):
-            await hazmat.edit("`Please disable your forward privacy setting...`")
+        if response.text.startswith("I can't"):
+            await hazmat.edit("`Can't handle this GIF...`")
+            await hazmat.client.delete_messages(
+                conv.chat_id,
+                [msg.id, response.id, r.id, msg_level.id])
+            return
         else:
             downloaded_file_name = await hazmat.client.download_media(
                                  response.media,
