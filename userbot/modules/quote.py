@@ -9,7 +9,11 @@ import requests
 import base64
 import json
 import telethon
+import datetime
 
+from telethon import events
+from telethon.errors.rpcerrorlist import YouBlockedUserError
+from telethon.tl.functions.account import UpdateNotifySettingsRequest
 from logging import Logger as logger
 from PIL import Image
 from io import BytesIO
@@ -44,7 +48,7 @@ config = dict({"api_url": "http://api.antiddos.systems",
                                    "#62d4e3", "#65bdf3", "#ff5694"],
                "default_username_color": "#b48bf2"})
 
-@register(outgoing=True, pattern="^.q(?: |$)(.*)")
+@register(outgoing=True, pattern="^.qt(?: |$)(.*)")
 async def quotecmd(message):  # noqa: C901
     """Quote a message.
     Usage: .pch [template]
@@ -203,8 +207,38 @@ async def get_markdown(reply):
     return markdown
 
 
+@register(outgoing=True, pattern="^.q(?: |$)(.*)")
+async def _(event):
+    if event.fwd_from:
+        return
+    if not event.reply_to_msg_id:
+       await event.edit("```Reply to another nigga.```")
+       return
+    reply_message = await event.get_reply_message()
+    if not reply_message.text:
+       await event.edit("```It's not a text, nigga```")
+       return
+    chat = "@QuotLyBot"
+    sender = reply_message.sender
+    await event.edit("```Making a Quote```")
+    async with bot.conversation(chat) as conv:
+          try:
+              response = conv.wait_event(events.NewMessage(incoming=True,from_users=1031952739))
+              await bot.forward_messages(chat, reply_message)
+              response = await response
+          except YouBlockedUserError:
+              await event.reply("```Please unblock @QuotLyBot and try again```")
+              return
+          if response.text.startswith("Hi!"):
+             await event.edit("```Can you kindly disable your forward privacy settings for good?```")
+          else:
+             await event.delete()
+             await bot.forward_messages(event.chat_id, response.message)
+
 CMD_HELP.update({
     "stickerchat":
-    ">`.q`"
-    "\nUsage: Same as quotly, enhance ur text to sticker."
+    ">`.qt`"
+    "\nUsage: Same as quotly, enhance ur text to sticker.\n"
+    ">`.q `"
+    "\nUsage: Enhance ur text to sticker.\n"
 })
