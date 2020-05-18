@@ -208,7 +208,7 @@ async def upstream(event):
         await print_changelogs(event, ac_br, changelog)
         await event.delete()
         return await event.respond(
-            'do " `.update now` or `.update deploy` " to update.')
+            'do `.update now` or `.update deploy` to update.')
 
     if force_update:
         await event.edit(

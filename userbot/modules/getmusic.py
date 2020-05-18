@@ -17,7 +17,7 @@ os.system("rm -rf *.mp3")
 def bruh(name):
     os.system("instantmusic -q -s "+name)
 
-@register(outgoing=True, pattern="^.song (.*)")
+@register(outgoing=True, pattern=r"^.song (.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -46,6 +46,6 @@ async def _(event):
 
 CMD_HELP.update({
     "song":
-        ".song muse hysteria\
-        \nUsage: Finding and uploading song."
+        ">.song muse hysteria"
+        "\nUsage: Finding and uploading song."
 })
