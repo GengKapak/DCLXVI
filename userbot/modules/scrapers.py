@@ -33,7 +33,7 @@ from youtube_dl.utils import (DownloadError, ContentTooShortError,
                               UnavailableVideoError, XAttrMetadataError)
 from asyncio import sleep
 from userbot import (CMD_HELP, BOTLOG, BOTLOG_CHATID, YOUTUBE_API_KEY,
-                     TEMP_DOWNLOAD_DIRECTORY)
+                     TEMP_DOWNLOAD_DIRECTORY, IMG_LIMIT)
 from userbot.events import register
 from telethon.tl.types import DocumentAttributeAudio
 from userbot.utils import progress, chrome, googleimagesdownload
@@ -106,7 +106,7 @@ async def img_sampler(event):
         lim = lim.replace("lim=", "")
         query = query.replace("lim=" + lim[0], "")
     except IndexError:
-        lim = 7
+        lim = IMG_LIMIT
     response = googleimagesdownload()
 
     # creating list of arguments
