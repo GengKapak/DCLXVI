@@ -51,16 +51,6 @@
       "value": "1",
       "required": false
     },
-    "CHROME_DRIVER": {
-      "description": "ChromeDriver location for selenium based modules.",
-      "value": "/usr/bin/chromedriver",
-      "required": false
-    },
-    "GOOGLE_CHROME_BIN": {
-      "description": "Google Chrome (or) Chromium binary location for selenium based modules.",
-      "value": "/usr/bin/chromium-browser",
-      "required": false
-    },
     "OPEN_WEATHER_MAP_APPID": {
       "description": "Get your own APPID (API key)from https://api.openweathermap.org/data/2.5/weather",
       "required": false
@@ -156,6 +146,21 @@
       "value": "",
       "required": true
     },
+    "TERM_ALIAS": {
+      "description": "Leave if u don't know",
+      "value": "",
+      "required": false
+    },
+    "BOT_TOKEN": {
+      "description": "Create new bot and give BOT TOKEN",
+      "value": "",
+      "required": true
+    },
+    "BOT_USERNAME": {
+      "description": "Your bot username",
+      "value": "",
+      "required": true
+    }
     "LOGSPAMMER": {
       "description": "Set this to True in case you want the error logs to be stored in the userbot log group, instead of spitting out the file in the current chat, requires a valid BOTLOG_CHATID to be set.",
       "value": "True"
