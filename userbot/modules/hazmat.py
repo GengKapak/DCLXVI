@@ -22,9 +22,6 @@ async def _(hazmat):
     if not reply_message.media:
         await hazmat.edit("`Word can destroy anything Capt!...`")
         return
-    if reply_message.sender.bot:
-        await hazmat.edit("`Reply to actual user...`")
-        return
     chat = "@hazmat_suit_bot"
     await hazmat.edit("```Suit Up Capt!, We are going to purge some virus...```")
     message_id_to_reply = hazmat.message.reply_to_msg_id
