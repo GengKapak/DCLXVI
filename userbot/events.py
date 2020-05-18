@@ -14,8 +14,8 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
-""" Olayları yönetmek için UserBot modülü.
- UserBot'un ana bileşenlerinden biri. """
+""" UserBot module to manage events.
+ One of the main components of UserBot """
 
 import sys
 
@@ -29,7 +29,7 @@ from telethon import events
 from userbot import bot, BOTLOG_CHATID, LOGSPAMMER, BLACKLIST
 
 def register(**args):
-    """ Yeni bir etkinlik kaydedin. """
+    """ Register a new event. """
     pattern = args.get('pattern', None)
     disable_edited = args.get('disable_edited', False)
     ignore_unsafe = args.get('ignore_unsafe', False)
@@ -59,7 +59,7 @@ def register(**args):
 
     if "trigger_on_fwd" in args:
         del args['trigger_on_fwd']
-      
+
     if "trigger_on_inline" in args:
         del args['trigger_on_inline']
 
@@ -79,7 +79,7 @@ def register(**args):
 
             if check.via_bot_id and not trigger_on_inline:
                 return
-             
+
             if groups_only and not check.is_group:
                 await check.respond("`I don't think this is a group.`")
                 return
@@ -137,7 +137,7 @@ def register(**args):
 
                     ftext += result
 
-                    file = open("crash.log", "w+")
+                    file = open("crash.txt", "w+")
                     file.write(ftext)
                     file.close()
 
@@ -146,9 +146,9 @@ def register(**args):
                         \nThe error logs are stored in the userbot's log chat.`")
 
                     await check.client.send_file(send_to,
-                                                 "crash.log",
+                                                 "crash.txt",
                                                  caption=text)
-                    remove("crash.log")
+                    remove("crash.txt")
 
         if not disable_edited:
             bot.add_event_handler(wrapper, events.MessageEdited(**args))
