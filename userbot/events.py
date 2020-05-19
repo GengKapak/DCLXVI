@@ -26,7 +26,7 @@ from time import gmtime, strftime
 from traceback import format_exc
 from telethon import events
 
-from userbot import bot, BOTLOG_CHATID, LOGSPAMMER, BLACKLIST
+from userbot import bot, BOTLOG, BOTLOG_CHATID, LOGSPAMMER, BLACKLIST
 
 def register(**args):
     """ Register a new event. """
@@ -69,19 +69,13 @@ def register(**args):
 
     def decorator(func):
         async def wrapper(check):
-            if not LOGSPAMMER:
-                send_to = check.chat_id
-            else:
-                send_to = BOTLOG_CHATID
-
-            if not trigger_on_fwd and check.fwd_from:
-                return
-
-            if check.via_bot_id and not trigger_on_inline:
+            if check.edit_date and check.is_channel and not check.is_group:
                 return
 
             if groups_only and not check.is_group:
-                await check.respond("`I don't think this is a group.`")
+                await check.respond("`Are you sure this is a group?`")
+                return
+            if check.via_bot_id and not insecure and check.out:
                 return
 
             try:
@@ -141,14 +135,13 @@ def register(**args):
                     file.write(ftext)
                     file.close()
 
-                    if LOGSPAMMER:
-                        await check.client.respond("`Sorry, userbot has crashed..\
-                        \nThe error logs are stored in the userbot's log chat.`")
-
-                    await check.client.send_file(send_to,
-                                                 "crash.txt",
-                                                 caption=text)
+                    await check.client.send_file(BOTLOG_CHATID
+                                                if BOTLOG
+                                                else check.chat_id, "crash.txt", caption=text)
                     remove("crash.txt")
+
+            else:
+                pass
 
         if not disable_edited:
             bot.add_event_handler(wrapper, events.MessageEdited(**args))
