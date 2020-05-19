@@ -15,7 +15,7 @@ if GENIUS is not None:
     genius = lyricsgenius.Genius(GENIUS)
 
 
-@register(outgoing=True, pattern="^.lyrics (?:(now)|(.*) - (.*))")
+@register(outgoing=True, pattern="^.lcs (?:(now)|(.*) - (.*))")
 async def lyrics(lyric):
     await lyric.edit("`Getting information...`")
     if GENIUS is None:
@@ -64,7 +64,7 @@ async def lyrics(lyric):
 
 CMD_HELP.update({
     "lyrics":
-    ">`.lyrics` **<artist name> - <song name>**"
+    ">`.lcs` **<artist name> - <song name>**"
     "\nUsage: Get lyrics matched artist and song."
     "\n\n>`.lyrics now`"
     "\nUsage: Get lyrics artist and song from current lastfm scrobbling."

@@ -46,6 +46,6 @@ async def _(event):
 
 CMD_HELP.update({
     "song":
-        ">.song muse hysteria"
+        ">`.song` **atrist title**"
         "\nUsage: Finding and uploading song."
 })
