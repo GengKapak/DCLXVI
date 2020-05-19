@@ -1529,11 +1529,11 @@ CMD_HELP.update({
 \n\n>`.decide` [Alternates: (`.yes`, `.no`, `.maybe`)]\
 \nUsage: Make a quick decision.\
 \n\n>`.scam` <action> <time>\
-\n[Available Actions: (typing, contact, game, location, voice, round, video, photo, document, cancel)]\
+\n[Available Actions: (`typing`, `contact`, `game`, `location`, `voice`, `round`, `video`, `photo`, `document`, `cancel`)]\
 \nUsage: Create fake chat actions, for fun. (Default action: typing)\
 \n\nAnd many more\
-\n`.nou` ; `.bot` ; `.gay` ; `.gey` ; `.tf` ; `.paw` ; `.taco` ; `.nih` ;\
-\n`.fag` ; `.gtfo` ; `.stfu` ; `.lol` ; `.lool` ; `.fail` ; `.love`\
-\n`.rain` ; `.earth` ; `.ii` ; `.tolol`\
+\n| `.nou` | `.bot` | `.gay` | `.gey` | `.tf` | `.paw` | `.taco` | `.nih` |\
+\n| `.fag` | `.gtfo` | `.stfu` | `.lol` | `.lool` | `.fail` | `.love` |\
+\n| `.rain` | `.earth` | `.ii` | `.tolol` |\
 \n\n\nThanks to 🅱️ottom🅱️ext🅱️ot (@NotAMemeBot) for some of these."
 })
