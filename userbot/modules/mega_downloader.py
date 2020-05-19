@@ -155,7 +155,7 @@ async def mega_downloader(megadl):
         else:
             return await megadl.edit(
                 f"`{file_name}`\n\n"
-                f"Successfully downloaded in: `'{file_path}'`.\n"
+                f"Successfully downloaded in: `{file_path}`.\n\n"
                 f"Download took: {time_formatter(download_time)}.")
     else:
         await megadl.edit("`Failed to download, "
