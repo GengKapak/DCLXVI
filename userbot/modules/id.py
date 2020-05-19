@@ -20,7 +20,7 @@ async def image_maker(event):
  font = ImageFont.truetype('userbot/utils/Imperator.ttf', size=24)
  draw.text(position, replied_user.sender.first_name, fill=color, font=font)
  id_template.save('user_id.png')
- await event.edit(`Generating ID Card..`)
+ await event.edit("`Generating ID Card..`")
  await event.client.send_message(
         event.chat_id,
         "Generated User ID",
