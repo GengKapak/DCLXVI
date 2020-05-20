@@ -6,8 +6,9 @@
 """ Userbot module containing commands related to the \
     Information Superhighway (yes, Internet). """
 
+import os
+import wget
 from datetime import datetime
-
 from speedtest import Speedtest
 from telethon import functions
 from userbot import CMD_HELP
@@ -25,32 +26,44 @@ async def speedtst(spd):
     test.upload()
     test.results.share()
     result = test.results.dict()
+    path = wget.download(result['share'])
+    output =  f"""**  --Started at {result['timestamp']}--
 
-    await spd.edit("`"
-                   "Started at "
-                   f"{result['timestamp']} \n\n"
-                   "Download "
-                   f"{speed_convert(result['download'])} \n"
-                   "Upload "
-                   f"{speed_convert(result['upload'])} \n"
-                   "Ping "
-                   f"{result['ping']} \n"
-                   "ISP "
-                   f"{result['client']['isp']}"
-                   "`")
+		Client:
+
+		ISP: `{result['client']['isp']}`
+		Country: `{result['client']['country']}`
+
+		Server:
+		Name: `{result['server']['name']}`
+		Country: `{result['server']['country']}, {result['server']['cc']}`
+		Sponsor: `{result['server']['sponsor']}`
+		Latency: `{result['server']['latency']}`
+
+		Ping: `{result['ping']}`
+		Sent: `{humanbytes(result['bytes_sent'])}`
+		Received: `{humanbytes(result['bytes_received'])}`
+		Download: `{humanbytes(result['download'] / 8)}/s`
+		Upload: `{humanbytes(result['upload'] / 8)}/s`**"""
+    await spd.delete()
+    await spd.client.send_file(spd.chat_id,
+                                   path,
+                                   caption=output,
+                                   force_document=False)
+    os.remove(path)
 
 
-def speed_convert(size):
-    """
-    Hi human, you can't read bytes?
-    """
-    power = 2**10
-    zero = 0
-    units = {0: '', 1: 'Kb/s', 2: 'Mb/s', 3: 'Gb/s', 4: 'Tb/s'}
+def humanbytes(size: float) -> str:
+    """humanize size"""
+    if not size:
+        return ""
+    power = 1024
+    t_n = 0
+    power_dict = {0: ' ', 1: 'Ki', 2: 'Mi', 3: 'Gi', 4: 'Ti'}
     while size > power:
         size /= power
-        zero += 1
-    return f"{round(size, 2)} {units[zero]}"
+        t_n += 1
+    return "{:.2f} {}B".format(size, power_dict[t_n])
 
 
 @register(outgoing=True, pattern="^.dc$")
