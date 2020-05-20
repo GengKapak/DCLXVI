@@ -304,7 +304,7 @@ with bot:
                 result = builder.article(
                     f"Please Use Only With .help Command",
                     text="{}\nTotal loaded modules: {}".format(
-                        "DCLXVI UserBot by @akmjfeels\n\nhttps://github.com/AnggaR96s/DCLXVI", len(dugmeler)),
+                        "DCLXVI UserBot by @akmjfeels\n\nGitHub Repository [Here](https://github.com/AnggaR96s/DCLXVI)\n", len(dugmeler)),
                     buttons=buttons,
                     link_preview=False
                 )
