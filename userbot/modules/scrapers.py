@@ -116,12 +116,14 @@ async def img_sampler(event):
     }
 
     # passing the arguments to the function
+    await event.edit("`Sending some images...`")
+    await sleep(5)
+    await event.delete()
     paths = response.download(arguments)
     lst = paths[0][query]
     await event.client.send_file(
         await event.client.get_input_entity(event.chat_id), lst)
     shutil.rmtree(os.path.dirname(os.path.abspath(lst[0])))
-    await event.delete()
 
 
 @register(outgoing=True, pattern="^.currency (.*)")
