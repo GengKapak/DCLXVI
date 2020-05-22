@@ -12,9 +12,9 @@ async def image_maker(event):
  await event.client.download_profile_photo(replied_user.from_id, file= 'user.png', download_big = True)
  user_photo = Image.open('user.png')
  id_template = Image.open('userbot/utils/DCLXVI.png')
- user_photo = user_photo.resize((123, 134))
- id_template.paste(user_photo, (146, 66))
- position = (300, 56)
+ user_photo = user_photo.resize((989, 1073))
+ id_template.paste(user_photo, (1229, 573))
+ position = (2473, 481)
  draw = ImageDraw.Draw(id_template)
  color = 'rgb(23, 43, 226)' #blue color
  font = ImageFont.truetype('userbot/utils/Imperator.ttf', size=24)
