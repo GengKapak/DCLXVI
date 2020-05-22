@@ -17,8 +17,8 @@ async def image_maker(event):
  position = (2473, 481)
  draw = ImageDraw.Draw(id_template)
  color = 'rgb(23, 43, 226)' #blue color
- font = ImageFont.truetype('userbot/utils/Imperator.ttf', size=24)
- draw.text(position, replied_user.sender.first_name, fill=color, font=font)
+ font = ImageFont.truetype('userbot/utils/Imperator.ttf', size=200)
+ draw.text(position, replied_user.sender.first_name.replace('\u2060', ''), fill=color, font=font)
  id_template.save('user_id.png')
  await event.edit("`Generating ID Card..`")
  await event.client.send_message(
