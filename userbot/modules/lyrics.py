@@ -66,6 +66,6 @@ CMD_HELP.update({
     "lyrics":
     ">`.lcs` **<artist name> - <song name>**"
     "\nUsage: Get lyrics matched artist and song."
-    "\n\n>`.lyrics now`"
+    "\n\n>`.lcs now`"
     "\nUsage: Get lyrics artist and song from current lastfm scrobbling."
 })
