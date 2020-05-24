@@ -7,7 +7,7 @@ from userbot import CMD_HELP, bot
 
 
 
-@register(outgoing=True, pattern="^.dice(?: |$)(.*)")
+@register(outgoing=True, pattern="^\.dice(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -23,7 +23,7 @@ async def _(event):
         except:
             pass
 
-@register(outgoing=True, pattern="^.dart(?: |$)(.*)")
+@register(outgoing=True, pattern="^\.dart(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -39,7 +39,7 @@ async def _(event):
         except:
             pass
 
-@register(outgoing=True, pattern="^.ball(?: |$)(.*)")
+@register(outgoing=True, pattern="^\.ball(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return

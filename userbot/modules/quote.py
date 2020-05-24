@@ -48,7 +48,7 @@ config = dict({"api_url": "http://api.antiddos.systems",
                                    "#62d4e3", "#65bdf3", "#ff5694"],
                "default_username_color": "#b48bf2"})
 
-@register(outgoing=True, pattern="^.qt(?: |$)(.*)")
+@register(outgoing=True, pattern="^\.qt(?: |$)(.*)")
 async def quotecmd(message):  # noqa: C901
     """Quote a message.
     Usage: .pch [template]
@@ -207,7 +207,7 @@ async def get_markdown(reply):
     return markdown
 
 
-@register(outgoing=True, pattern="^.q(?: |$)(.*)")
+@register(outgoing=True, pattern="^\.q(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return

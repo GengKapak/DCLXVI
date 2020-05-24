@@ -18,7 +18,7 @@ from userbot import bot, CMD_HELP
 from userbot.events import register
 
 
-@register(outgoing=True, pattern="^.boobs(?: |$)(.*)")
+@register(outgoing=True, pattern="^\.boobs(?: |$)(.*)")
 async def boobs(e):
     await e.edit("`Finding some big boobs...`")
     await sleep(3)
@@ -30,7 +30,7 @@ async def boobs(e):
     os.remove("boobs.jpg")
     await e.delete()
 
-@register(outgoing=True, pattern="^.butts(?: |$)(.*)")
+@register(outgoing=True, pattern="^\.butts(?: |$)(.*)")
 async def butts(e):
     await e.edit("`Finding some beautiful butts...`")
     await sleep(3)

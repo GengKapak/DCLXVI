@@ -25,7 +25,7 @@ DEVICES_DATA = ('https://raw.githubusercontent.com/androidtrackers/'
                 'certified-android-devices/master/by_device.json')
 
 
-@register(outgoing=True, pattern="^.magisk$")
+@register(outgoing=True, pattern="^\.magisk$")
 async def magisk(request):
     """ magisk latest releases """
     magisk_dict = {
@@ -47,7 +47,7 @@ async def magisk(request):
     await request.edit(releases)
 
 
-@register(outgoing=True, pattern=r"^.device(?: |$)(\S*)")
+@register(outgoing=True, pattern=r"^\.device(?: |$)(\S*)")
 async def device_info(request):
     """ get android device basic info from its codename """
     textx = await request.get_reply_message()
@@ -75,7 +75,7 @@ async def device_info(request):
     await request.edit(reply)
 
 
-@register(outgoing=True, pattern=r"^.codename(?: |)([\S]*)(?: |)([\s\S]*)")
+@register(outgoing=True, pattern=r"^\.codename(?: |)([\S]*)(?: |)([\s\S]*)")
 async def codename_info(request):
     """ search for android codename """
     textx = await request.get_reply_message()
@@ -109,7 +109,7 @@ async def codename_info(request):
     await request.edit(reply)
 
 
-@register(outgoing=True, pattern="^.pixeldl(?: |$)(.*)")
+@register(outgoing=True, pattern="^\.pixeldl(?: |$)(.*)")
 async def download_api(dl):
     await dl.edit("`Collecting information...`")
     URL = dl.pattern_match.group(1)
@@ -217,7 +217,7 @@ async def download_api(dl):
     return
 
 
-@register(outgoing=True, pattern=r"^.specs(?: |)([\S]*)(?: |)([\s\S]*)")
+@register(outgoing=True, pattern=r"^\.specs(?: |)([\S]*)(?: |)([\s\S]*)")
 async def devices_specifications(request):
     """ Mobile devices specifications """
     textx = await request.get_reply_message()
@@ -269,7 +269,7 @@ async def devices_specifications(request):
     await request.edit(reply)
 
 
-@register(outgoing=True, pattern=r"^.twrp(?: |$)(\S*)")
+@register(outgoing=True, pattern=r"^\.twrp(?: |$)(\S*)")
 async def twrp(request):
     """ get android device twrp """
     textx = await request.get_reply_message()

@@ -25,7 +25,7 @@ if HEROKU_APP_NAME is not None and HEROKU_API_KEY is not None:
 
 
 @register(outgoing=True,
-          pattern=r"^.(set|get|del) var(?: |$)(.*)(?: |$)([\s\S]*)")
+          pattern=r"^\.(set|get|del) var(?: |$)(.*)(?: |$)([\s\S]*)")
 async def variable(var):
     """
         Manage most of ConfigVars setting, set new var, get current var,
@@ -128,7 +128,7 @@ async def variable(var):
             return await var.edit("`Information don't exists...`")
 
 
-@register(outgoing=True, pattern=r"^.usage(?: |$)")
+@register(outgoing=True, pattern=r"^\.usage(?: |$)")
 async def dyno_usage(dyno):
     """
         Get your account Dyno Usage

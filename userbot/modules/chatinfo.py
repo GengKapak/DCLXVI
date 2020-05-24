@@ -16,7 +16,7 @@ from telethon.utils import get_input_location
 from userbot import CMD_HELP
 from userbot.events import register
 
-@register(pattern=".chatinfo(?: |$)(.*)", outgoing=True)
+@register(pattern="^\.chatinfo(?: |$)(.*)", outgoing=True)
 async def info(event):
     await event.edit("`Analysing the chat...`")
     chat = await get_chatinfo(event)

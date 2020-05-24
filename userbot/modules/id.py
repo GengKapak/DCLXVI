@@ -6,7 +6,7 @@ from userbot import CMD_HELP
 from PIL import Image, ImageDraw, ImageFont
 import os
 
-@register(outgoing=True, pattern="^.id$")
+@register(outgoing=True, pattern="^\.id$")
 async def image_maker(event):
  replied_user = await event.get_reply_message()
  await event.client.download_profile_photo(replied_user.from_id, file= 'user.png', download_big = True)

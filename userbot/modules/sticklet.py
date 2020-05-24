@@ -12,7 +12,7 @@ from userbot import CMD_HELP
 from userbot.events import register
 
 
-@register(outgoing=True, pattern=r"^.rgb (.*)")
+@register(outgoing=True, pattern=r"^\.rgb (.*)")
 async def sticklet(event):
     R = random.randint(0,256)
     G = random.randint(0,256)

@@ -26,7 +26,7 @@ def deEmojify(inputString: str) -> str:
     return re.sub(EMOJI_PATTERN, '', inputString)
 
 
-@register(outgoing=True, pattern="^.waifu(?: |$)(.*)")
+@register(outgoing=True, pattern="^\.wf(?: |$)(.*)")
 async def waifu(animu):
     text = animu.pattern_match.group(1)
     if not text:
@@ -47,6 +47,6 @@ async def waifu(animu):
 
 CMD_HELP.update({
     "waifu":
-    ">`.waifu`"
+    ">`.wf`"
     "\nUsage: To stickerize your text with beautiful anime girl templates."
 })

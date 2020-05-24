@@ -7,7 +7,7 @@ from userbot.events import register
 PLACE = ''
 
 
-@register(outgoing=True, pattern=r"^.adzan (.*)")
+@register(outgoing=True, pattern=r"^\.adzan (.*)")
 async def get_adzan(adzan):
     await adzan.edit("🚛Loading...")
     if not adzan.pattern_match.group(1):

@@ -21,7 +21,7 @@ os.system("rm -rf *.mp3")
 def bruh(name):
     os.system("instantmusic -q -s "+name)
 
-@register(outgoing=True, pattern=r"^.song (.*)")
+@register(outgoing=True, pattern=r"^\.song (.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -49,7 +49,7 @@ async def _(event):
     await event.delete()
 
 
-@register(outgoing=True, pattern="^.smd(?: |$)(.*)")
+@register(outgoing=True, pattern="^\.smd(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return

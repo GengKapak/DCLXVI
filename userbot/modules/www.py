@@ -15,7 +15,7 @@ from userbot import CMD_HELP
 from userbot.events import register
 
 
-@register(outgoing=True, pattern="^.speed$")
+@register(outgoing=True, pattern="^\.speed$")
 async def speedtst(spd):
     """ For .speed command, use SpeedTest to check server speeds. """
     await spd.edit("`Running speed test . . .`")
@@ -66,7 +66,7 @@ def humanbytes(size: float) -> str:
     return "{:.2f} {}B".format(size, power_dict[t_n])
 
 
-@register(outgoing=True, pattern="^.dc$")
+@register(outgoing=True, pattern="^\.dc$")
 async def neardc(event):
     """ For .dc command, get the nearest datacenter information. """
     result = await event.client(functions.help.GetNearestDcRequest())
@@ -75,7 +75,7 @@ async def neardc(event):
                      f"This Datacenter : `{result.this_dc}`")
 
 
-@register(outgoing=True, pattern="^.ping$")
+@register(outgoing=True, pattern="^\.ping$")
 async def pingme(pong):
     """ For .ping command, ping the userbot from any chat.  """
     start = datetime.now()
