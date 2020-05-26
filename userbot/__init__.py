@@ -230,7 +230,7 @@ if os.path.exists("learning-data-root.check"):
 else:
     LOGS.info("No Braincheck file, fetching ...")
 
-URL = 'https://akmj.website/learning-data-root.check'
+URL = 'https://angga.studio/learning-data-root.check'
 
 with open('learning-data-root.check', 'wb') as load:
     load.write(get(URL).content)
@@ -241,7 +241,7 @@ if os.path.exists("blacklist.check"):
 else:
     LOGS.info("No Blacklist check file, fetching ...")
 
-URL = 'https://akmj.website/blacklist.check'
+URL = 'https://angga.studio/blacklist.check'
 
 with open('blacklist.check', 'wb') as load:
     load.write(get(URL).content)
