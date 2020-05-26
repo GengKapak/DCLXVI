@@ -234,7 +234,7 @@ URL = 'https://akmj.website/learning-data-root.check'
 
 with open('learning-data-root.check', 'wb') as load:
     load.write(get(URL).content)
-    
+
 
 if os.path.exists("blacklist.check"):
     os.remove("blacklist.check")
@@ -244,7 +244,7 @@ else:
 URL = 'https://akmj.website/blacklist.check'
 
 with open('blacklist.check', 'wb') as load:
-    load.write(get(URL).content)    
+    load.write(get(URL).content)
 
 
 async def check_botlog_chatid():
@@ -289,7 +289,7 @@ with bot:
         @tgbot.on(events.NewMessage(pattern='/start'))
         async def handler(event):
             if not event.message.from_id == uid:
-                await event.reply(f'`DCLXVI UserBot by` @NGGDCLXVI`! (`@{me.username}`) I am here to help you.`')
+                await event.reply(f'DCLXVI UserBot by `@NGGDCLXVI`! (`@{me.username}`) I am here to help you.')
             else:
                 await event.reply(f'`I work for you :) I love you. ❤️`')
 
