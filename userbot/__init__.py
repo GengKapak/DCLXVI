@@ -199,6 +199,9 @@ CMD_HELP = {}
 # IMG Stuff
 IMG_LIMIT = os.environ.get("IMG_LIMIT", None)
 
+# JustWatch Country
+WATCH_COUNTRY = os.environ.get("WATCH_COUNTRY", None)
+
 # Setting Up CloudMail.ru and MEGA.nz extractor binaries,
 # and giving them correct perms to work properly.
 if not os.path.exists('bin'):
