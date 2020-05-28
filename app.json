@@ -144,7 +144,7 @@
     "QUOTES_API_TOKEN": {
       "description": "API for quotes module get it from http://antiddos.systems",
       "value": "",
-      "required": true
+      "required": false
     },
     "TERM_ALIAS": {
       "description": "Leave if u don't know",
