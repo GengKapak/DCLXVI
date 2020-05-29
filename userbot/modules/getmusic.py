@@ -71,11 +71,39 @@ async def _(event):
           await bot.forward_messages(event.chat_id, respond.message)
           await bot.send_read_acknowledge(event.chat_id)
 
+@register(outgoing=True, pattern="^\.net(?: |$)(.*)")
+async def _(event):
+    if event.fwd_from:
+        return
+    song = event.pattern_match.group(1)
+    chat = "@WooMaiBot"
+    link = f"/netease {song}"
+    await event.edit("```Getting Your Music```")
+    async with bot.conversation(chat) as conv:
+          await asyncio.sleep(2)
+          await event.edit("`Downloading...Please wait`")
+          try:
+              msg = await conv.send_message(link)
+              response = await conv.get_response()
+              respond = await conv.get_response()
+              """ - don't spam notif - """
+              await bot.send_read_acknowledge(conv.chat_id)
+          except YouBlockedUserError:
+              await event.reply("```Please unblock @WooMaiBot and try again```")
+              return
+          await event.edit("`Sending Your Music...`")
+          await asyncio.sleep(3)
+          await bot.send_file(event.chat_id, respond)
+    await event.client.delete_messages(conv.chat_id,
+                                       [msg.id, response.id, respond.id])
+    await event.delete()
 
 CMD_HELP.update({
     "song":
-        ">`.song` **atrist title**"
+        ">`.song` **Artist - Song Title**"
         "\nUsage: Finding and uploading song.\n"
-        ">`.smd` **<song tittle>**"
-        "\nUsage: **Download music from spotify**"
+        ">`.smd` **Artist - Song Title**"
+        "\nUsage: Download music from spotify.\n"
+        ">`.net` **Artist - Song Title**"
+        "\nUsage: Download music with @WooMaiBot."
 })
