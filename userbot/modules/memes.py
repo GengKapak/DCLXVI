@@ -768,7 +768,7 @@ async def univsaye(cowmsg):
     await cowmsg.edit(f"`{cheese.milk(text).replace('`', '´')}`")
 
 
-@register(outgoing=True, pattern="^:/$", ignore_unsafe=True)
+@register(outgoing=True, pattern="^:/$", ignore_unsafe=True, disable_errors=True)
 async def kek(keks):
     """ Check yourself ;)"""
     uio = ["/", "\\"]
@@ -864,7 +864,7 @@ async def slap(replied_user, event):
         victim=slapped, item=item, hits=hit, throws=throw, where=where)
 
     return caption
-                      
+
 @register(outgoing=True, pattern="^-_-$", ignore_unsafe=True)
 async def lol(lel):
     """ Ok... """
