@@ -136,11 +136,6 @@
       "description": "Set the default city for the userbot's weather module.",
       "required": false
     },
-    "TELEGRAPH_SHORT_NAME": {
-      "description": "For telegraph module",
-      "value": "0",
-      "required": true
-    },
     "QUOTES_API_TOKEN": {
       "description": "API for quotes module get it from http://antiddos.systems",
       "value": "",

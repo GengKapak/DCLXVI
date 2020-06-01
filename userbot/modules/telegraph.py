@@ -2,11 +2,11 @@ import os
 from PIL import Image
 from datetime import datetime
 from telegraph import Telegraph, upload_file, exceptions
-from userbot import (TELEGRAPH_SHORT_NAME, TEMP_DOWNLOAD_DIRECTORY, CMD_HELP, bot)
+from userbot import (TEMP_DOWNLOAD_DIRECTORY, CMD_HELP, bot)
 from userbot.events import register
 
 telegraph = Telegraph()
-r = telegraph.create_account(short_name=TELEGRAPH_SHORT_NAME)
+r = telegraph.create_account(short_name="TELEGRAPH")
 auth_url = r["auth_url"]
 
 
@@ -23,7 +23,7 @@ async def telegraphs(graph):
             start = datetime.now()
             r_message = await graph.get_reply_message()
             input_str = graph.pattern_match.group(1)
-            if input_str == "media":
+            if input_str == "m":
                 downloaded_file_name = await bot.download_media(
                     r_message,
                     TEMP_DOWNLOAD_DIRECTORY
@@ -45,7 +45,7 @@ async def telegraphs(graph):
                     os.remove(downloaded_file_name)
                     await graph.edit("Successfully Uploaded to [telegra.ph](https://telegra.ph{})."
                                      .format(media_urls[0], (ms + ms_two)), link_preview=True)
-            elif input_str == "text":
+            elif input_str == "t":
                 user_object = await bot.get_entity(r_message.from_id)
                 title_of_page = user_object.first_name  # + " " + user_object.last_name
                 # apparently, all Users do not have last_name field
