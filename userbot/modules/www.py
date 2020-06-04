@@ -27,7 +27,8 @@ async def speedtst(spd):
     test.results.share()
     result = test.results.dict()
     path = wget.download(result['share'])
-    output =  f"""**  --Started at {result['timestamp']}--
+    output =  f"""**
+                Started at `{result['timestamp']}`
 
 		Client:
 
