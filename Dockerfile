@@ -1,5 +1,5 @@
-# We're using Ubuntu
-FROM dasbastard/ubuntu:latest
+# We're using ArchLinux
+FROM dasbastard/arch:latest
 
 #
 # Clone repo and prepare working directory
