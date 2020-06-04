@@ -377,7 +377,7 @@ You can convert your account to bot and use them. Remember, you can't manage som
                 cmdhel = str(CMD_HELP[modul_name])
                 if len(cmdhel) > 150:
                     help_string = str(CMD_HELP[modul_name])[
-                        :150] + "\n\nRead more... " + modul_name + " "
+                        :150] + "\n\nRead more .help " + modul_name + " "
                 else:
                     help_string = str(CMD_HELP[modul_name])
 
