@@ -18,13 +18,32 @@ async def github(event):
             url = result.get("html_url", None)
             name = result.get("name", None)
             company = result.get("company", None)
+            blog = result.get("blog", None)
+            loc = result.get("location", None)
+            email = result.get("email", None)
             bio = result.get("bio", None)
+            twitter = result.get("twitter_username", None)
+            repo = result.get("public_repos", None)
+            gist = result.get("public_gists", None)
+            followers = result.get("followers", None)
+            following = result.get("following", None)
             created_at = result.get("created_at", "Not Found")
 
             REPLY = (
                 f"GitHub Info for `{event.pattern_match.group(1)}`"
-                f"\nUsername: `{name}`\nBio: `{bio}`\nURL: {url}"
-                f"\nCompany: `{company}`\nCreated at: `{created_at}`"
+                f"\nUsername: `{name}`"
+                f"\nURL: {url}"
+                f"\nTwitter: https://twitter.com/{twitter}"
+                f"\nBlog: {blog}"
+                f"\nBio: `{bio}`"
+                f"\nLocation: `{loc}`"
+                f"\nEmail: {email}"
+                f"\nCompany: `{company}`"
+                f"\nPublic Repos: `{repo}`"
+                f"\nPublic Gists: `{gist}`"
+                f"\nFollowers: `{followers}`"
+                f"\nFollowing: `{following}`"
+                f"\nCreated at: `{created_at}`"
             )
 
             if not result.get("repos_url", None):
