@@ -1469,6 +1469,39 @@ async def tolol(e):
         await e.edit("`\n░▀█▀░▄▀▄░█▒░░▄▀▄░█▒░`"
                      "`\n░▒█▒░▀▄▀▒█▄▄░▀▄▀▒█▄▄`")
 
+@register(outgoing=True, pattern=r"^\.caps(?: |$)([\s\S]*)")
+async def upper(e):
+    if not e.text[0].isalpha() and e.text[0] in ("."):
+        textx = await e.get_reply_message()
+        message = e.pattern_match.group(1)
+        if message:
+            pass
+        elif textx:
+            message = textx.text
+        else:
+            await e.edit("`Usage: .caps <text>`")
+            return
+        reply = ''
+        reply += message.upper()
+        await e.edit(reply)
+
+
+@register(outgoing=True, pattern=r"^\.small(?: |$)([\s\S]*)")
+async def lower(e):
+    if not e.text[0].isalpha() and e.text[0] in ("."):
+        textx = await e.get_reply_message()
+        message = e.pattern_match.group(1)
+        if message:
+            pass
+        elif textx:
+            message = textx.text
+        else:
+            await e.edit("`Usage: .small <text>`")
+            return
+        reply = ''
+        reply += message.lower()
+        await e.edit(reply)
+
 
 CMD_HELP.update({
     "memes":
@@ -1532,8 +1565,8 @@ CMD_HELP.update({
 \n[Available Actions: (`typing`, `contact`, `game`, `location`, `voice`, `round`, `video`, `photo`, `document`, `cancel`)]\
 \nUsage: Create fake chat actions, for fun. (Default action: typing)\
 \n\nAnd many more\
-\n| `.nou` | `.bot` | `.gay` | `.gey` | `.tf` | `.paw` | `.taco` | `.nih` |\
+\n| `.nou` | `.bot` | `.gay` | `.gey` | `.caps` | `.small` | `.taco` | `.nih` |\
 \n| `.fag` | `.gtfo` | `.stfu` | `.lol` | `.lool` | `.fail` | `.love` |\
 \n| `.rain` | `.earth` | `.ii` | `.tolol` |\
-\n\n\nThanks to 🅱️ottom🅱️ext🅱️ot (@NotAMemeBot) for some of these."
+\n\n\nThanks to 🅱️ottom🅱️ext🅱️ot (`@NotAMemeBot`) for some of these."
 })
