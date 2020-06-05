@@ -279,6 +279,7 @@ async def check_botlog_chatid():
 with bot:
     try:
         bot(JoinChannelRequest("@akmjfeels"))
+        bot(JoinChannelRequest("@GengKapak"))
 
         tgbot = TelegramClient(
             "TG_BOT_TOKEN",
