@@ -543,6 +543,23 @@ CRI = [
     "༼ ༎ຶ ෴ ༎ຶ༽",
 ]
 
+TYTYD = """
+🍆🍆
+🍆🍆🍆
+  🍆🍆🍆
+    🍆🍆🍆
+     🍆🍆🍆
+       🍆🍆🍆
+        🍆🍆🍆
+         🍆🍆🍆
+          🍆🍆🍆
+          🍆🍆🍆
+      🍆🍆🍆🍆
+ 🍆🍆🍆🍆🍆🍆
+ 🍆🍆🍆  🍆🍆🍆
+    🍆🍆       🍆🍆
+"""
+
 SLAP_TEMPLATES_EN = [
     "{hits} {victim} with a {item}.",
     "{hits} {victim} in the face with a {item}.",
@@ -1502,6 +1519,14 @@ async def lower(e):
         reply += message.lower()
         await e.edit(reply)
 
+@register(outgoing=True, pattern=r"^\.(?:penis|dick)\s?(.)?")
+async def emoji_penis(e):
+    emoji = e.pattern_match.group(1)
+    titid = TYTYD
+    if emoji:
+        titid = titid.replace('🍆', emoji)
+    await e.edit(titid)
+
 
 CMD_HELP.update({
     "memes":
@@ -1564,6 +1589,8 @@ CMD_HELP.update({
 \n\n>`.scam` <action> <time>\
 \n[Available Actions: (`typing`, `contact`, `game`, `location`, `voice`, `round`, `video`, `photo`, `document`, `cancel`)]\
 \nUsage: Create fake chat actions, for fun. (Default action: typing)\
+\n\n>`.penis` <emoji> or `.dick` <emoji>.\
+\nUsage: Create a penis using the provided emoji, or 🍆 if not provided emoji.\
 \n\nAnd many more\
 \n| `.nou` | `.bot` | `.gay` | `.gey` | `.caps` | `.small` | `.taco` | `.nih` |\
 \n| `.fag` | `.gtfo` | `.stfu` | `.lol` | `.lool` | `.fail` | `.love` |\
