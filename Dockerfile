@@ -4,7 +4,7 @@ FROM dasbastard/arch:latest
 #
 # Clone repo and prepare working directory
 #
-RUN git clone -b master https://github.com/AnggaR96s/DCLXVI /home/dclxvi/
+RUN git clone -b master https://github.com/GengKapak/DCLXVI /home/dclxvi/
 RUN mkdir /home/dclxvi/bin/
 WORKDIR /home/dclxvi/
 

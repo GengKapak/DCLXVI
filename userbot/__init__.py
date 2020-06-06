@@ -105,7 +105,7 @@ HEROKU_API_KEY = os.environ.get("HEROKU_API_KEY", None)
 # Custom (forked) repo URL for updater.
 UPSTREAM_REPO_URL = os.environ.get(
     "UPSTREAM_REPO_URL",
-    "https://github.com/AnggaR96s/DCLXVI.git")
+    "https://github.com/GengKapak/DCLXVI.git")
 # UPSTREAM_REPO_URL branch, the default is master
 UPSTREAM_REPO_BRANCH = os.environ.get(
     "UPSTREAM_REPO_BRANCH", "master")
@@ -309,7 +309,7 @@ with bot:
                 result = builder.article(
                     f"Please Use Only With .help Command",
                     text="{}\nTotal loaded modules: {}".format(
-                        "DCLXVI UserBot by @akmjfeels\n\nGitHub Repository [Here](https://github.com/AnggaR96s/DCLXVI)\n", len(dugmeler)),
+                        "DCLXVI UserBot by @akmjfeels\n\nGitHub Repository [Here](https://github.com/GengKapak/DCLXVI)\n", len(dugmeler)),
                     buttons=buttons,
                     link_preview=False
                 )
@@ -329,7 +329,7 @@ You can convert your account to bot and use them. Remember, you can't manage som
                         [custom.Button.url("Follow Channel", "https://t.me/akmjfeels"), custom.Button.url(
                             "Build by", "https://t.me/NGGDCLXVI")],
                         [custom.Button.url(
-                            "GitHub", "https://github.com/AnggaR96s/DCLXVI")]
+                            "GitHub", "https://github.com/GengKapak/DCLXVI")]
                     ],
                     link_preview=False
                 )
