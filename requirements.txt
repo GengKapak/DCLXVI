@@ -45,3 +45,4 @@ python-dateutil
 git+https://github.com/johnwmillr/LyricsGenius.git
 justwatch
 bitlyshortener
+pyaztro
