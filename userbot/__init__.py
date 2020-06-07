@@ -303,30 +303,30 @@ with bot:
             builder = event.builder
             result = None
             query = event.text
-            if event.query.user_id == uid and query.startswith("@akmjfeels"):
+            if event.query.user_id == uid and query.startswith("@GengKapak"):
                 rev_text = query[::-1]
                 buttons = paginate_help(0, dugmeler, "helpme")
                 result = builder.article(
                     f"Please Use Only With .help Command",
                     text="{}\nTotal loaded modules: {}".format(
-                        "DCLXVI UserBot by @akmjfeels\n\nGitHub Repository [Here](https://github.com/GengKapak/DCLXVI)\n", len(dugmeler)),
+                        "DCLXVI UserBot by @GengKapak\n\nGitHub Repository [Here](https://github.com/GengKapak/DCLXVI)\n", len(dugmeler)),
                     buttons=buttons,
                     link_preview=False
                 )
             elif query.startswith("tb_btn"):
                 result = builder.article(
-                    "© @akmjfeels",
-                    text=f"@akmjfeels",
+                    "© @GengKapak",
+                    text=f"@GengKapak",
                     buttons=[],
                     link_preview=True
                 )
             else:
                 result = builder.article(
-                    "© @akmjfeels",
-                    text="""@akmjfeels is for you!
+                    "© @GengKapak",
+                    text="""@GengKapak is for you!
 You can convert your account to bot and use them. Remember, you can't manage someone else's bot! All installation details are explained from GitHub address below.""",
                     buttons=[
-                        [custom.Button.url("Follow Channel", "https://t.me/akmjfeels"), custom.Button.url(
+                        [custom.Button.url("Follow Channel", "https://t.me/GengKapak"), custom.Button.url(
                             "Build by", "https://t.me/NGGDCLXVI")],
                         [custom.Button.url(
                             "GitHub", "https://github.com/GengKapak/DCLXVI")]
