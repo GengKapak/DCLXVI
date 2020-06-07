@@ -39,8 +39,8 @@ from telethon.tl.types import DocumentAttributeAudio
 from userbot.utils import progress, chrome, googleimagesdownload
 
 CARBONLANG = "auto"
-TTS_LANG = "en"
-TRT_LANG = "en"
+TTS_LANG = "id"
+TRT_LANG = "id"
 
 
 @register(outgoing=True, pattern="^\.crblang (.*)")
@@ -126,7 +126,7 @@ async def img_sampler(event):
     shutil.rmtree(os.path.dirname(os.path.abspath(lst[0])))
 
 
-@register(outgoing=True, pattern="^\.currency (.*)")
+@register(outgoing=True, pattern="^\.crc (.*)")
 async def moni(event):
     input_str = event.pattern_match.group(1)
     input_sgra = input_str.split(" ")
@@ -642,7 +642,7 @@ CMD_HELP.update({
     ">`.img <search_query>`"
     "\nUsage: Does an image search on Google and shows **IMG_LIMIT** images.",
     "currency":
-    ">`.currency <amount> <from> <to>`"
+    ">`.crc <amount> <from> <to>`"
     "\nUsage: Converts various currencies for you.",
     "carbon":
     ">`.carbon <text> [or reply]`"
