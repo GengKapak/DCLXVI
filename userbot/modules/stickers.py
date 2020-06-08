@@ -305,7 +305,7 @@ async def get_pack_info(event):
     await event.edit(OUTPUT)
 
 
-@register(outgoing=True, pattern="^\.getsticker$")
+@register(outgoing=True, pattern="^\.get$")
 async def sticker_to_png(sticker):
     if not sticker.is_reply:
         await sticker.edit("`NULL information to fetch...`")
@@ -345,6 +345,6 @@ CMD_HELP.update({
     "or choose the emoji you want to."
     "\n\n>`.stkrinfo`"
     "\nUsage: Gets info about the sticker pack."
-    "\n\n>`.getsticker`"
+    "\n\n>`.get`"
     "\nUsage: reply to a sticker to get 'PNG' file of sticker."
 })
