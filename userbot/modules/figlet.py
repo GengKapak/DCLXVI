@@ -14,8 +14,8 @@ async def figlet(e):
         return
     CMD_FIG = {"slant": "slant", "3D": "3-d", "5line": "5lineoblique", "alpha": "alphabet", "banner": "banner3-D", "doh": "doh", "iso": "isometric1", "letter": "letters", "allig": "alligator", "dotm": "dotmatrix", "bubble": "bubble", "bulb": "bulbhead", "digi": "digital"}
     input_str = e.pattern_match.group(1)
-    if "|" in input_str:
-        text, cmd = input_str.split("|", maxsplit=1)
+    if "." in input_str:
+        text, cmd = input_str.split(".", maxsplit=1)
     elif input_str is not None:
         cmd = None
         text = input_str
@@ -36,6 +36,8 @@ async def figlet(e):
 
 CMD_HELP.update({
         "figlet":
-        ">`.figlet` \
-          \nUsage: Enhance ur text to strip line with anvil.\n"
+        ">`.figlet`"
+          "\nUsage: Enhance ur text to strip line with anvil."
+          "\n\nExample: `.figlet TEXT.STYLE`"
+          "\nSTYLE LIST: `slant`, `3D`, `5line`, `alpha`, `banner`, `doh`, `iso`, `letter`, `allig`, `dotm`, `bubble`, `bulb`, `digi`"
     })
