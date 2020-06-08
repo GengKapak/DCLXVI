@@ -1,5 +1,5 @@
 # We're using ArchLinux
-FROM dasbastard/arch:latest
+FROM dasbastard/alpine:latest
 
 #
 # Clone repo and prepare working directory
