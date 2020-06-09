@@ -560,6 +560,12 @@ TYTYD = """
     🍆🍆       🍆🍆
 """
 
+normiefont = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
+              'v', 'w', 'x', 'y', 'z']
+
+weebyfont = ['卂', '乃', '匚', '刀', '乇', '下', '厶', '卄', '工', '丁', '长', '乚', '从', '𠘨', '口', '尸', '㔿', '尺', '丂', '丅', '凵',
+             'リ', '山', '乂', '丫', '乙']
+
 SLAP_TEMPLATES_EN = [
     "{hits} {victim} with a {item}.",
     "{hits} {victim} in the face with a {item}.",
@@ -1527,6 +1533,21 @@ async def emoji_penis(e):
         titid = titid.replace('🍆', emoji)
     await e.edit(titid)
 
+@register(outgoing=True, pattern="^\.weeb(?: |$)(.*)")
+async def weebify(e):
+    args = e.pattern_match.group(1)
+    if not args:
+        get = await e.get_reply_message()
+        args = get.text
+    if not args:
+        await e.edit("`What I am Supposed to Weebify U Dumb`")
+        return
+    string = '  '.join(args).lower()
+    for normiecharacter in string:
+        if normiecharacter in normiefont:
+            weebycharacter = weebyfont[normiefont.index(normiecharacter)]
+            string = string.replace(normiecharacter, weebycharacter)
+    await e.edit(string)
 
 CMD_HELP.update({
     "memes":
@@ -1594,6 +1615,6 @@ CMD_HELP.update({
 \n\nAnd many more\
 \n| `.nou` | `.bot` | `.gay` | `.gey` | `.caps` | `.small` | `.taco` | `.nih` |\
 \n| `.fag` | `.gtfo` | `.stfu` | `.lol` | `.lool` | `.fail` | `.love` |\
-\n| `.rain` | `.earth` | `.ii` | `.tolol` |\
+\n| `.rain` | `.earth` | `.ii` | `.tolol` | `.weeb` |\
 \n\n\nThanks to 🅱️ottom🅱️ext🅱️ot (`@NotAMemeBot`) for some of these."
 })
