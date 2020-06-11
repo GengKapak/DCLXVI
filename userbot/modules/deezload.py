@@ -39,7 +39,7 @@ from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from telethon.tl.types import DocumentAttributeAudio
 
-@register(outgoing=True, pattern="^\.deezload (.+?|) --(FLAC|MP3\_320|MP3\_256|MP3\_128)")
+@register(outgoing=True, pattern="^\.deez (.+?|) (FLAC|MP3\_320|MP3\_256|MP3\_128)")
 async def _(event):
     """DeezLoader by @An0nimia
     Ported for UniBorg by @SpEcHlDe"""
@@ -48,10 +48,10 @@ async def _(event):
 
     strings = {
         "name": "DeezLoad",
-        "arl_token_cfg_doc": "ARL Token for Deezer",
-        "invalid_arl_token": "please set the required variables for this module",
-        "wrong_cmd_syntax": "bruh, now i think how far should we go. please terminate my Session 🥺",
-        "server_error": "We're experiencing technical difficulties.",
+        "arl_token_cfg_doc": "`ARL Token for Deezer`",
+        "invalid_arl_token": "`Please set the required variables for this module`",
+        "wrong_cmd_syntax": "`Bruh, now i think how far should we go. please terminate my Session 🥺`",
+        "server_error": "`We're experiencing technical difficulties.`",
         "processing": "`Downloading..`"
     }
 
@@ -174,6 +174,6 @@ async def upload_track(track_location, message):
 
 CMD_HELP.update({
     "deezload":
-        ">`.deezload` <spotify/deezer link> --FORMAT"
-        "\nUsage: Download music from deezer."
+        ">`.deez` <spotify/deezer link> FORMAT"
+        "\nUsage: Download music from deezer or spotify."
 })
