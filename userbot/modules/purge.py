@@ -119,7 +119,7 @@ async def editer(edit):
    '''
 
 
-@register(outgoing=True, pattern="^\.sd")
+@register(outgoing=True, disable_errors=True, pattern="^\.sd")
 async def selfdestruct(destroy):
     """ For .sd command, make seflf-destructable messages. """
     message = destroy.text
