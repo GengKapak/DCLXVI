@@ -98,7 +98,7 @@ async def _(event):
                                        [msg.id, response.id, respond.id])
     await event.delete()
 
-@register(outgoing=True, pattern="^.sdd(?: |$)(.*)")
+@register(outgoing=True, disable_errors=True, pattern="^\.sdd(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
