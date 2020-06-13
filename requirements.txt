@@ -39,6 +39,7 @@ speedtest-cli
 sqlalchemy
 telethon
 telethon-session-sqlalchemy
+twitter_scraper
 urbandict
 wikipedia
 telegraph
