@@ -26,7 +26,7 @@ from time import gmtime, strftime
 from traceback import format_exc
 from telethon import events
 
-from userbot import bot, BOTLOG, BOTLOG_CHATID, LOGSPAMMER, BLACKLIST
+from userbot import bot, BOTLOG, BOTLOG_CHATID, BLACKLIST
 
 def register(**args):
     """ Register a new event. """

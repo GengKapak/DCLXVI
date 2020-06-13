@@ -8,20 +8,14 @@
 from coffeehouse.lydia import LydiaAI
 from coffeehouse.api import API
 import asyncio
-from telethon import events
 import logging
 logging.basicConfig(format='[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s',
                     level=logging.WARNING)
 
-import coffeehouse as cf
-
 import asyncio
-import io
-from userbot.modules.sql_helper.lydia_sql import get_s, get_all_s, add_s, remove_s
-from time import time
 import coffeehouse
 from userbot import LYDIA_API_KEY
-from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP, bot
+from userbot import CMD_HELP
 from userbot.events import register
 from telethon import events
 from coffeehouse.lydia import LydiaAI

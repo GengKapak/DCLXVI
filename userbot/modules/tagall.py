@@ -1,13 +1,6 @@
-from telethon import events
-from asyncio import sleep
-from random import choice, getrandbits, randint
-from re import sub
-from collections import deque
-import requests
 
 from userbot import CMD_HELP, bot
 from userbot.events import register
-from userbot.modules.admin import get_user_from_event
 
 @register(outgoing=True, pattern="^\.all$")
 async def all(event):

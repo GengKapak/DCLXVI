@@ -9,11 +9,9 @@ import requests
 import base64
 import json
 import telethon
-import datetime
 
 from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
-from telethon.tl.functions.account import UpdateNotifySettingsRequest
 from logging import Logger as logger
 from PIL import Image
 from io import BytesIO

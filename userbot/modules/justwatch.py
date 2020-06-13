@@ -3,11 +3,9 @@
 # All rights reserved.
 
 """Syntax: .watch Movie/TV Show"""
-from telethon import events
-import requests
 from userbot.events import register
 from justwatch import JustWatch
-from userbot import bot, WATCH_COUNTRY, CMD_HELP
+from userbot import WATCH_COUNTRY, CMD_HELP
 
 def get_stream_data(query):
     stream_data = {}

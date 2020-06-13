@@ -3,7 +3,7 @@
 
 from telethon.tl.types import InputMediaDice
 from userbot.events import register 
-from userbot import CMD_HELP, bot
+from userbot import CMD_HELP
 
 
 
