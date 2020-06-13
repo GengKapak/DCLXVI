@@ -37,7 +37,7 @@ async def _(hazmat):
                 r = await conv.get_response()
                 response = await conv.get_response()
             elif reply_message.gif:
-                m = f"/hazmat"
+                m = "/hazmat"
                 msg_reply = await conv.send_message(
                           m,
                           reply_to=msg.id)

@@ -299,7 +299,7 @@ with bot:
             if not event.message.from_id == uid:
                 await event.reply(f'DCLXVI UserBot by `@NGGDCLXVI`! (`@{me.username}`) I am here to help you.')
             else:
-                await event.reply(f'`I work for you :) I love you. ❤️`')
+                await event.reply('`I work for you :) I love you. ❤️`')
 
         @tgbot.on(events.InlineQuery)  # pylint:disable=E0602
         async def inline_handler(event):
@@ -310,7 +310,7 @@ with bot:
                 rev_text = query[::-1]
                 buttons = paginate_help(0, dugmeler, "helpme")
                 result = builder.article(
-                    f"Please Use Only With .help Command",
+                    "Please Use Only With .help Command",
                     text="{}\nTotal loaded modules: {}".format(
                         "DCLXVI UserBot by @GengKapak\n\nGitHub Repository [Here](https://github.com/GengKapak/DCLXVI)\n", len(dugmeler)),
                     buttons=buttons,
@@ -319,7 +319,7 @@ with bot:
             elif query.startswith("tb_btn"):
                 result = builder.article(
                     "© @GengKapak",
-                    text=f"@GengKapak",
+                    text="@GengKapak",
                     buttons=[],
                     link_preview=True
                 )
