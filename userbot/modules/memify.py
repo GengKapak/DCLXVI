@@ -27,10 +27,6 @@ async def mim(event):
        await event.edit("```reply to a image/sticker/gif```")
        return
     chat = "@MemeAutobot"
-    sender = reply_message.sender
-    file_ext_ns_ion = "@memetime.png"
-    file = await bot.download_file(reply_message.media)
-    uploaded_gif = None
     if reply_message.sender.bot:
        await event.edit("```Reply to actual users message.```")
        return

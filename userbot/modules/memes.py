@@ -892,7 +892,7 @@ async def slap(replied_user, event):
 async def lol(lel):
     """ Ok... """
     okay = "-_-"
-    for i in range(10):
+    for _ in range(10):
         okay = okay[:-1] + "_-"
         await lel.edit(okay)
 
@@ -915,7 +915,7 @@ async def decide(event):
 @register(outgoing=True, pattern="^;_;$", ignore_unsafe=True)
 async def fun(e):
     t = ";_;"
-    for j in range(10):
+    for _ in range(10):
         t = t[:-1] + "_;"
         await e.edit(t)
 
@@ -1155,7 +1155,7 @@ async def pressf(f):
 @register(outgoing=True, pattern="^Oof$")
 async def Oof(e):
     t = "Oof"
-    for j in range(15):
+    for _ in range(15):
         t = t[:-1] + "of"
         await e.edit(t)
 
@@ -1164,7 +1164,7 @@ async def Oof(e):
 async def moon(event):
     deq = deque(list("🌗🌘🌑🌒🌓🌔🌕🌖"))
     try:
-        for x in range(32):
+        for _ in range(32):
             await sleep(0.1)
             await event.edit("".join(deq))
             deq.rotate(1)
@@ -1176,7 +1176,7 @@ async def moon(event):
 async def earth(event):
     deq = deque(list("🌏🌍🌎🌎🌍🌏🌍🌎"))
     try:
-        for x in range(32):
+        for _ in range(32):
             await sleep(0.1)
             await event.edit("".join(deq))
             deq.rotate(1)
@@ -1188,7 +1188,7 @@ async def earth(event):
 async def clock(event):
     deq = deque(list("🕙🕘🕗🕖🕕🕔🕓🕒🕑🕐🕛"))
     try:
-        for x in range(32):
+        for _ in range(32):
             await sleep(0.1)
             await event.edit("".join(deq))
             deq.rotate(1)
@@ -1200,7 +1200,7 @@ async def clock(event):
 async def rain(event):
     deq = deque(list("☀️🌤⛅️🌥☁️🌧⛈"))
     try:
-        for x in range(32):
+        for _ in range(32):
             await sleep(0.1)
             await event.edit("".join(deq))
             deq.rotate(1)
@@ -1212,7 +1212,7 @@ async def rain(event):
 async def love(event):
     deq = deque(list("❤️🧡💛💚💙💜🖤💕💞💓💗💖💘💝"))
     try:
-        for x in range(32):
+        for _ in range(32):
             await sleep(0.1)
             await event.edit("".join(deq))
             deq.rotate(1)

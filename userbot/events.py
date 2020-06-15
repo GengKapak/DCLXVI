@@ -35,8 +35,8 @@ def register(**args):
     ignore_unsafe = args.get('ignore_unsafe', False)
     unsafe_pattern = r'^[^/!#@\$A-Za-z]'
     groups_only = args.get('groups_only', False)
-    trigger_on_fwd = args.get('trigger_on_fwd', False)
-    trigger_on_inline = args.get('trigger_on_inline', False)
+    args.get('trigger_on_fwd', False)
+    args.get('trigger_on_inline', False)
     disable_errors = args.get('disable_errors', False)
     insecure = args.get('insecure', False)
     me = bot.get_me()

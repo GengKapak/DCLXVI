@@ -307,7 +307,6 @@ with bot:
             result = None
             query = event.text
             if event.query.user_id == uid and query.startswith("@GengKapak"):
-                rev_text = query[::-1]
                 buttons = paginate_help(0, dugmeler, "helpme")
                 result = builder.article(
                     "Please Use Only With .help Command",

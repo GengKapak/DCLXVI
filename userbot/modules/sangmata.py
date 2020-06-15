@@ -15,7 +15,6 @@ async def _(event):
        await event.edit("```reply to text message```")
        return
     chat = "@SangMataInfo_bot"
-    sender = reply_message.sender
     await event.edit("`Processing`")
     async with bot.conversation(chat) as conv:
           try:

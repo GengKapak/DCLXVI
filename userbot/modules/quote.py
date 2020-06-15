@@ -221,7 +221,6 @@ async def _(event):
        await event.edit("```It's not a text, nigga```")
        return
     chat = "@QuotLyBot"
-    sender = reply_message.sender
     await event.edit("```Making a Quote```")
     async with bot.conversation(chat) as conv:
           try:
