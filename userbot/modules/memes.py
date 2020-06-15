@@ -1573,7 +1573,7 @@ CMD_HELP.update({
 \nUsage: UwU\
 \n\n>`.react`\
 \nUsage: Make your userbot react to everything.\
-\n\n>`.slap`\
+\n\n>`.slap` or `.slap jutsu` or `.slap id`\
 \nUsage: reply to slap them with random objects !!\
 \n\n>`.cry`\
 \nUsage: y u du dis, i cri.\
