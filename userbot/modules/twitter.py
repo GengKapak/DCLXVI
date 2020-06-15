@@ -15,26 +15,20 @@ async def twit(event):
         await event.edit(f"`Probably no such account. Because an error occurred. Error: {e}`")
         return
 
+    result = []
     if len(twits) > 2:
-        if twits[0]["tweetId"] < twits[1]["tweetId"]:
-            twit = twits[1]
-            pic = twit['entries']['photos']
-            result = []
+        twit = twits[1]
+        pic = twit['entries']['photos']
+        if twits[0]["tweetId"] < twit["tweetId"]:
             if len(pic) >= 1:
-                i = 0
-                while i < len(pic):
+                for i in range(len(pic)):
                     with open(f"{q}-{i}.jpg", 'wb') as load:
                         load.write(get(pic[i]).content)
                     result.append(f"{q}-{i}.jpg")
-                    i += 1
                 await event.client.send_file(event.chat_id, result, caption=f"**{q}**\n{twit['time']}\n\n`{twit['text']}`\n\n💬{twit['replies']} 🔁{twit['retweets']} ❤️{twit['likes']}")
                 await event.delete()
                 return
-            await event.edit(f"**{q}**\n{twit['time']}\n\n`{twit['text']}`\n\n💬{twit['replies']} 🔁{twit['retweets']} ❤️{twit['likes']}")
         else:
-            twit = twits[1]
-            pic = twit['entries']['photos']
-            result = []
             if len(pic) >= 1:
                 i = 0
                 while i < len(pic):
@@ -46,12 +40,9 @@ async def twit(event):
                 await event.client.send_file(event.chat_id, result, caption=f"**{q}**\n{twit['time']}\n\n`{twit['text']}`\n\n💬{twit['replies']} 🔁{twit['retweets']} ❤️{twit['likes']}")
                 await event.delete()
                 return
-            await event.edit(f"**{q}**\n{twit['time']}\n\n`{twit['text']}`\n\n💬{twit['replies']} 🔁{twit['retweets']} ❤️{twit['likes']}")
-        return
     else:
         twit = twits[0]
         pic = twit['entries']['photos']
-        result = []
         if len(pic) >= 1:
             i = 0
             while i < len(pic):
@@ -62,8 +53,9 @@ async def twit(event):
             await event.client.send_file(event.chat_id, result, caption=f"**{q}**\n{twit['time']}\n\n`{twit['text']}`\n\n💬{twit['replies']} 🔁{twit['retweets']} ❤️{twit['likes']}")
             await event.delete()
             return
-        await event.edit(f"**{q}**\n{twit['time']}\n\n`{twit['text']}`\n\n💬{twit['replies']} 🔁{twit['retweets']} ❤️{twit['likes']}")
-        return
+
+    await event.edit(f"**{q}**\n{twit['time']}\n\n`{twit['text']}`\n\n💬{twit['replies']} 🔁{twit['retweets']} ❤️{twit['likes']}")
+    return
 
 CMD_HELP.update({
     "twitter":

@@ -27,10 +27,7 @@ load_dotenv("config.env")
 def paginate_help(page_number, loaded_modules, prefix):
     number_of_rows = 5
     number_of_cols = 2
-    helpable_modules = []
-    for p in loaded_modules:
-        if not p.startswith("_"):
-            helpable_modules.append(p)
+    helpable_modules = [p for p in loaded_modules if not p.startswith("_")]
     helpable_modules = sorted(helpable_modules)
     modules = [custom.Button.inline(
         "{} {}".format("🔸", x),
@@ -255,20 +252,13 @@ with open('blacklist.check', 'wb') as load:
 
 
 async def check_botlog_chatid():
-    if not BOTLOG_CHATID and LOGSPAMMER:
+    if not BOTLOG_CHATID and LOGSPAMMER or not BOTLOG_CHATID and BOTLOG:
         LOGS.info(
             "You must set up the BOTLOG_CHATID variable in the config.env or environment variables, for the private error log storage to work."
             )
         quit(1)
 
-    elif not BOTLOG_CHATID and BOTLOG:
-        LOGS.info(
-            "You must set up the BOTLOG_CHATID variable in the config.env or environment variables, for the private error log storage to work."
-
-            )
-        quit(1)
-
-    elif not BOTLOG or not LOGSPAMMER:
+    elif not (BOTLOG and LOGSPAMMER):
         return
 
     entity = await bot.get_entity(BOTLOG_CHATID)
@@ -296,7 +286,7 @@ with bot:
 
         @tgbot.on(events.NewMessage(pattern='/start'))
         async def handler(event):
-            if not event.message.from_id == uid:
+            if event.message.from_id != uid:
                 await event.reply(f'DCLXVI UserBot by `@NGGDCLXVI`! (`@{me.username}`) I am here to help you.')
             else:
                 await event.reply('`I work for you :) I love you. ❤️`')
@@ -387,10 +377,10 @@ You can convert your account to bot and use them. Remember, you can't manage som
                 reply_pop_up_alert = help_string if help_string is not None else \
                     "{} No document has been written for module.".format(
                         modul_name)
-                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
             else:
                 reply_pop_up_alert = "Please make for yourself, don't use my bot!"
-                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+
+            await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
     except:
         LOGS.info(
             "Support for inline is disabled on your bot. "

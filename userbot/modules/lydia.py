@@ -78,12 +78,12 @@ async def remcf(event):
 async def user(event):
     try:
         session = ACC_LYDIA[event.chat_id & event.from_id]
-        msg = event.text
         async with event.client.action(event.chat_id, "typing"):
+            msg = event.text
             text_rep = session.think_thought(msg)
             wait_time = 0
-            for _ in range(len(text_rep)):
-                wait_time = wait_time + 0.1
+            for _ in text_rep:
+                wait_time += 0.1
             await asyncio.sleep(wait_time)
             await event.reply(text_rep)
     except (KeyError, TypeError):

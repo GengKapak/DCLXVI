@@ -858,35 +858,26 @@ async def slap(replied_user, event):
     else:
         slapped = f"[{first_name}](tg://user?id={user_id})"
     slap_str = event.pattern_match.group(1)
-    if slap_str == "en":
-       temp = choice(SLAP_TEMPLATES_EN)
-       item = choice(ITEMS_EN)
-       hit = choice(HIT_EN)
-       throw = choice(THROW_EN)
-       where = choice(WHERE_EN)
+    if slap_str == "en" or slap_str not in ["id", "jutsu"]:
+        temp = choice(SLAP_TEMPLATES_EN)
+        item = choice(ITEMS_EN)
+        hit = choice(HIT_EN)
+        throw = choice(THROW_EN)
+        where = choice(WHERE_EN)
     elif slap_str == "id":
-       temp = choice(SLAP_TEMPLATES_ID)
-       item = choice(ITEMS_ID)
-       hit = choice(HIT_ID)
-       throw = choice(THROW_ID)
-       where = choice(WHERE_ID)
-    elif slap_str == "jutsu":
-       temp = choice(SLAP_TEMPLATES_Jutsu)
-       item = choice(ITEMS_Jutsu)
-       hit = choice(HIT_Jutsu)
-       throw = choice(THROW_Jutsu)
-       where = choice(WHERE_Jutsu)
+        temp = choice(SLAP_TEMPLATES_ID)
+        item = choice(ITEMS_ID)
+        hit = choice(HIT_ID)
+        throw = choice(THROW_ID)
+        where = choice(WHERE_ID)
     else:
-       temp = choice(SLAP_TEMPLATES_EN)
-       item = choice(ITEMS_EN)
-       hit = choice(HIT_EN)
-       throw = choice(THROW_EN)
-       where = choice(WHERE_EN)
-
-    caption = "..." + temp.format(
+        temp = choice(SLAP_TEMPLATES_Jutsu)
+        item = choice(ITEMS_Jutsu)
+        hit = choice(HIT_Jutsu)
+        throw = choice(THROW_Jutsu)
+        where = choice(WHERE_Jutsu)
+    return "..." + temp.format(
         victim=slapped, item=item, hits=hit, throws=throw, where=where)
-
-    return caption
 
 @register(outgoing=True, pattern="^-_-$", ignore_unsafe=True)
 async def lol(lel):
@@ -958,10 +949,7 @@ async def copypasta(cp_e):
         elif owo.lower() == b_char:
             reply_text += "🅱️"
         else:
-            if bool(getrandbits(1)):
-                reply_text += owo.upper()
-            else:
-                reply_text += owo.lower()
+            reply_text += owo.upper() if bool(getrandbits(1)) else owo.lower()
     reply_text += choice(EMOJIS)
     await cp_e.edit(reply_text)
 
@@ -1032,7 +1020,7 @@ async def zal(zgfy):
             reply_text.append(charac)
             continue
 
-        for _ in range(0, 3):
+        for _ in range(3):
             textz = randint(0, 2)
 
             if textz == 0:
@@ -1494,36 +1482,40 @@ async def tolol(e):
 
 @register(outgoing=True, pattern=r"^\.caps(?: |$)([\s\S]*)")
 async def upper(e):
-    if not e.text[0].isalpha() and e.text[0] in ("."):
-        textx = await e.get_reply_message()
-        message = e.pattern_match.group(1)
-        if message:
-            pass
-        elif textx:
-            message = textx.text
-        else:
-            await e.edit("`Usage: .caps <text>`")
-            return
-        reply = ''
-        reply += message.upper()
-        await e.edit(reply)
+    if e.text[0].isalpha() or e.text[0] not in ".":
+        return
+
+    textx = await e.get_reply_message()
+    message = e.pattern_match.group(1)
+    if message:
+        pass
+    elif textx:
+        message = textx.text
+    else:
+        await e.edit("`Usage: .caps <text>`")
+        return
+    reply = ''
+    reply += message.upper()
+    await e.edit(reply)
 
 
 @register(outgoing=True, pattern=r"^\.small(?: |$)([\s\S]*)")
 async def lower(e):
-    if not e.text[0].isalpha() and e.text[0] in ("."):
-        textx = await e.get_reply_message()
-        message = e.pattern_match.group(1)
-        if message:
-            pass
-        elif textx:
-            message = textx.text
-        else:
-            await e.edit("`Usage: .small <text>`")
-            return
-        reply = ''
-        reply += message.lower()
-        await e.edit(reply)
+    if e.text[0].isalpha() or e.text[0] not in ".":
+        return
+
+    textx = await e.get_reply_message()
+    message = e.pattern_match.group(1)
+    if message:
+        pass
+    elif textx:
+        message = textx.text
+    else:
+        await e.edit("`Usage: .small <text>`")
+        return
+    reply = ''
+    reply += message.lower()
+    await e.edit(reply)
 
 @register(outgoing=True, pattern=r"^\.(?:penis|dick)\s?(.)?")
 async def emoji_penis(e):

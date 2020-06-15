@@ -144,9 +144,6 @@ def register(**args):
                                                 else check.chat_id, "crash.txt", caption=text)
                     remove("crash.txt")
 
-            else:
-                pass
-
         if not disable_edited:
             bot.add_event_handler(wrapper, events.MessageEdited(**args))
         bot.add_event_handler(wrapper, events.NewMessage(**args))
