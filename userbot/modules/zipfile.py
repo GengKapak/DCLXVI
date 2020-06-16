@@ -97,10 +97,7 @@ async def upload_zip(up):
     await up.edit(f"`Uploading.......`")
     input_str = up.pattern_match.group(1)
     curdate = today.strftime("%m%d%y")
-    if input_str:
-        title = str(input_str)
-    else:
-        title = "zipfile" + f"{curdate}"
+    title = str(input_str) if input_str else "zipfile" + f"{curdate}"
     zipf = zipfile.ZipFile(title + '.zip', 'w', zipfile.ZIP_DEFLATED)
     zipdir(ZIP_DOWNLOAD_DIRECTORY, zipf)
     zipf.close()

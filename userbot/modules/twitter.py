@@ -19,27 +19,16 @@ async def twit(event):
     if len(twits) > 2:
         twit = twits[1]
         pic = twit['entries']['photos']
-        if twits[0]["tweetId"] < twit["tweetId"]:
-            if len(pic) >= 1:
-                for i in range(len(pic)):
-                    with open(f"{q}-{i}.jpg", 'wb') as load:
-                        load.write(get(pic[i]).content)
-                    result.append(f"{q}-{i}.jpg")
-                await event.client.send_file(event.chat_id, result, caption=f"**{q}**\n{twit['time']}\n\n`{twit['text']}`\n\n💬{twit['replies']} 🔁{twit['retweets']} ❤️{twit['likes']}")
-                await event.delete()
-                return
-        else:
-            if len(pic) >= 1:
-                i = 0
-                while i < len(pic):
-                    with open(f"{q}-{i}.jpg", 'wb') as load:
-                        load.write(get(pic[i]).content)
-                    result.append(f"{q}-{i}.jpg")
-                    i += 1
+        if len(pic) >= 1:
+            for i in range(len(pic)):
+                with open(f"{q}-{i}.jpg", 'wb') as load:
+                    load.write(get(pic[i]).content)
+                result.append(f"{q}-{i}.jpg")
+            if twits[0]["tweetId"] >= twit["tweetId"]:
                 print(result)
-                await event.client.send_file(event.chat_id, result, caption=f"**{q}**\n{twit['time']}\n\n`{twit['text']}`\n\n💬{twit['replies']} 🔁{twit['retweets']} ❤️{twit['likes']}")
-                await event.delete()
-                return
+            await event.client.send_file(event.chat_id, result, caption=f"**{q}**\n{twit['time']}\n\n`{twit['text']}`\n\n💬{twit['replies']} 🔁{twit['retweets']} ❤️{twit['likes']}")
+            await event.delete()
+            return
     else:
         twit = twits[0]
         pic = twit['entries']['photos']
