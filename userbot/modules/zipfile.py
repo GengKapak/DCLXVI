@@ -21,9 +21,9 @@ async def _(event):
     if event.fwd_from:
         return
     if not event.is_reply:
-        await event.edit("Reply to a file to compress it.")
+        await event.edit("`Reply to a file to compress it.`")
         return
-    mone = await event.edit("Processing ...")
+    mone = await event.edit("`Processing ...`")
     if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
         os.makedirs(TEMP_DOWNLOAD_DIRECTORY)
     if event.reply_to_msg_id:
@@ -34,7 +34,7 @@ async def _(event):
                 reply_message,
                 TEMP_DOWNLOAD_DIRECTORY,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, mone, c_time, "Trying to download")
+                    progress(d, t, mone, c_time, "`Trying to download`")
                 )
             )
             directory_name = downloaded_file_name
@@ -49,7 +49,7 @@ async def _(event):
         allow_cache=False,
         reply_to=event.message.id,
     )
-    await event.edit("DONE!!!")
+    await event.edit("`DONE!!!`")
     await asyncio.sleep(7)
     await event.delete()
 
@@ -64,10 +64,10 @@ async def addzip(add):
     if add.fwd_from:
         return
     if not add.is_reply:
-        await add.edit("Reply to a file to compress it.")
+        await add.edit("`Reply to a file to compress it.`")
         return
     directroy_zip = zip
-    mone = await add.edit("Processing ...")
+    mone = await add.edit("`Processing ...`")
     if not os.path.isdir(ZIP_DOWNLOAD_DIRECTORY):
         os.makedirs(ZIP_DOWNLOAD_DIRECTORY)
     if add.reply_to_msg_id:
@@ -78,12 +78,12 @@ async def addzip(add):
                 reply_message,
                 ZIP_DOWNLOAD_DIRECTORY,
                 progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
-                    progress(d, t, mone, c_time, "Trying to download")
+                    progress(d, t, mone, c_time, "`Trying to download`")
                 )
             )
             directory_name = downloaded_file_name
             success = str(downloaded_file_name).replace("./zips/", "")
-            await add.edit(f"{success} Successfully added to list")
+            await add.edit(f"`{success} Successfully added to list`")
         except Exception as e:  # pylint:disable=C0103,W0703
             await mone.edit(str(e))
             return
@@ -109,6 +109,7 @@ async def upload_zip(up):
         reply_to=up.message.id,
     )
     os.rmdir(ZIP_DOWNLOAD_DIRECTORY)
+    await up.delete()
 
 @register(outgoing=True, pattern=r"^\.rmzip(?: |$)(.*)")
 async def remove_dir(rm):
@@ -116,7 +117,7 @@ async def remove_dir(rm):
         await rm.edit(f"`Directory not found`")
         return
     os.rmdir(ZIP_DOWNLOAD_DIRECTORY)
-    await rm.edit("Zip list removed")
+    await rm.edit("`Zip list removed`")
 
 
 def zipdir(path, ziph):
