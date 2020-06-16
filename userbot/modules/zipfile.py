@@ -116,7 +116,7 @@ async def upload_zip(up):
 @register(outgoing=True, pattern=r"^\.rmzip(?: |$)(.*)")
 async def remove_dir(rm):
     if not os.path.isdir(ZIP_DOWNLOAD_DIRECTORY):
-        await up.edit(f"`Directory not found`")
+        await rm.edit(f"`Directory not found`")
         return
     os.rmdir(ZIP_DOWNLOAD_DIRECTORY)
     await rm.edit("Zip list removed")
@@ -138,6 +138,6 @@ CMD_HELP.update({
             \nUsage: add files to zip list."
         "\n>`.upzip` [optional: <zip title>]\
             \nUsage: upload zip list."
-        "\n.>`rmzip` [optional: <zip title>]\
+        "\n>`.rmzip` [optional: <zip title>]\
             \nUsage: clear zip list."
 })
