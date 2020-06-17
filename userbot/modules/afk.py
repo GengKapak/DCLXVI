@@ -54,55 +54,56 @@ async def mention_afk(mention):
     global afk_end
     not_afk = datetime.now()
     afk_end = not_afk.replace(microsecond=0)
-    if (
-        mention.message.mentioned
-        and not (await mention.get_sender()).bot
-        and ISAFK
-    ):
-        now = datetime.now()
-        afk_since = now - afk_time
-        day = float(afk_since.seconds) // (24 * 3600)
-        time = float(afk_since.seconds) % (24 * 3600)
-        hours = time // 3600
-        time %= 3600
-        minutes = time // 60
-        time %= 60
-        seconds = time
-        if day == 1:
-            afk_str = "Yesterday"
-        elif day > 1:
-            if day > 6:
-                date = now + \
-                    datetime.timedelta(
-                        days=-day, hours=-hours, minutes=-minutes)
-                afk_str = date.strftime("%A, %Y %B %m, %H:%I")
+    if mention.message.mentioned and not (await mention.get_sender()).bot:
+        if ISAFK:
+            now = datetime.now()
+            afk_since = now - afk_time
+            day = float(afk_since.seconds) // (24 * 3600)
+            time = float(afk_since.seconds) % (24 * 3600)
+            hours = time // 3600
+            time %= 3600
+            minutes = time // 60
+            time %= 60
+            seconds = time
+            if day == 1:
+                afk_str = "Yesterday"
+            elif day > 1:
+                if day > 6:
+                    date = now + \
+                        datetime.timedelta(
+                            days=-day, hours=-hours, minutes=-minutes)
+                    afk_str = date.strftime("%A, %Y %B %m, %H:%I")
+                else:
+                    wday = now + datetime.timedelta(days=-day)
+                    afk_str = wday.strftime('%A')
+            elif hours > 1:
+                afk_str = f"`{int(hours)}h{int(minutes)}m` ago"
+            elif minutes > 0:
+                afk_str = f"`{int(minutes)}m{int(seconds)}s` ago"
             else:
-                wday = now + datetime.timedelta(days=-day)
-                afk_str = wday.strftime('%A')
-        elif hours > 1:
-            afk_str = f"`{int(hours)}h{int(minutes)}m` ago"
-        elif minutes > 0:
-            afk_str = f"`{int(minutes)}m{int(seconds)}s` ago"
-        else:
-            afk_str = f"`{int(seconds)}s` ago"
-        if mention.sender_id not in USERS:
-            if AFKREASON:
-                await mention.reply("I'm AFK right now."
-                                    f"\nBecause I'm `{AFKREASON}`."
-                                    f"\nAFK since: {afk_str}")
-            else:
-                await mention.reply(str(choice(AFKSTR)))
-            USERS.update({mention.sender_id: 1})
-        else:
-            if USERS[mention.sender_id] % randint(2, 4) == 0:
+                afk_str = f"`{int(seconds)}s` ago"
+            if mention.sender_id not in USERS:
                 if AFKREASON:
-                    await mention.reply("I'm still AFK."
-                                        f"\nReason: `{AFKREASON}`."
-                                        f"\nAFK from: {afk_str}")
+                    await mention.reply("I'm AFK right now."
+                                        f"\nBecause I'm `{AFKREASON}`."
+                                        f"\nAFK since: {afk_str}")
                 else:
                     await mention.reply(str(choice(AFKSTR)))
-            USERS[mention.sender_id] = USERS[mention.sender_id] + 1
-        COUNT_MSG = COUNT_MSG + 1
+                USERS.update({mention.sender_id: 1})
+                COUNT_MSG = COUNT_MSG + 1
+            elif mention.sender_id in USERS:
+                if USERS[mention.sender_id] % randint(2, 4) == 0:
+                    if AFKREASON:
+                        await mention.reply("I'm still AFK."
+                                            f"\nReason: `{AFKREASON}`."
+                                            f"\nAFK from: {afk_str}")
+                    else:
+                        await mention.reply(str(choice(AFKSTR)))
+                    USERS[mention.sender_id] = USERS[mention.sender_id] + 1
+                    COUNT_MSG = COUNT_MSG + 1
+                else:
+                    USERS[mention.sender_id] = USERS[mention.sender_id] + 1
+                    COUNT_MSG = COUNT_MSG + 1
 
 
 @register(incoming=True, disable_errors=True)
@@ -163,7 +164,7 @@ async def afk_on_pm(sender):
                     await sender.reply(str(choice(AFKSTR)))
                 USERS.update({sender.sender_id: 1})
                 COUNT_MSG = COUNT_MSG + 1
-            elif apprv:
+            elif apprv and sender.sender_id in USERS:
                 if USERS[sender.sender_id] % randint(2, 4) == 0:
                     if AFKREASON:
                         await sender.reply("I'm still AFK."
@@ -171,8 +172,11 @@ async def afk_on_pm(sender):
                                            f"\nAFK from: {afk_str}")
                     else:
                         await sender.reply(str(choice(AFKSTR)))
-                USERS[sender.sender_id] = USERS[sender.sender_id] + 1
-                COUNT_MSG = COUNT_MSG + 1
+                    USERS[sender.sender_id] = USERS[sender.sender_id] + 1
+                    COUNT_MSG = COUNT_MSG + 1
+                else:
+                    USERS[sender.sender_id] = USERS[sender.sender_id] + 1
+                    COUNT_MSG = COUNT_MSG + 1
 
 
 @register(outgoing=True, pattern="^\.afk(?: |$)(.*)", disable_errors=True)
