@@ -142,6 +142,7 @@ async def amireallyalive(alive):
               f"------------------------------------\n"
               "`")
     await bot.send_file(alive.chat_id, img, caption=caption)
+    await alive.delete()
 
 
 @register(outgoing=True, pattern="^\.aliveu")
