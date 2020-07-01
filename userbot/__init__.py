@@ -207,6 +207,11 @@ WATCH_COUNTRY = os.environ.get("WATCH_COUNTRY", None)
 # Deezloader
 DEEZER_ARL_TOKEN = os.environ.get("DEEZER_ARL_TOKEN", None)
 
+# Image for alive
+IMG = os.environ.get(
+    "IMG",
+    "https://telegra.ph/file/2a7b0bd8547a80c019493.jpg")
+
 # Setting Up CloudMail.ru and MEGA.nz extractor binaries,
 # and giving them correct perms to work properly.
 if not os.path.exists('bin'):
