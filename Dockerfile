@@ -1,4 +1,4 @@
-# We're using ArchLinux
+# We're using Alpine
 FROM dasbastard/alpine:latest
 
 #
