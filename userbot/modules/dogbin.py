@@ -1,6 +1,6 @@
 # Copyright (C) 2019 The Raphielscape Company LLC.
 #
-# Licensed under the Raphielscape Public License, Version 1.c (the "License");
+# Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
 #
 """ Userbot module containing commands for interacting with dogbin(https://del.dog)"""
@@ -55,10 +55,12 @@ async def paste(pstl):
             reply_text = ("`Pasted successfully!`\n\n"
                           f"`Shortened URL:` {dogbin_final_url}\n\n"
                           "`Original(non-shortened) URLs`\n"
-                          f"`Dogbin URL`: {DOGBIN_URL}v/{key}\n")
+                          f"`Dogbin URL`: {DOGBIN_URL}v/{key}\n"
+                          f"`View RAW`: {DOGBIN_URL}raw/{key}")
         else:
             reply_text = ("`Pasted successfully!`\n\n"
-                          f"`Dogbin URL`: {dogbin_final_url}")
+                          f"`Dogbin URL`: {dogbin_final_url}\n"
+                          f"`View RAW`: {DOGBIN_URL}raw/{key}")
     else:
         reply_text = ("`Failed to reach Dogbin`")
 
