@@ -24,7 +24,7 @@ async def gengkapak(e):
             run += 1
             r1 = ts[run]
             list1 = "<-----{}----->\nName: {}\nSeeders: {}\nSize: {}\nAge: {}\n<--Magnet Below-->\n{}\n\n\n".format(run, r1['name'], r1['seeder'], r1['size'], r1['age'], r1['magnet'])
-            listdata = listdata + list1
+            listdata += list1
         except:
             break
 
