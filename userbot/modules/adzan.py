@@ -28,6 +28,7 @@ async def get_adzan(adzan):
 
     city = parsed["results"]["location"]["city"]
     country = parsed["results"]["location"]["country"]
+    timezone = parsed["results"]["location"]["timezone"]
     date = parsed["results"]["datetime"][0]["date"]["gregorian"]
 
     imsak = parsed["results"]["datetime"][0]["times"]["Imsak"]
@@ -38,7 +39,7 @@ async def get_adzan(adzan):
     isya = parsed["results"]["datetime"][0]["times"]["Isha"]
 
     result = (f"**Jadwal Sholat**:\n"
-                 f"📅 `{date}`\n"
+                 f"📅 `{date} | {timezone}`\n"
                  f"🌏 `{city} | {country}`\n\n"
                  f"**Imsak :** `{imsak}`\n"
                  f"**Subuh :** `{subuh}`\n"
