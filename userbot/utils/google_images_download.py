@@ -14,7 +14,7 @@ if cur_version >= version:  # If the Current Version of Python is 3.0 or above
     from urllib.request import URLError, HTTPError
     from urllib.parse import quote
     import http.client
-    from http.client import IncompleteRead, BadStatusLine
+    from http.client import BadStatusLine
     http.client._MAXHEADERS = 1000
 else:  # If the Current Version of Python is 2.x
     import urllib2
@@ -326,7 +326,6 @@ class googleimagesdownload:
         except OSError as e:
             raise e
         print("completed ====> " + image_name.encode('raw_unicode_escape').decode('utf-8'))
-        return
 
     @staticmethod
     def similar_images(similar_images):
@@ -496,7 +495,6 @@ class googleimagesdownload:
         except OSError as e:
             if e.errno != 17:
                 raise
-        return
 
 
     # Download Image thumbnails
