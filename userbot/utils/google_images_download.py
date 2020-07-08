@@ -583,7 +583,7 @@ class googleimagesdownload:
                 extensions = [".jpg", ".jpeg", ".gif", ".png", ".bmp", ".svg", ".webp", ".ico"]
                 # keep everything after the last '/'
                 image_name = str(image_url[(image_url.rfind('/')) + 1:])
-                if format and (not image_format or image_format != format):
+                if format and not (image_format and image_format == format):
                     download_status = 'fail'
                     download_message = "Wrong image format returned. Skipping..."
                     return_image_name = ''

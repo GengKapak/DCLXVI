@@ -14,7 +14,7 @@ async def gengkapak(e):
     query = e.pattern_match.group(1)
     response = requests.get(f"https://sjprojectsapi.herokuapp.com/torrent/?query={query}")
     ts = json.loads(response.text)
-    if not ts == response.json():
+    if ts != response.json():
         await e.edit("**Some error occured**\n`Try Again Later`")
         return
     listdata = ""
