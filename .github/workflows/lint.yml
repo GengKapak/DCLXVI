@@ -1,0 +1,32 @@
+name: lint
+on:
+  push:
+    branches: [ '*' ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+
+      - name: Install Python lint libraries
+        run: |
+          pip install isort==5.0.2 black==19.10b0
+      - run: cd userbot/modules && isort .
+      - run: cd userbot/modules && black .
+
+
+      # commit changes
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Automatic lint
+          commit_options: '--no-verify --signoff'
+          repository: .
+          commit_user_name: AnggaR96s
+          commit_user_email: angga@linuxmail.org
+          commit_author: Angga <angga@linuxmail.org>
