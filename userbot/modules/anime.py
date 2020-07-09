@@ -4,6 +4,7 @@ import html
 import textwrap
 
 import bs4
+import jikanpy
 import requests
 import wget
 from html_telegraph_poster import TelegraphPoster
@@ -384,6 +385,7 @@ async def get_anime(message):
 
     results_ = await jikan.anime(f_mal_id)
     await jikan.close()
+    await message.delete()
 
     # Get All Info of anime
     anime_title = results_["title"]
@@ -467,6 +469,7 @@ async def manga(message):
     search_result = jikan.search("manga", search_query)
     first_mal_id = search_result["results"][0]["mal_id"]
     caption, image = get_anime_manga(first_mal_id, "anime_manga", message.chat_id)
+    await message.delete()
     await message.client.send_file(
         message.chat_id, file=image, caption=caption, parse_mode="HTML"
     )
@@ -482,6 +485,7 @@ async def anime(message):
     first_mal_id = search_result["results"][0]["mal_id"]
     caption, image = get_anime_manga(first_mal_id, "anime_anime", message.chat_id)
     try:
+        await message.delete()
         await message.client.send_file(
             message.chat_id, file=image, caption=caption, parse_mode="HTML"
         )
