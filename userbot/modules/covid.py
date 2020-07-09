@@ -4,7 +4,6 @@
 # you may not use this file except in compliance with the License.
 #
 
-from datetime import datetime
 from covid import Covid
 from userbot import CMD_HELP
 from userbot.events import register
