@@ -4,11 +4,9 @@
 # you may not use this file except in compliance with the License.
 #
 """ Userbot module for purging unneeded messages(usually spam or ot). """
-
 from asyncio import sleep
 
 from telethon.errors import rpcbaseerrors
-
 from userbot import CMD_HELP
 from userbot.events import register
 
@@ -35,14 +33,14 @@ async def fastpurger(purg):
     if msgs:
         await purg.client.delete_messages(chat, msgs)
     done = await purg.client.send_message(
-        purg.chat_id, "`Fast purge complete!`"
-        f"\nPurged {str(count)} messages")
-    '''
+        purg.chat_id, "`Fast purge complete!`" f"\nPurged {str(count)} messages"
+    )
+    """
     if BOTLOG:
         await purg.client.send_message(
             BOTLOG_CHATID,
             "Purge of " + str(count) + " messages done successfully.")
-    '''
+    """
     await sleep(2)
     await done.delete()
 
@@ -54,23 +52,21 @@ async def purgeme(delme):
     count = int(message[9:])
     i = 1
 
-    async for message in delme.client.iter_messages(delme.chat_id,
-                                                    from_user='me'):
+    async for message in delme.client.iter_messages(delme.chat_id, from_user="me"):
         if i > count + 1:
             break
         i += 1
         await message.delete()
 
     smsg = await delme.client.send_message(
-        delme.chat_id,
-        "`Purge complete!` Purged " + str(count) + " messages.",
+        delme.chat_id, "`Purge complete!` Purged " + str(count) + " messages.",
     )
-    '''
+    """
     if BOTLOG:
         await delme.client.send_message(
             BOTLOG_CHATID,
             "Purge of " + str(count) + " messages done successfully.")
-    '''
+    """
     await sleep(2)
     i = 1
     await smsg.delete()
@@ -84,18 +80,18 @@ async def delete_it(delme):
         try:
             await msg_src.delete()
             await delme.delete()
-            '''
+            """
             if BOTLOG:
                 await delme.client.send_message(
                     BOTLOG_CHATID, "Deletion of message was successful")
-            '''
+            """
         except rpcbaseerrors.BadRequestError:
             await delme.edit("Well, I can't delete a message")
-            '''
+            """
             if BOTLOG:
                 await delme.client.send_message(
                     BOTLOG_CHATID, "Well, I can't delete a message")
-            '''
+            """
 
 
 @register(outgoing=True, pattern="^\.edit")
@@ -103,7 +99,7 @@ async def editer(edit):
     """ For .editme command, edit your last message. """
     message = edit.text
     chat = await edit.get_input_chat()
-    self_id = await edit.client.get_peer_id('me')
+    self_id = await edit.client.get_peer_id("me")
     string = str(message[6:])
     i = 1
     async for message in edit.client.iter_messages(chat, self_id):
@@ -112,11 +108,11 @@ async def editer(edit):
             await edit.delete()
             break
         i += 1
-    '''
+    """
     if BOTLOG:
         await edit.client.send_message(BOTLOG_CHATID,
                                        "Edit query was executed successfully")
-   '''
+   """
 
 
 @register(outgoing=True, disable_errors=True, pattern="^\.sd")
@@ -129,28 +125,23 @@ async def selfdestruct(destroy):
     smsg = await destroy.client.send_message(destroy.chat_id, text)
     await sleep(counter)
     await smsg.delete()
-    '''
+    """
     if BOTLOG:
         await destroy.client.send_message(BOTLOG_CHATID,
                                           "sd query done successfully")
-    '''
+    """
 
 
-CMD_HELP.update({
-    "purge":
-    ">`.purge`"
-    "\nUsage: Purges all messages starting from the reply.",
-    "purgeme":
-    ">`.purgeme <x>`"
-    "\nUsage: Deletes x amount of your latest messages.",
-    "del":
-    ">`.del`"
-    "\nUsage: Deletes the message you replied to.",
-    "edit":
-    ">`.edit <newmessage>`"
-    "\nUsage: Replace your last message with <newmessage>.",
-    "sd":
-    ">`.sd <x> <message>`"
-    "\nUsage: Creates a message that selfdestructs in x seconds."
-    "\nKeep the seconds under 100 since it puts your bot to sleep."
-})
+CMD_HELP.update(
+    {
+        "purge": ">`.purge`" "\nUsage: Purges all messages starting from the reply.",
+        "purgeme": ">`.purgeme <x>`"
+        "\nUsage: Deletes x amount of your latest messages.",
+        "del": ">`.del`" "\nUsage: Deletes the message you replied to.",
+        "edit": ">`.edit <newmessage>`"
+        "\nUsage: Replace your last message with <newmessage>.",
+        "sd": ">`.sd <x> <message>`"
+        "\nUsage: Creates a message that selfdestructs in x seconds."
+        "\nKeep the seconds under 100 since it puts your bot to sleep.",
+    }
+)

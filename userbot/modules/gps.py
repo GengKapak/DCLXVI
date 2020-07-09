@@ -1,10 +1,9 @@
 # Copyright (C) 2020 GengKapak and AnggaR96s.
 # All rights reserved.
-
 from geopy.geocoders import Nominatim
 from telethon.tl import types
-from userbot.events import register
 from userbot import CMD_HELP
+from userbot.events import register
 
 
 @register(outgoing=True, pattern="^\.gps (.*)")
@@ -28,20 +27,12 @@ async def gps(e):
         lat = geoloc.latitude
         await e.reply(
             input_str,
-            file=types.InputMediaGeoPoint(
-                types.InputGeoPoint(
-                    lat, lon
-                )
-            ),
-            reply_to=reply_to_id
+            file=types.InputMediaGeoPoint(types.InputGeoPoint(lat, lon)),
+            reply_to=reply_to_id,
         )
         await e.delete()
     else:
         await e.edit("`I coudn't find it.`")
 
 
-CMD_HELP.update({
-    "gps":
-    ">`.gps` **Location**"
-    "\nUsage: Search location."
-})
+CMD_HELP.update({"gps": ">`.gps` **Location**" "\nUsage: Search location."})
