@@ -28,6 +28,7 @@ hachoir
 heroku3
 httplib2
 humanize
+jikanpy
 lxml
 oauth2client
 psycopg2
