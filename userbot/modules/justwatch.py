@@ -3,10 +3,10 @@
 # All rights reserved.
 
 """Syntax: .watch Movie/TV Show"""
+from justwatch import JustWatch
+
 from userbot import CMD_HELP, WATCH_COUNTRY
 from userbot.events import register
-
-from justwatch import JustWatch
 
 
 def get_stream_data(query):

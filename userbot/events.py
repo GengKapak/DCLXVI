@@ -18,58 +18,59 @@
  One of the main components of UserBot """
 
 import sys
-
 from asyncio import create_subprocess_shell as asyncsubshell
 from asyncio import subprocess as asyncsub
 from os import remove
 from time import gmtime, strftime
 from traceback import format_exc
+
 from telethon import events
 
-from userbot import bot, BOTLOG, BOTLOG_CHATID, BLACKLIST
+from userbot import BLACKLIST, BOTLOG, BOTLOG_CHATID, bot
+
 
 def register(**args):
     """ Register a new event. """
-    pattern = args.get('pattern', None)
-    disable_edited = args.get('disable_edited', False)
-    ignore_unsafe = args.get('ignore_unsafe', False)
-    unsafe_pattern = r'^[^/!#@\$A-Za-z]'
-    groups_only = args.get('groups_only', False)
-    args.get('trigger_on_fwd', False)
-    args.get('trigger_on_inline', False)
-    disable_errors = args.get('disable_errors', False)
-    insecure = args.get('insecure', False)
+    pattern = args.get("pattern", None)
+    disable_edited = args.get("disable_edited", False)
+    ignore_unsafe = args.get("ignore_unsafe", False)
+    unsafe_pattern = r"^[^/!#@\$A-Za-z]"
+    groups_only = args.get("groups_only", False)
+    args.get("trigger_on_fwd", False)
+    args.get("trigger_on_inline", False)
+    disable_errors = args.get("disable_errors", False)
+    insecure = args.get("insecure", False)
     me = bot.get_me()
     uid = me.id
     uid not in BLACKLIST
 
-    if pattern is not None and not pattern.startswith('(?i)'):
-        args['pattern'] = '(?i)' + pattern
+    if pattern is not None and not pattern.startswith("(?i)"):
+        args["pattern"] = "(?i)" + pattern
 
     if "disable_edited" in args:
-        del args['disable_edited']
+        del args["disable_edited"]
 
     if "ignore_unsafe" in args:
-        del args['ignore_unsafe']
+        del args["ignore_unsafe"]
 
     if "groups_only" in args:
-        del args['groups_only']
+        del args["groups_only"]
 
     if "disable_errors" in args:
-        del args['disable_errors']
+        del args["disable_errors"]
 
     if "trigger_on_fwd" in args:
-        del args['trigger_on_fwd']
+        del args["trigger_on_fwd"]
 
     if "trigger_on_inline" in args:
-        del args['trigger_on_inline']
+        del args["trigger_on_inline"]
 
     if "insecure" in args:
-        del args['insecure']
+        del args["insecure"]
 
     if pattern:
         if not ignore_unsafe:
-            args['pattern'] = pattern.replace('^.', unsafe_pattern, 1)
+            args["pattern"] = pattern.replace("^.", unsafe_pattern, 1)
 
     def decorator(func):
         async def wrapper(check):
@@ -122,16 +123,15 @@ def register(**args):
                     ftext += str(sys.exc_info()[1])
                     ftext += "\n\n--------END USERBOT TRACEBACK LOG--------"
 
-                    command = "git log --pretty=format:\"%an: %s\" -10"
+                    command = 'git log --pretty=format:"%an: %s" -10'
 
                     ftext += "\n\n\nLast 10 commits:\n"
 
-                    process = await asyncsubshell(command,
-                                                  stdout=asyncsub.PIPE,
-                                                  stderr=asyncsub.PIPE)
+                    process = await asyncsubshell(
+                        command, stdout=asyncsub.PIPE, stderr=asyncsub.PIPE
+                    )
                     stdout, stderr = await process.communicate()
-                    result = str(stdout.decode().strip()) \
-                        + str(stderr.decode().strip())
+                    result = str(stdout.decode().strip()) + str(stderr.decode().strip())
 
                     ftext += result
 
@@ -139,9 +139,11 @@ def register(**args):
                     file.write(ftext)
                     file.close()
 
-                    await check.client.send_file(BOTLOG_CHATID
-                                                if BOTLOG
-                                                else check.chat_id, "crash.txt", caption=text)
+                    await check.client.send_file(
+                        BOTLOG_CHATID if BOTLOG else check.chat_id,
+                        "crash.txt",
+                        caption=text,
+                    )
                     remove("crash.txt")
 
         if not disable_edited:
@@ -150,6 +152,7 @@ def register(**args):
         return wrapper
 
     return decorator
+
 
 class RetardsException(Exception):
     pass

@@ -26,16 +26,6 @@ from requests import get
 from search_engine_parser import GoogleSearch
 from telethon.tl.types import DocumentAttributeAudio
 from urbandict import define
-from userbot import (
-    BOTLOG,
-    BOTLOG_CHATID,
-    CMD_HELP,
-    IMG_LIMIT,
-    TEMP_DOWNLOAD_DIRECTORY,
-    YOUTUBE_API_KEY,
-)
-from userbot.events import register
-from userbot.utils import chrome, googleimagesdownload, progress
 from wikipedia import summary
 from wikipedia.exceptions import DisambiguationError, PageError
 from youtube_dl import YoutubeDL
@@ -49,6 +39,17 @@ from youtube_dl.utils import (
     UnavailableVideoError,
     XAttrMetadataError,
 )
+
+from userbot import (
+    BOTLOG,
+    BOTLOG_CHATID,
+    CMD_HELP,
+    IMG_LIMIT,
+    TEMP_DOWNLOAD_DIRECTORY,
+    YOUTUBE_API_KEY,
+)
+from userbot.events import register
+from userbot.utils import chrome, googleimagesdownload, progress
 
 CARBONLANG = "auto"
 TTS_LANG = "id"

@@ -10,12 +10,12 @@ import asyncio
 import os
 
 import barcode
+import qrcode
 from barcode.writer import ImageWriter
 from bs4 import BeautifulSoup
+
 from userbot import CMD_HELP, LOGS
 from userbot.events import register
-
-import qrcode
 
 
 @register(pattern=r"^\.decode$", outgoing=True)

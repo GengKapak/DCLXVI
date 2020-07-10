@@ -4,6 +4,7 @@
 # you may not use this file except in compliance with the License.
 from telethon.tl.functions.messages import EditChatDefaultBannedRightsRequest
 from telethon.tl.types import ChatBannedRights
+
 from userbot import CMD_HELP
 from userbot.events import register
 
