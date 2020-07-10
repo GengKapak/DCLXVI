@@ -30,6 +30,8 @@ from userbot.events import register
 jikan = Jikan()
 
 # Anime Helper
+
+
 def getPosterLink(mal):
     # grab poster from kitsu
     kitsu = getKitsu(mal)
@@ -63,9 +65,8 @@ def getBannerLink(mal, kitsu_search=True):
     }
     """
     data = {"query": query, "variables": {"idMal": int(mal)}}
-    image = requests.post("https://graphql.anilist.co", json=data).json()["data"][
-        "Media"
-    ]["bannerImage"]
+    image = requests.post("https://graphql.anilist.co",
+                          json=data).json()["data"]["Media"]["bannerImage"]
     if image:
         return image
     return getPosterLink(mal)
@@ -102,7 +103,8 @@ def get_anime_manga(mal_id, search_type, _user_id):
     if alternative_names:
         alternative_names_string = ", ".join(alternative_names)
         caption += f"\n<b>Also known as</b>: <code>{alternative_names_string}</code>"
-    genre_string = ", ".join(genre_info["name"] for genre_info in result["genres"])
+    genre_string = ", ".join(genre_info["name"]
+                             for genre_info in result["genres"])
     if result["synopsis"] is not None:
         synopsis = result["synopsis"].split(" ", 60)
         try:
@@ -156,7 +158,8 @@ def get_poster(query):
     soup = bs4.BeautifulSoup(page.content, "lxml")
     odds = soup.findAll("tr", "odd")
     # Fetching the first post from search
-    page_link = "http://www.imdb.com/" + odds[0].findNext("td").findNext("td").a["href"]
+    page_link = "http://www.imdb.com/" + \
+        odds[0].findNext("td").findNext("td").a["href"]
     page1 = requests.get(page_link)
     soup = bs4.BeautifulSoup(page1.content, "lxml")
     # Poster Link
@@ -172,13 +175,23 @@ def post_to_telegraph(anime_title, html_format_content):
     bish = "https://t.me/GengKapak"
     post_client.create_api_token(auth_name)
     post_page = post_client.post(
-        title=anime_title, author=auth_name, author_url=bish, text=html_format_content
-    )
+        title=anime_title,
+        author=auth_name,
+        author_url=bish,
+        text=html_format_content)
     return post_page["url"]
 
 
 def replace_text(text):
-    return text.replace('"', "").replace("\\r", "").replace("\\n", "").replace("\\", "")
+    return text.replace(
+        '"',
+        "").replace(
+        "\\r",
+        "").replace(
+            "\\n",
+            "").replace(
+                "\\",
+        "")
 
 
 @register(outgoing=True, pattern=r"^\.anime ?(.*)")
@@ -428,11 +441,11 @@ async def get_anime(message):
     # Poster Links Search
     try:
         main_poster = get_poster(anime_title)
-    except:
+    except BaseException:
         pass
     try:
         telegraph_poster = getBannerLink(f_mal_id)
-    except:
+    except BaseException:
         pass
     # if not main_poster:
     main_poster = telegraph_poster
@@ -482,7 +495,8 @@ async def manga(message):
     jikan = jikanpy.jikan.Jikan()
     search_result = jikan.search("manga", search_query)
     first_mal_id = search_result["results"][0]["mal_id"]
-    caption, image = get_anime_manga(first_mal_id, "anime_manga", message.chat_id)
+    caption, image = get_anime_manga(
+        first_mal_id, "anime_manga", message.chat_id)
     await message.delete()
     await message.client.send_file(
         message.chat_id, file=image, caption=caption, parse_mode="HTML"
@@ -497,13 +511,14 @@ async def anime(message):
     jikan = jikanpy.jikan.Jikan()
     search_result = jikan.search("anime", search_query)
     first_mal_id = search_result["results"][0]["mal_id"]
-    caption, image = get_anime_manga(first_mal_id, "anime_anime", message.chat_id)
+    caption, image = get_anime_manga(
+        first_mal_id, "anime_anime", message.chat_id)
     try:
         await message.delete()
         await message.client.send_file(
             message.chat_id, file=image, caption=caption, parse_mode="HTML"
         )
-    except:
+    except BaseException:
         image = getBannerLink(first_mal_id, False)
         await message.client.send_file(
             message.chat_id, file=image, caption=caption, parse_mode="HTML"
@@ -591,7 +606,8 @@ def is_gif(file):
     # lazy to go to github and make an issue kek
     if not is_video(file):
         return False
-    if DocumentAttributeAnimated() not in getattr(file, "document", file).attributes:
+    if DocumentAttributeAnimated() not in getattr(
+            file, "document", file).attributes:
         return False
     return True
 
@@ -605,6 +621,4 @@ CMD_HELP.update(
         ">`.scanime` <anime> or `.sanime` <anime> Search anime.\n"
         ">`.smanga` <manga> Search manga.\n"
         ">`.whatanime` Reply to media.\n"
-        "Usage: Find anime from media file."
-    }
-)
+        "Usage: Find anime from media file."})

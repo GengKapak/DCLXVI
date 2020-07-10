@@ -10,7 +10,7 @@ from userbot import CMD_HELP, TEMP_DOWNLOAD_DIRECTORY
 from userbot.events import register
 
 
-@register(outgoing=True, pattern="^\.ts (.*)")
+@register(outgoing=True, pattern=r"^\.ts (.*)")
 async def gengkapak(e):
     await e.edit("`Please wait, fetching results...`")
     query = e.pattern_match.group(1)
@@ -28,10 +28,9 @@ async def gengkapak(e):
             run += 1
             r1 = ts[run]
             list1 = "<-----{}----->\nName: {}\nSeeders: {}\nSize: {}\nAge: {}\n<--Magnet Below-->\n{}\n\n\n".format(
-                run, r1["name"], r1["seeder"], r1["size"], r1["age"], r1["magnet"]
-            )
+                run, r1["name"], r1["seeder"], r1["size"], r1["age"], r1["magnet"])
             listdata += list1
-        except:
+        except BaseException:
             break
 
     if not listdata:
@@ -42,12 +41,8 @@ async def gengkapak(e):
         out_file.write(str(listdata))
     fd = codecs.open(tsfileloc, "r", encoding="utf-8")
     data = fd.read()
-    key = (
-        requests.post("https://nekobin.com/api/documents", json={"content": data})
-        .json()
-        .get("result")
-        .get("key")
-    )
+    key = (requests.post("https://nekobin.com/api/documents",
+                         json={"content": data}) .json() .get("result") .get("key"))
     url = f"https://nekobin.com/raw/{key}"
     caption = f"Here are the results for the query: {query}\nNekofied to : {url}"
     await e.client.send_file(

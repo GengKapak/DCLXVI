@@ -56,14 +56,14 @@ TTS_LANG = "id"
 TRT_LANG = "id"
 
 
-@register(outgoing=True, pattern="^\.crblang (.*)")
+@register(outgoing=True, pattern=r"^\.crblang (.*)")
 async def setlang(prog):
     global CARBONLANG
     CARBONLANG = prog.pattern_match.group(1)
     await prog.edit(f"Language for carbon.now.sh set to {CARBONLANG}")
 
 
-@register(outgoing=True, pattern="^\.carbon")
+@register(outgoing=True, pattern=r"^\.carbon")
 async def carbon_api(e):
     """ A Wrapper for carbon.now.sh """
     await e.edit("`Processing...`")
@@ -103,7 +103,7 @@ async def carbon_api(e):
     await e.delete()  # Deleting msg
 
 
-@register(outgoing=True, pattern="^\.img (.*)")
+@register(outgoing=True, pattern=r"^\.img (.*)")
 async def img_sampler(event):
     """ For .img command, search and return images matching the query. """
     await event.edit("`Processing...`")
@@ -137,7 +137,7 @@ async def img_sampler(event):
     shutil.rmtree(os.path.dirname(os.path.abspath(lst[0])))
 
 
-@register(outgoing=True, pattern="^\.crc (.*)")
+@register(outgoing=True, pattern=r"^\.crc (.*)")
 async def moni(event):
     input_str = event.pattern_match.group(1)
     input_sgra = input_str.split(" ")
@@ -147,8 +147,7 @@ async def moni(event):
             currency_from = input_sgra[1].upper()
             currency_to = input_sgra[2].upper()
             request_url = "https://api.exchangeratesapi.io/latest?base={}".format(
-                currency_from
-            )
+                currency_from)
             current_response = get(request_url).json()
             if currency_to in current_response["rates"]:
                 current_rate = float(current_response["rates"][currency_to])
@@ -230,7 +229,7 @@ async def wiki(wiki_q):
         )
 
 
-@register(outgoing=True, pattern="^\.ud (.*)")
+@register(outgoing=True, pattern=r"^\.ud (.*)")
 async def urban_dict(ud_e):
     """ For .ud command, fetch content from Urban Dictionary. """
     await ud_e.edit("Processing...")
@@ -327,19 +326,21 @@ async def text_to_speech(query):
 
 
 # kanged from Blank-x ;---;
-@register(outgoing=True, pattern="^\.imdb (.*)")
+@register(outgoing=True, pattern=r"^\.imdb (.*)")
 async def imdb(e):
     try:
         movie_name = e.pattern_match.group(1)
         remove_space = movie_name.split(" ")
         final_name = "+".join(remove_space)
-        page = get("https://www.imdb.com/find?ref_=nv_sr_fn&q=" + final_name + "&s=all")
+        page = get(
+            "https://www.imdb.com/find?ref_=nv_sr_fn&q=" +
+            final_name +
+            "&s=all")
         soup = BeautifulSoup(page.content, "lxml")
         odds = soup.findAll("tr", "odd")
         mov_title = odds[0].findNext("td").findNext("td").text
-        mov_link = (
-            "http://www.imdb.com/" + odds[0].findNext("td").findNext("td").a["href"]
-        )
+        mov_link = ("http://www.imdb.com/" +
+                    odds[0].findNext("td").findNext("td").a["href"])
         page1 = get(mov_link)
         soup = BeautifulSoup(page1.content, "lxml")
         if soup.find("div", "poster"):
@@ -371,7 +372,8 @@ async def imdb(e):
             actors.pop()
             stars = actors[0] + "," + actors[1] + "," + actors[2]
         if soup.find("div", "inline canwrap"):
-            story_line = soup.find("div", "inline canwrap").findAll("p")[0].text
+            story_line = soup.find(
+                "div", "inline canwrap").findAll("p")[0].text
         else:
             story_line = "Not available"
         info = soup.findAll("div", "txt-block")
@@ -482,7 +484,7 @@ async def lang(value):
         )
 
 
-@register(outgoing=True, pattern="^\.yt (.*)")
+@register(outgoing=True, pattern=r"^\.yt (.*)")
 async def yt_search(video_q):
     """ For .yt command, do a YouTube search from Telegram. """
     query = video_q.pattern_match.group(1)
@@ -546,7 +548,7 @@ async def youtube_search(
         return (nexttok, videos)
 
 
-@register(outgoing=True, pattern="^\.r(a|v) (.*)")
+@register(outgoing=True, pattern=r"^\.r(a|v) (.*)")
 async def download_video(v_url):
     """ For media downloader command, download media from YouTube and many other sites. """
     url = v_url.pattern_match.group(2)
@@ -669,19 +671,23 @@ CMD_HELP.update(
         "carbon": ">`.carbon <text> [or reply]`"
         "\nUsage: Beautify your code using carbon.now.sh\n"
         "Use .crblang <text> to set language for your code.",
-        "google": ">`.google <query>`" "\nUsage: Does a search on Google.",
-        "wiki": ">`.wiki <query>`" "\nUsage: Does a search on Wikipedia.",
-        "ud": ">`.ud <query>`" "\nUsage: Does a search on Urban Dictionary.",
+        "google": ">`.google <query>`"
+        "\nUsage: Does a search on Google.",
+        "wiki": ">`.wiki <query>`"
+        "\nUsage: Does a search on Wikipedia.",
+        "ud": ">`.ud <query>`"
+        "\nUsage: Does a search on Urban Dictionary.",
         "tts": ">`.tts <text> [or reply]`"
         "\nUsage: Translates text to speech for the language which is set."
         "\nUse >`.lang tts <language code>` to set language for tts. (Default is English.)",
         "trt": ">`.trt <text> [or reply]`"
         "\nUsage: Translates text to the language which is set."
         "\nUse >`.lang trt <language code>` to set language for trt. (Default is English)",
-        "yt": ">`.yt <text>`" "\nUsage: Does a YouTube search.",
-        "imdb": ">`.imdb <movie-name>`" "\nUsage: Shows movie info and other stuff.",
+        "yt": ">`.yt <text>`"
+        "\nUsage: Does a YouTube search.",
+        "imdb": ">`.imdb <movie-name>`"
+        "\nUsage: Shows movie info and other stuff.",
         "rip": ">`.ra <url> or .rv <url>`"
         "\nUsage: Download videos and songs from YouTube "
         "(and [many other sites](https://ytdl-org.github.io/youtube-dl/supportedsites.html)).",
-    }
-)
+    })

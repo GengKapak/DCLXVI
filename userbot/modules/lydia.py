@@ -4,6 +4,8 @@
 # you may not use this file except in compliance with the License.
 # credit goes to @snapdragon and @devpatel_73 for making it work on this userbot.
 #
+from userbot.events import register
+from userbot import CMD_HELP, LYDIA_API_KEY
 import asyncio
 import logging
 
@@ -11,16 +13,9 @@ from coffeehouse.api import API
 from coffeehouse.lydia import LydiaAI
 
 logging.basicConfig(
-    format="[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s", level=logging.WARNING
-)
+    format="[%(levelname) 5s/%(asctime)s] %(name)s: %(message)s",
+    level=logging.WARNING)
 
-import asyncio
-
-from coffeehouse.api import API
-from coffeehouse.lydia import LydiaAI
-
-from userbot import CMD_HELP, LYDIA_API_KEY
-from userbot.events import register
 
 # Non-SQL Mode
 ACC_LYDIA = {}
@@ -31,7 +26,7 @@ if LYDIA_API_KEY:
     lydia = LydiaAI(api_client)
 
 
-@register(outgoing=True, pattern="^\.repcf$")
+@register(outgoing=True, pattern=r"^\.repcf$")
 async def repcf(event):
     if event.fwd_from:
         return
@@ -46,7 +41,7 @@ async def repcf(event):
         await event.edit(str(e))
 
 
-@register(outgoing=True, pattern="^\.addcf$")
+@register(outgoing=True, pattern=r"^\.addcf$")
 async def addcf(event):
     if event.fwd_from:
         return
@@ -68,7 +63,7 @@ async def addcf(event):
         await event.edit("Reply to a user to activate Lydia AI on them")
 
 
-@register(outgoing=True, pattern="^\.remcf$")
+@register(outgoing=True, pattern=r"^\.remcf$")
 async def remcf(event):
     if event.fwd_from:
         return

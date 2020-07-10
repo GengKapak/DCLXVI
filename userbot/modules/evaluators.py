@@ -12,7 +12,7 @@ from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP, TERM_ALIAS
 from userbot.events import register
 
 
-@register(outgoing=True, pattern="^\.eval(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.eval(?: |$)(.*)")
 async def evaluate(query):
     """ For .eval command, evaluates the given Python expression. """
     if query.is_channel and not query.is_group:
@@ -88,8 +88,14 @@ async def run(run_q):
     else:
         clines = code.splitlines()
         codepre = (
-            clines[0] + "\n" + clines[1] + "\n" + clines[2] + "\n" + clines[3] + "..."
-        )
+            clines[0] +
+            "\n" +
+            clines[1] +
+            "\n" +
+            clines[2] +
+            "\n" +
+            clines[3] +
+            "...")
 
     command = "".join(f"\n {l}" for l in code.split("\n.strip()"))
     process = await asyncio.create_subprocess_exec(
@@ -129,7 +135,7 @@ async def run(run_q):
         )
 
 
-@register(outgoing=True, pattern="^\.term(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.term(?: |$)(.*)")
 async def terminal_runner(term):
     """ For .term command, runs bash commands and scripts on your server. """
     curruser = TERM_ALIAS
@@ -185,11 +191,10 @@ async def terminal_runner(term):
         )
 """
 
-CMD_HELP.update(
-    {
-        "eval": ">`.eval 2 + 3`" "\nUsage: Evalute mini-expressions.",
-        "exec": ">`.exec print('hello')`" "\nUsage: Execute small python scripts.",
-        "term": ">`.term <cmd>`"
-        "\nUsage: Run bash commands and scripts on your server.",
-    }
-)
+CMD_HELP.update({"eval": ">`.eval 2 + 3`"
+                 "\nUsage: Evalute mini-expressions.",
+                 "exec": ">`.exec print('hello')`"
+                 "\nUsage: Execute small python scripts.",
+                 "term": ">`.term <cmd>`"
+                 "\nUsage: Run bash commands and scripts on your server.",
+                 })

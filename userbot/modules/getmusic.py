@@ -20,7 +20,9 @@ def get_readable_time(seconds: int) -> str:
     time_suffix_list = ["s", "m", "h", "days"]
     while count < 4:
         count += 1
-        remainder, result = divmod(seconds, 60) if count < 3 else divmod(seconds, 24)
+        remainder, result = divmod(
+            seconds, 60) if count < 3 else divmod(
+            seconds, 24)
         if seconds == 0 and remainder == 0:
             break
         time_list.append(int(result))
@@ -43,8 +45,9 @@ def getmusic(get, DEFAULT_AUDIO_QUALITY):
     }
 
     html = requests.get(
-        "https://www.youtube.com/results?search_query=" + search, headers=headers
-    ).text
+        "https://www.youtube.com/results?search_query=" +
+        search,
+        headers=headers).text
     soup = BeautifulSoup(html, "html.parser")
     for link in soup.find_all("a"):
         if "/watch?v=" in link.get("href"):
@@ -95,7 +98,7 @@ async def _(event):
     subprocess.check_output("rm -rf *.mp3", shell=True)
 
 
-@register(outgoing=True, pattern="^\.smd(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.smd(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -122,7 +125,7 @@ async def _(event):
         await bot.send_read_acknowledge(event.chat_id)
 
 
-@register(outgoing=True, pattern="^\.net(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.net(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return
@@ -149,7 +152,7 @@ async def _(event):
     await event.delete()
 
 
-@register(outgoing=True, disable_errors=True, pattern="^\.sdd(?: |$)(.*)")
+@register(outgoing=True, disable_errors=True, pattern=r"^\.sdd(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return

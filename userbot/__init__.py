@@ -40,7 +40,7 @@ def paginate_help(page_number, loaded_modules, prefix):
     modulo_page = page_number % max_num_pages
     if len(pairs) > number_of_rows:
         pairs = pairs[
-            modulo_page * number_of_rows : number_of_rows * (modulo_page + 1)
+            modulo_page * number_of_rows: number_of_rows * (modulo_page + 1)
         ] + [
             (
                 custom.Button.inline(
@@ -61,12 +61,13 @@ ASYNC_POOL = []
 
 if CONSOLE_LOGGER_VERBOSE:
     basicConfig(
-        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=DEBUG,
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        level=DEBUG,
     )
 else:
     basicConfig(
-        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=INFO
-    )
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        level=INFO)
 LOGS = getLogger(__name__)
 
 if version_info < (3, 8, 0):
@@ -133,7 +134,9 @@ ALIVE_NAME = os.environ.get("ALIVE_NAME", None)
 
 # Chrome stuff
 CHROME_DRIVER = os.environ.get("CHROME_DRIVER", "/usr/bin/chromedriver")
-GOOGLE_CHROME_BIN = os.environ.get("GOOGLE_CHROME_BIN", "/usr/bin/chromium-browser")
+GOOGLE_CHROME_BIN = os.environ.get(
+    "GOOGLE_CHROME_BIN",
+    "/usr/bin/chromium-browser")
 
 # OpenWeatherMap API Key
 OPEN_WEATHER_MAP_APPID = os.environ.get("OPEN_WEATHER_MAP_APPID", None)
@@ -185,7 +188,8 @@ G_DRIVE_CLIENT_ID = os.environ.get("G_DRIVE_CLIENT_ID", None)
 G_DRIVE_CLIENT_SECRET = os.environ.get("G_DRIVE_CLIENT_SECRET", None)
 G_DRIVE_AUTH_TOKEN_DATA = os.environ.get("G_DRIVE_AUTH_TOKEN_DATA", None)
 G_DRIVE_FOLDER_ID = os.environ.get("G_DRIVE_FOLDER_ID", None)
-TEMP_DOWNLOAD_DIRECTORY = os.environ.get("TMP_DOWNLOAD_DIRECTORY", "./downloads")
+TEMP_DOWNLOAD_DIRECTORY = os.environ.get(
+    "TMP_DOWNLOAD_DIRECTORY", "./downloads")
 
 # Terminal Alias
 TERM_ALIAS = os.environ.get("TERM_ALIAS", None)
@@ -217,7 +221,9 @@ WATCH_COUNTRY = os.environ.get("WATCH_COUNTRY", None)
 DEEZER_ARL_TOKEN = os.environ.get("DEEZER_ARL_TOKEN", None)
 
 # Image for alive
-IMG = os.environ.get("IMG", "https://telegra.ph/file/2a7b0bd8547a80c019493.jpg")
+IMG = os.environ.get(
+    "IMG",
+    "https://telegra.ph/file/2a7b0bd8547a80c019493.jpg")
 
 # Setting Up CloudMail.ru and MEGA.nz extractor binaries,
 # and giving them correct perms to work properly.
@@ -279,8 +285,7 @@ async def check_botlog_chatid():
     if entity.default_banned_rights.send_messages:
         LOGS.info(
             "Your account doesn't have rights to send messages to BOTLOG_CHATID "
-            "group. Check if you typed the Chat ID correctly."
-        )
+            "group. Check if you typed the Chat ID correctly.")
         quit(1)
 
 
@@ -289,9 +294,11 @@ with bot:
         bot(JoinChannelRequest("@akmjfeels"))
         bot(JoinChannelRequest("@GengKapak"))
 
-        tgbot = TelegramClient("TG_BOT_TOKEN", api_id=API_KEY, api_hash=API_HASH).start(
-            bot_token=BOT_TOKEN
-        )
+        tgbot = TelegramClient(
+            "TG_BOT_TOKEN",
+            api_id=API_KEY,
+            api_hash=API_HASH).start(
+            bot_token=BOT_TOKEN)
 
         dugmeler = CMD_HELP
         me = bot.get_me()
@@ -324,8 +331,10 @@ with bot:
                 )
             elif query.startswith("tb_btn"):
                 result = builder.article(
-                    "© @GengKapak", text="@GengKapak", buttons=[], link_preview=True
-                )
+                    "© @GengKapak",
+                    text="@GengKapak",
+                    buttons=[],
+                    link_preview=True)
             else:
                 result = builder.article(
                     "© @GengKapak",
@@ -334,15 +343,16 @@ You can convert your account to bot and use them. Remember, you can't manage som
                     buttons=[
                         [
                             custom.Button.url(
-                                "Follow Channel", "https://t.me/GengKapak"
-                            ),
-                            custom.Button.url("Build by", "https://t.me/NGGDCLXVI"),
+                                "Follow Channel",
+                                "https://t.me/GengKapak"),
+                            custom.Button.url(
+                                "Build by",
+                                "https://t.me/NGGDCLXVI"),
                         ],
                         [
                             custom.Button.url(
-                                "GitHub", "https://github.com/GengKapak/DCLXVI"
-                            )
-                        ],
+                                "GitHub",
+                                "https://github.com/GengKapak/DCLXVI")],
                     ],
                     link_preview=False,
                 )
@@ -350,13 +360,15 @@ You can convert your account to bot and use them. Remember, you can't manage som
 
         @tgbot.on(
             events.callbackquery.CallbackQuery(  # pylint:disable=E0602
-                data=re.compile(b"helpme_next\((.+?)\)")
+                data=re.compile(rb"helpme_next\((.+?)\)")
             )
         )
         async def on_plug_in_callback_query_handler(event):
             if event.query.user_id == uid:  # pylint:disable=E0602
-                current_page_number = int(event.data_match.group(1).decode("UTF-8"))
-                buttons = paginate_help(current_page_number + 1, dugmeler, "helpme")
+                current_page_number = int(
+                    event.data_match.group(1).decode("UTF-8"))
+                buttons = paginate_help(
+                    current_page_number + 1, dugmeler, "helpme")
                 # https://t.me/TelethonChat/115200
                 await event.edit(buttons=buttons)
             else:
@@ -365,12 +377,13 @@ You can convert your account to bot and use them. Remember, you can't manage som
 
         @tgbot.on(
             events.callbackquery.CallbackQuery(  # pylint:disable=E0602
-                data=re.compile(b"helpme_prev\((.+?)\)")
+                data=re.compile(rb"helpme_prev\((.+?)\)")
             )
         )
         async def on_plug_in_callback_query_handler(event):
             if event.query.user_id == uid:  # pylint:disable=E0602
-                current_page_number = int(event.data_match.group(1).decode("UTF-8"))
+                current_page_number = int(
+                    event.data_match.group(1).decode("UTF-8"))
                 buttons = paginate_help(
                     current_page_number - 1, dugmeler, "helpme"  # pylint:disable=E0602
                 )
@@ -412,16 +425,15 @@ You can convert your account to bot and use them. Remember, you can't manage som
 
             await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
-    except:
+    except BaseException:
         LOGS.info(
             "Support for inline is disabled on your bot. "
             "To enable it, define a bot token and enable inline mode on your bot. "
-            "If you think there is a problem other than this, contact us."
-        )
+            "If you think there is a problem other than this, contact us.")
 
     try:
         bot.loop.run_until_complete(check_botlog_chatid())
-    except:
+    except BaseException:
         LOGS.info(
             "ERROR: The BOTLOG_CHATID variable entered is not valid. "
             "Please check the value you entered. "

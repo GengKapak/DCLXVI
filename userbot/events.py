@@ -94,7 +94,7 @@ def register(**args):
                 exit(1)
             except KeyboardInterrupt:
                 pass
-            except:
+            except BaseException:
                 if not disable_errors:
                     date = strftime("%Y-%m-%d %H:%M:%S", gmtime())
 
@@ -131,7 +131,8 @@ def register(**args):
                         command, stdout=asyncsub.PIPE, stderr=asyncsub.PIPE
                     )
                     stdout, stderr = await process.communicate()
-                    result = str(stdout.decode().strip()) + str(stderr.decode().strip())
+                    result = str(stdout.decode().strip()) + \
+                        str(stderr.decode().strip())
 
                     ftext += result
 

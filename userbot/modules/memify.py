@@ -15,7 +15,7 @@ from userbot.events import register
 THUMB_IMAGE_PATH = "./thumb_image.jpg"
 
 
-@register(outgoing=True, pattern="^\.mmf(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.mmf(?: |$)(.*)")
 async def mim(event):
     if event.fwd_from:
         return
@@ -67,7 +67,8 @@ async def mim(event):
                 file_name = "meme.png"
                 reply_message = await event.get_reply_message()
                 to_download_directory = TEMP_DOWNLOAD_DIRECTORY
-                downloaded_file_name = os.path.join(to_download_directory, file_name)
+                downloaded_file_name = os.path.join(
+                    to_download_directory, file_name)
                 downloaded_file_name = await bot.download_media(
                     reply_message, downloaded_file_name,
                 )
@@ -86,7 +87,8 @@ async def mim(event):
             response = await bot_conv.get_response()
             the_download_directory = TEMP_DOWNLOAD_DIRECTORY
             files_name = "memes.webp"
-            download_file_name = os.path.join(the_download_directory, files_name)
+            download_file_name = os.path.join(
+                the_download_directory, files_name)
             await bot.download_media(
                 response.media, download_file_name,
             )

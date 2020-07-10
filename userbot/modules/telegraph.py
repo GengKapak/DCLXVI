@@ -12,11 +12,12 @@ r = telegraph.create_account(short_name="TELEGRAPH")
 auth_url = r["auth_url"]
 
 
-@register(outgoing=True, pattern="^\.tg(m|t)$")
+@register(outgoing=True, pattern=r"^\.tg(m|t)$")
 async def telegraphs(graph):
     """ For .telegraph command, upload media & text to telegraph site. """
     await graph.edit("`Processing...`")
-    if not graph.text[0].isalpha() and graph.text[0] not in ("/", "#", "@", "!"):
+    if not graph.text[0].isalpha() and graph.text[0] not in (
+            "/", "#", "@", "!"):
         if graph.fwd_from:
             return
         if not os.path.isdir(TEMP_DOWNLOAD_DIRECTORY):
@@ -90,6 +91,5 @@ def resize_image(image):
     im.save(image, "PNG")
 
 
-CMD_HELP.update(
-    {"telegraph": ">`.tgm` or >`.tgt`" "\nUsage: Upload text & media on Telegraph."}
-)
+CMD_HELP.update({"telegraph": ">`.tgm` or >`.tgt`"
+                 "\nUsage: Upload text & media on Telegraph."})

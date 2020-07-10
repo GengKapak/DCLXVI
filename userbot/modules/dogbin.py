@@ -75,7 +75,7 @@ async def paste(pstl):
         )
 
 
-@register(outgoing=True, pattern="^\.getpaste(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.getpaste(?: |$)(.*)")
 async def get_dogbin_content(dog_url):
     """ For .getpaste command, fetches the content of a dogbin URL. """
     textx = await dog_url.get_reply_message()
@@ -89,11 +89,11 @@ async def get_dogbin_content(dog_url):
     format_view = f"{DOGBIN_URL}v/"
 
     if message.startswith(format_view):
-        message = message[len(format_view) :]
+        message = message[len(format_view):]
     elif message.startswith(format_normal):
-        message = message[len(format_normal) :]
+        message = message[len(format_normal):]
     elif message.startswith("del.dog/"):
-        message = message[len("del.dog/") :]
+        message = message[len("del.dog/"):]
     else:
         return await dog_url.edit("`Is that even a dogbin url?`")
 
@@ -117,8 +117,8 @@ async def get_dogbin_content(dog_url):
         return
 
     reply_text = (
-        "`Fetched dogbin URL content successfully!`" "\n\n`Content:` " + resp.text
-    )
+        "`Fetched dogbin URL content successfully!`"
+        "\n\n`Content:` " + resp.text)
 
     await dog_url.edit(reply_text)
     if BOTLOG:

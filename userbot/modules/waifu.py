@@ -26,7 +26,7 @@ def deEmojify(inputString: str) -> str:
     return re.sub(EMOJI_PATTERN, "", inputString)
 
 
-@register(outgoing=True, pattern="^\.wf(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.wf(?: |$)(.*)")
 async def waifu(animu):
     text = animu.pattern_match.group(1)
     if not text:

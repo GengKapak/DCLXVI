@@ -16,7 +16,7 @@ from userbot.events import register
 from userbot.utils import time_formatter
 
 
-@register(outgoing=True, pattern="^\.random")
+@register(outgoing=True, pattern=r"^\.random")
 async def randomise(items):
     """ For .random command, get a random item from the list of items. """
     itemo = (items.text[8:]).split()
@@ -30,7 +30,7 @@ async def randomise(items):
     )
 
 
-@register(outgoing=True, pattern="^\.sleep ([0-9]+)$")
+@register(outgoing=True, pattern=r"^\.sleep ([0-9]+)$")
 async def sleepybot(time):
     """ For .sleep command, let the userbot snooze for a few second. """
     counter = int(time.pattern_match.group(1))
@@ -44,7 +44,7 @@ async def sleepybot(time):
     await time.edit("`OK, I'm awake now.`")
 
 
-@register(outgoing=True, pattern="^\.shutdown$")
+@register(outgoing=True, pattern=r"^\.shutdown$")
 async def killthebot(event):
     """ For .shutdown command, shut the bot down."""
     await event.edit("`Goodbye...`")
@@ -53,7 +53,7 @@ async def killthebot(event):
     await bot.disconnect()
 
 
-@register(outgoing=True, pattern="^\.restart$")
+@register(outgoing=True, pattern=r"^\.restart$")
 async def killdabot(event):
     await event.edit("`*i would be back in a moment*`")
     if BOTLOG:
@@ -65,7 +65,7 @@ async def killdabot(event):
     exit()
 
 
-@register(outgoing=True, pattern="^\.readme$")
+@register(outgoing=True, pattern=r"^\.readme$")
 async def reedme(e):
     await e.edit(
         "Here's something for you to read:\n"
@@ -80,7 +80,7 @@ async def reedme(e):
 
 
 # Copyright (c) Gegham Zakaryan | 2019
-@register(outgoing=True, pattern="^\.repeat (.*)")
+@register(outgoing=True, pattern=r"^\.repeat (.*)")
 async def repeat(rep):
     cnt, txt = rep.pattern_match.group(1).split(" ", 1)
     replyCount = int(cnt)
@@ -94,13 +94,13 @@ async def repeat(rep):
     await rep.edit(replyText)
 
 
-@register(outgoing=True, pattern="^\.repo$")
+@register(outgoing=True, pattern=r"^\.repo$")
 async def repo_is_here(wannasee):
     """ For .repo command, just returns the repo URL. """
     await wannasee.edit("[Repo](https://github.com/GengKapak/DCLXVI) GitHub's page.")
 
 
-@register(outgoing=True, pattern="^\.raw$")
+@register(outgoing=True, pattern=r"^\.raw$")
 async def raw(event):
     the_real_message = None
     reply_to_id = None
@@ -128,15 +128,18 @@ CMD_HELP.update(
     {
         "random": ">`.random <item1> <item2> ... <itemN>`"
         "\nUsage: Get a random item from the list of items.",
-        "sleep": ">`.sleep <seconds>`" "\nUsage: Let yours snooze for a few seconds.",
-        "shutdown": ">`.shutdown`" "\nUsage: Shutdown bot",
-        "repo": ">`.repo`" "\nUsage: Github Repo of this bot",
+        "sleep": ">`.sleep <seconds>`"
+        "\nUsage: Let yours snooze for a few seconds.",
+        "shutdown": ">`.shutdown`"
+        "\nUsage: Shutdown bot",
+        "repo": ">`.repo`"
+        "\nUsage: Github Repo of this bot",
         "readme": ">`.readme`"
         "\nUsage: Provide links to setup the userbot and it's modules.",
         "repeat": ">`.repeat <no> <text>`"
         "\nUsage: Repeats the text for a number of times. Don't confuse this with spam tho.",
-        "restart": ">`.restart`" "\nUsage: Restarts the bot !!",
+        "restart": ">`.restart`"
+        "\nUsage: Restarts the bot !!",
         "raw": ">`.raw`"
         "\nUsage: Get detailed JSON-like formatted data about replied message.",
-    }
-)
+    })

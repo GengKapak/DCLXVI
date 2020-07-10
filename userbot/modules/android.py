@@ -24,7 +24,7 @@ DEVICES_DATA = (
 )
 
 
-@register(outgoing=True, pattern="^\.magisk$")
+@register(outgoing=True, pattern=r"^\.magisk$")
 async def magisk(request):
     """ magisk latest releases """
     magisk_dict = {
@@ -39,8 +39,7 @@ async def magisk(request):
         releases += (
             f'{name}: [ZIP v{data["magisk"]["version"]}]({data["magisk"]["link"]}) | '
             f'[APK v{data["app"]["version"]}]({data["app"]["link"]}) | '
-            f'[Uninstaller]({data["uninstaller"]["link"]})\n'
-        )
+            f'[Uninstaller]({data["uninstaller"]["link"]})\n')
     await request.edit(releases)
 
 
@@ -111,7 +110,7 @@ async def codename_info(request):
     await request.edit(reply)
 
 
-@register(outgoing=True, pattern="^\.pixeldl(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.pixeldl(?: |$)(.*)")
 async def download_api(dl):
     await dl.edit("`Collecting information...`")
     URL = dl.pattern_match.group(1)
@@ -229,11 +228,11 @@ async def devices_specifications(request):
         return await request.edit("`Usage: .specs <brand> <device>`")
     all_brands = (
         BeautifulSoup(
-            get("https://www.devicespecifications.com/en/brand-more").content, "lxml"
-        )
-        .find("div", {"class": "brand-listing-container-news"})
-        .findAll("a")
-    )
+            get("https://www.devicespecifications.com/en/brand-more").content,
+            "lxml") .find(
+            "div",
+            {
+                "class": "brand-listing-container-news"}) .findAll("a"))
     brand_page_url = None
     try:
         brand_page_url = [

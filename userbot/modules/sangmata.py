@@ -5,7 +5,7 @@ from userbot import CMD_HELP, bot
 from userbot.events import register
 
 
-@register(outgoing=True, pattern="^\.sg(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.sg(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return

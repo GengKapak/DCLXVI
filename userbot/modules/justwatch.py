@@ -74,7 +74,7 @@ def get_provider(url):
     return url
 
 
-@register(outgoing=True, pattern="^\.watch (.*)")
+@register(outgoing=True, pattern=r"^\.watch (.*)")
 async def _(event):
     if event.fwd_from:
         return

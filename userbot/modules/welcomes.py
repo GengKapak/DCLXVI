@@ -138,7 +138,7 @@ async def save_welcome(event):
         await event.edit(success.format("updated"))
 
 
-@register(outgoing=True, pattern="^\.checkwelcome$")
+@register(outgoing=True, pattern=r"^\.checkwelcome$")
 async def show_welcome(event):
     try:
         from userbot.modules.sql_helper.welcome_sql import get_current_welcome_settings
@@ -158,7 +158,7 @@ async def show_welcome(event):
         await event.reply(cws.reply)
 
 
-@register(outgoing=True, pattern="^\.rmwelcome$")
+@register(outgoing=True, pattern=r"^\.rmwelcome$")
 async def del_welcome(event):
     try:
         from userbot.modules.sql_helper.welcome_sql import rm_welcome_setting
@@ -181,6 +181,4 @@ CMD_HELP.update(
         "\n\n>`.checkwelcome`"
         "\nUsage: Check whether you have a welcome note in the chat."
         "\n\n>`.rmwelcome`"
-        "\nUsage: Deletes the welcome note for the current chat."
-    }
-)
+        "\nUsage: Deletes the welcome note for the current chat."})

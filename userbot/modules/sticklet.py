@@ -46,8 +46,14 @@ async def sticklet(event):
 
     width, height = draw.multiline_textsize(sticktext, font=font)
     draw.multiline_text(
-        ((512 - width) / 2, (512 - height) / 2), sticktext, font=font, fill=(R, G, B)
-    )
+        ((512 - width) / 2,
+         (512 - height) / 2),
+        sticktext,
+        font=font,
+        fill=(
+            R,
+            G,
+            B))
 
     image_stream = io.BytesIO()
     image_stream.name = "dclxvi.webp"
@@ -65,7 +71,7 @@ async def sticklet(event):
     # cleanup
     try:
         os.remove(FONT_FILE)
-    except:
+    except BaseException:
         pass
 
 

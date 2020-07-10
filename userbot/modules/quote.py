@@ -55,7 +55,7 @@ config = {
 }
 
 
-@register(outgoing=True, pattern="^\.qt(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.qt(?: |$)(.*)")
 async def quotecmd(message):  # noqa: C901
     """Quote a message.
     Usage: .pch [template]
@@ -124,7 +124,8 @@ async def quotecmd(message):  # noqa: C901
 
     pfp = await bot.download_profile_photo(profile_photo_url, bytes)
     if pfp is not None:
-        profile_photo_url = "data:image/png;base64, " + base64.b64encode(pfp).decode()
+        profile_photo_url = "data:image/png;base64, " + \
+            base64.b64encode(pfp).decode()
 
     if user_id is not None:
         username_color = config["username_colors"][user_id % 7]
@@ -238,7 +239,7 @@ async def get_markdown(reply):
     return markdown
 
 
-@register(outgoing=True, pattern="^\.q(?: |$)(.*)")
+@register(outgoing=True, pattern=r"^\.q(?: |$)(.*)")
 async def _(event):
     if event.fwd_from:
         return

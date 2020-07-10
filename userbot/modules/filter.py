@@ -26,7 +26,8 @@ async def filter_incoming_handler(handler):
             if not filters:
                 return
             for trigger in filters:
-                pattern = r"( |^|[^\w])" + escape(trigger.keyword) + r"( |$|[^\w])"
+                pattern = r"( |^|[^\w])" + \
+                    escape(trigger.keyword) + r"( |$|[^\w])"
                 pro = search(pattern, name, flags=IGNORECASE)
                 if pro:
                     if trigger.f_mesg_id:
@@ -101,7 +102,7 @@ async def remove_a_filter(r_handler):
         )
 
 
-@register(outgoing=True, pattern="^\.rmbotfilters (.*)")
+@register(outgoing=True, pattern=r"^\.rmbotfilters (.*)")
 async def kick_marie_filter(event):
     """ For .rmfilters command, allows you to kick all \
         Marie(or her clones) filters from a chat. """
@@ -126,7 +127,7 @@ async def kick_marie_filter(event):
         )
 
 
-@register(outgoing=True, pattern="^\.filters$")
+@register(outgoing=True, pattern=r"^\.filters$")
 async def filters_active(event):
     """ For .filters command, lists all of the active filters in a chat. """
     try:

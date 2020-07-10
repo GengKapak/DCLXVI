@@ -16,7 +16,7 @@ if GENIUS is not None:
     genius = lyricsgenius.Genius(GENIUS)
 
 
-@register(outgoing=True, pattern="^\.lcs (?:(now)|(.*) - (.*))")
+@register(outgoing=True, pattern=r"^\.lcs (?:(now)|(.*) - (.*))")
 async def lyrics(lyric):
     await lyric.edit("`Getting information...`")
     if GENIUS is None:

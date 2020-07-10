@@ -6,7 +6,7 @@ from userbot import CMD_HELP
 from userbot.events import register
 
 
-@register(outgoing=True, pattern="^\.id$")
+@register(outgoing=True, pattern=r"^\.id$")
 async def image_maker(event):
     replied_user = await event.get_reply_message()
     await event.client.download_profile_photo(
