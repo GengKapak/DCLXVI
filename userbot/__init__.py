@@ -19,7 +19,6 @@ from requests import get
 from telethon.sessions import StringSession
 from telethon.sync import TelegramClient, custom, events
 from telethon.tl.functions.channels import JoinChannelRequest
-from telethon.utils import get_peer_id
 
 load_dotenv("config.env")
 

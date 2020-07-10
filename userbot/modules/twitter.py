@@ -5,7 +5,7 @@ from userbot import CMD_HELP
 from userbot.events import register
 
 
-@register(pattern=r"^\.tw ?(.*)", outgoing=True)
+@register(pattern=r"^\.twt ?(.*)", outgoing=True)
 async def twit(event):
     q = event.pattern_match.group(1)
     if len(q) < 1:
@@ -61,5 +61,5 @@ async def twit(event):
     return
 
 
-CMD_HELP.update({"twitter": ">`.tw` **username**"
+CMD_HELP.update({"twitter": ">`.twt` **username**"
                  "\nUsage: Scrap latest tweet from someone."})

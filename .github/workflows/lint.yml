@@ -16,15 +16,15 @@ jobs:
 
       - name: Install Python lint libraries
         run: |
-          pip install autopep8
+          pip install autopep8 autoflake
 
       - name: Check for showstoppers
         run: |
-          autopep8 --verbose --in-place --aggressive --aggressive *.py
-          autopep8 --verbose --in-place --aggressive --aggressive userbot/*.py
-          autopep8 --verbose --in-place --aggressive --aggressive userbot/modules/*.py
-          autopep8 --verbose --in-place --aggressive --aggressive userbot/modules/sql_helper/*.py
-          autopep8 --verbose --in-place --aggressive --aggressive userbot/utils/*.py
+          autopep8 --verbose --in-place --recursive --aggressive --aggressive . *.py
+
+      - name: Remove unused imports and variables
+        run: |
+          autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --ignore-init-module-imports .
 
       # commit changes
       - uses: stefanzweifel/git-auto-commit-action@v4
