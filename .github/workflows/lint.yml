@@ -16,10 +16,13 @@ jobs:
 
       - name: Install Python lint libraries
         run: |
-          pip install isort==5.0.2 black==19.10b0
+          pip install isort==5.0.2 black==19.10b0 flake8 flake8-print flake8-quotes
       - run: cd userbot/modules && isort .
       - run: cd userbot/modules && black .
 
+      - name: Check for showstoppers
+        run: |
+          flake8 ./userbot/modules --count --select=E999,W191,W291,E101 --show-source --statistics
 
       # commit changes
       - uses: stefanzweifel/git-auto-commit-action@v4
