@@ -129,7 +129,7 @@ async def fetch_info(chat, event):
         dc_id, _ = get_input_location(chat.full_chat.chat_photo)
     except Exception as e:
         dc_id = "Unknown"
-        location = str(e)
+        str(e)
 
     # this is some spaghetti I need to change
     description = chat.full_chat.about

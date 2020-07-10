@@ -202,7 +202,7 @@ async def afk_on_pm(sender):
 @register(outgoing=True, pattern=r"^\.afk(?: |$)(.*)", disable_errors=True)
 async def set_afk(afk_e):
     """ For .afk command, allows you to inform people that you are afk when they message you """
-    message = afk_e.text
+    afk_e.text
     string = afk_e.pattern_match.group(1)
     global ISAFK
     global AFKREASON

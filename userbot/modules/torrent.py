@@ -1,6 +1,5 @@
 # Copyright (C) 2020 GengKapak and AnggaR96s.
 # All rights reserved.
-import asyncio
 import codecs
 import json
 import os
@@ -124,7 +123,7 @@ async def tor_search(event):
             try:
                 mg = div.p.a['href']
                 magnets.append(mg)
-            except Exception as e:
+            except Exception:
                 pass
     print("Found Magnets...")
     shorted_links = dogbin(magnets)

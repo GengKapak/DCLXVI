@@ -97,7 +97,6 @@ async def ANTI_SPAMBOTS(welcm):
                             "CAS check failed, falling back to legacy anti_spambot behaviour."
                         )
                         data = None
-                        pass
 
                     if data and data["ok"]:
                         reason = f"[Banned by Combot Anti Spam](https://combot.org/cas/query?u={check_user.id})"
