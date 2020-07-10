@@ -27,25 +27,20 @@ async def speedtst(spd):
     test.results.share()
     result = test.results.dict()
     path = wget.download(result["share"])
-    output = f"""**
-                Started at `{result['timestamp']}`
-
-		Client:
-
-		ISP: `{result['client']['isp']}`
-		Country: `{result['client']['country']}`
-
-		Server:
-		Name: `{result['server']['name']}`
-		Country: `{result['server']['country']}, {result['server']['cc']}`
-		Sponsor: `{result['server']['sponsor']}`
-		Latency: `{result['server']['latency']}`
-
-		Ping: `{result['ping']}`
-		Sent: `{humanbytes(result['bytes_sent'])}`
-		Received: `{humanbytes(result['bytes_received'])}`
-		Download: `{humanbytes(result['download'] / 8)}/s`
-		Upload: `{humanbytes(result['upload'] / 8)}/s`**"""
+    output = f"Started at `{result['timestamp']}`\n\n"
+    output += f"Client:\n\n"
+    output += f"ISP: `{result['client']['isp']}`\n"
+    output += f"Country: `{result['client']['country']}`\n\n"
+    output += f"Server:\n"
+    output += f"Name: `{result['server']['name']}`\n"
+    output += f"Country: `{result['server']['country']}, {result['server']['cc']}`\n"
+    output += f"Sponsor: `{result['server']['sponsor']}`\n"
+    output += f"Latency: `{result['server']['latency']}`\n\n"
+    output += f"Ping: `{result['ping']}`\n"
+    output += f"Sent: `{humanbytes(result['bytes_sent'])}`\n"
+    output += f"Received: `{humanbytes(result['bytes_received'])}`\n"
+    output += f"Download: `{humanbytes(result['download'] / 8)}/s`\n"
+    output += f"Upload: `{humanbytes(result['upload'] / 8)}/s`"
     await spd.delete()
     await spd.client.send_file(spd.chat_id, path, caption=output, force_document=False)
     os.remove(path)

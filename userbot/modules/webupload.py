@@ -53,8 +53,8 @@ async def _(event):
     t_response = stdout.decode().strip()
     # logger.info(t_response)
     """if e_response:
-		await event.edit(f"**FAILED** to __transload__: `{e_response}`")
-		return"""
+                await event.edit(f"**FAILED** to __transload__: `{e_response}`")
+                return"""
     if t_response:
         try:
             t_response = json.dumps(json.loads(t_response), sort_keys=True, indent=4)
