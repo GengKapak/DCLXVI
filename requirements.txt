@@ -32,7 +32,7 @@ humanize
 jikanpy
 lxml
 oauth2client
-pendulum
+pendulum==2.0.5
 psycopg2
 psycopg2-binary
 pySmartDL
