@@ -14,11 +14,8 @@ from html_telegraph_poster import TelegraphPoster
 from jikanpy import Jikan
 from jikanpy.exceptions import APIException
 from telethon.errors.rpcerrorlist import FilePartsInvalidError
-from telethon.tl.types import (
-    DocumentAttributeAnimated,
-    DocumentAttributeFilename,
-    MessageMediaDocument,
-)
+from telethon.tl.types import (DocumentAttributeAnimated,
+                               DocumentAttributeFilename, MessageMediaDocument)
 from telethon.utils import is_image, is_video
 
 from userbot import CMD_HELP
@@ -364,6 +361,55 @@ async def site_search(event):
             await event.edit(result, parse_mode="HTML")
 
 
+@register(outgoing=True, pattern=r"^\.char ?(.*)")
+async def character(event):
+    message = await event.get_reply_message()
+    search_query = event.pattern_match.group(1)
+    if search_query:
+        pass
+    elif message:
+        search_query = message.text
+    else:
+        await event.edit("Format: `.char <character name>`")
+        return
+
+    try:
+        search_result = jikan.search("character", search_query)
+    except APIException:
+        await event.edit("`Character not found.`")
+        return
+    first_mal_id = search_result["results"][0]["mal_id"]
+    character = jikan.character(first_mal_id)
+    caption = f"[{character['name']}]({character['url']})"
+    if character["name_kanji"] != "Japanese":
+        caption += f" ({character['name_kanji']})\n"
+    else:
+        caption += "\n"
+
+    if character["nicknames"]:
+        nicknames_string = ", ".join(character["nicknames"])
+        caption += f"\n**Nicknames** : `{nicknames_string}`"
+    about = character["about"].split(" ", 60)
+    try:
+        about.pop(60)
+    except IndexError:
+        pass
+    about_string = " ".join(about)
+    mal_url = search_result["results"][0]["url"]
+    for entity in character:
+        if character[entity] is None:
+            character[entity] = "Unknown"
+    caption += f"\n🔰**Extracted Character Data**🔰\n\n{about_string}"
+    caption += f" [Read More]({mal_url})..."
+    await event.delete()
+    await event.client.send_file(
+        event.chat_id,
+        file=character["image_url"],
+        caption=replace_text(caption),
+        reply_to=event,
+    )
+
+
 @register(outgoing=True, pattern=r"^\.upcoming ?(.*)")
 async def upcoming(message):
     rep = "<b>Upcoming anime</b>\n"
@@ -614,6 +660,7 @@ CMD_HELP.update(
         "anime": ">`.anime <anime>` Returns with Anime information.\n"
         ">`.manga <manga name>` Returns with the Manga information.\n"
         ">`.akaizoku` or `.akayo` <anime name> Returns with the Anime Downlaod link.\n"
+        ">`.char` <character name> Return with character information.\n"
         ">`.upcoming` Returns with Upcoming Anime information.\n"
         ">`.scanime` <anime> or `.sanime` <anime> Search anime.\n"
         ">`.smanga` <manga> Search manga.\n"
