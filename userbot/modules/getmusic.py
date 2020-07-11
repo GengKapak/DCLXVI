@@ -5,8 +5,16 @@ import subprocess
 
 import requests
 from bs4 import BeautifulSoup
+from hachoir.metadata import extractMetadata
+from hachoir.parser import createParser
 from telethon import events
+from telethon.errors import (
+    MessageEmptyError,
+    MessageNotModifiedError,
+    MessageTooLongError,
+)
 from telethon.errors.rpcerrorlist import YouBlockedUserError
+from telethon.tl.types import DocumentAttributeVideo
 
 from userbot import CMD_HELP, bot
 from userbot.events import register
@@ -65,6 +73,27 @@ def getmusic(get, DEFAULT_AUDIO_QUALITY):
     os.system(command)
 
 
+# For getvideosong
+def getmusicvideo(cat):
+    search = cat
+    headers = {
+        "User-Agent": "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)"
+    }
+    html = requests.get(
+        "https://www.youtube.com/results?search_query=" +
+        search,
+        headers=headers).text
+    soup = BeautifulSoup(html, "html.parser")
+    for link in soup.find_all("a"):
+        if "/watch?v=" in link.get("href"):
+            # May change when Youtube Website may get updated in the future.
+            video_link = link.get("href")
+            break
+    video_link = "http://www.youtube.com/" + video_link
+    command = 'youtube-dl -f "[filesize<20M]" ' + video_link
+    os.system(command)
+
+
 @register(outgoing=True, pattern=r"^\.song (.*)")
 async def _(event):
     reply_to_id = event.message.id
@@ -96,6 +125,62 @@ async def _(event):
     await event.delete()
     os.system("rm -rf *.mp3")
     subprocess.check_output("rm -rf *.mp3", shell=True)
+
+
+@register(outgoing=True, pattern=r"^\.vsong(?: |$)(.*)")
+async def _(event):
+    reply_to_id = event.message.id
+    if event.reply_to_msg_id:
+        reply_to_id = event.reply_to_msg_id
+    reply = await event.get_reply_message()
+    if event.pattern_match.group(1):
+        query = event.pattern_match.group(1)
+        await event.edit("Wait..! I am finding your videosong..")
+    elif reply.message:
+        query = reply.message
+        await event.edit("Wait..! I am finding your videosong..")
+    else:
+        await event.edit("What I am Supposed to find")
+        return
+    getmusicvideo(query)
+    l = glob.glob(("*.mp4")) + glob.glob(("*.mkv")) + glob.glob(("*.webm"))
+    if l:
+        await event.edit("Yeah..! i found something..")
+    else:
+        await event.edit(f"Sorry..! i can't find anything with `{query}`")
+    loa = l[0]
+    metadata = extractMetadata(createParser(loa))
+    duration = 0
+    width = 0
+    height = 0
+    if metadata.has("duration"):
+        duration = metadata.get("duration").seconds
+    if metadata.has("width"):
+        width = metadata.get("width")
+    if metadata.has("height"):
+        height = metadata.get("height")
+    await event.client.send_file(
+        event.chat_id,
+        loa,
+        force_document=True,
+        allow_cache=False,
+        caption=query,
+        supports_streaming=True,
+        reply_to=reply_to_id,
+        attributes=[
+            DocumentAttributeVideo(
+                duration=duration,
+                w=width,
+                h=height,
+                round_message=False,
+                supports_streaming=True,
+            )
+        ],
+    )
+    await event.delete()
+    os.system("rm -rf *.mkv")
+    os.system("rm -rf *.mp4")
+    os.system("rm -rf *.webm")
 
 
 @register(outgoing=True, pattern=r"^\.smd(?: |$)(.*)")
@@ -185,6 +270,8 @@ CMD_HELP.update(
     {
         "song": ">`.song` **Artist - Song Title**"
         "\nUsage: Finding and uploading song.\n"
+        ">`.vsong` **Artist - Song Title**"
+        "\nUsage: Finding and uploading videoclip.\n"
         ">`.smd` **Artist - Song Title**"
         "\nUsage: Download music from spotify.\n"
         ">`.net` **Artist - Song Title**"
