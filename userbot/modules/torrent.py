@@ -43,12 +43,9 @@ async def gengkapak(e):
     key = (requests.post("https://nekobin.com/api/documents",
                          json={"content": data}) .json() .get("result") .get("key"))
     url = f"https://nekobin.com/raw/{key}"
-    caption = f"Here are the results for the query: {query}\nNekofied to : {url}"
-    await e.client.send_file(
-        e.chat_id, tsfileloc, caption=caption, force_document=False
-    )
+    caption = f"`Here the results for the query: {query}`\n\nPasted to: [Nekobin]({url})"
     os.remove(tsfileloc)
-    await e.delete()
+    await e.edit(caption, link_preview=False)
 
 
 def dogbin(magnets):
@@ -147,7 +144,7 @@ CMD_HELP.update(
     {
         "torrent": ">`.ts` Search query."
         "\nUsage: Search for torrent query and post to dogbin.\n"
-        ">`.tos` Search query.\n"
+        ">`.tos` Search query."
         "\nUsage: Search for torrent magnet from query."
     }
 )
