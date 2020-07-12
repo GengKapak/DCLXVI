@@ -8,11 +8,6 @@ from bs4 import BeautifulSoup
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from telethon import events
-from telethon.errors import (
-    MessageEmptyError,
-    MessageNotModifiedError,
-    MessageTooLongError,
-)
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 from telethon.tl.types import DocumentAttributeVideo
 
