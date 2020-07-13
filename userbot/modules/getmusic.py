@@ -2,6 +2,7 @@ import asyncio
 import glob
 import os
 import subprocess
+import time
 
 import requests
 from bs4 import BeautifulSoup
@@ -13,6 +14,7 @@ from telethon.tl.types import DocumentAttributeVideo
 
 from userbot import CMD_HELP, bot
 from userbot.events import register
+from userbot.utils import progress
 
 
 # For song module
@@ -109,6 +111,7 @@ async def _(event):
     l = glob.glob("*.mp3")
     loa = l[0]
     await event.edit("`Yeah.. Uploading your song..`")
+    c_time = time.time()
     await event.client.send_file(
         event.chat_id,
         loa,
@@ -116,6 +119,9 @@ async def _(event):
         allow_cache=False,
         caption=query,
         reply_to=reply_to_id,
+        progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+            progress(d, t, event, c_time, "[UPLOAD]", loa)
+        ),
     )
     await event.delete()
     os.system("rm -rf *.mp3")
@@ -155,6 +161,7 @@ async def _(event):
     if metadata.has("height"):
         height = metadata.get("height")
     await event.edit("`Uploading video.. Please wait..`")
+    c_time = time.time()
     await event.client.send_file(
         event.chat_id,
         loa,
@@ -172,6 +179,9 @@ async def _(event):
                 supports_streaming=True,
             )
         ],
+        progress_callback=lambda d, t: asyncio.get_event_loop().create_task(
+            progress(d, t, event, c_time, "[UPLOAD]", loa)
+        ),
     )
     await event.delete()
     os.system("rm -rf *.mkv")
