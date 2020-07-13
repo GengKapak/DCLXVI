@@ -22,15 +22,15 @@ async def lst(event):
         path = os.getcwd()
     if not exists(path):
         await event.edit(
-            f"There is no such directory or file with the name `{cat}` check again!"
+            f"**There is no such directory or file with the name `{cat}` check again!**"
         )
         return
     if isdir(path):
         if cat:
-            msg = "Folders and Files in `{}` :\n\n".format(path)
+            msg = "**Folders and Files in `{}`** :\n\n".format(path)
             lists = os.listdir(path)
         else:
-            msg = "Folders and Files in Current Directory :\n\n"
+            msg = "**Folders and Files in Current Directory** :\n\n"
             lists = os.listdir(path)
         files = ""
         folders = ""
@@ -72,7 +72,7 @@ async def lst(event):
             msg = msg + "__empty path__"
     else:
         size = os.stat(path).st_size
-        msg = "The details of given file :\n\n"
+        msg = "**The details of given file** :\n\n"
         if path.endswith((".mp3", ".flac", ".wav", ".m4a")):
             mode = "🎵 "
         if path.endswith((".opus")):
