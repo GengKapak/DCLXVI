@@ -115,11 +115,11 @@ async def amireallyalive(alive):
     caption = (
         "`"
         "I'm alive, at your services....\n"
-        f"------------------------------\n"
+        f"-------------------------------\n"
         f"👤 User             : {DEFAULTUSER}\n"
         f"🐍 Python           : {python_version()}\n"
         f"💻 Telethon version : {version.__version__}\n"
-        f"------------------------------\n"
+        f"-------------------------------\n"
         "`"
     )
     await bot.send_file(alive.chat_id, img, caption=caption)
