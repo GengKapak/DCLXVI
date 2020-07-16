@@ -232,7 +232,6 @@ if not os.path.exists("bin"):
 binaries = {
     "https://raw.githubusercontent.com/adekmaulana/megadown/master/megadown": "bin/megadown",
     "https://raw.githubusercontent.com/yshalsager/cmrudl.py/master/cmrudl.py": "bin/cmrudl",
-    "https://telegra.ph/file/0db043920353f3d69074e.jpg": "bin/thumb.jpg",
 }
 
 for binary, path in binaries.items():
