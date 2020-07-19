@@ -7,6 +7,7 @@
 
 import os
 import re
+import time
 from distutils.util import strtobool as sb
 from logging import DEBUG, INFO, basicConfig, getLogger
 from math import ceil
@@ -223,6 +224,10 @@ DEEZER_ARL_TOKEN = os.environ.get("DEEZER_ARL_TOKEN", None)
 IMG = os.environ.get(
     "IMG",
     "https://telegra.ph/file/2a7b0bd8547a80c019493.jpg")
+
+# Set default timezone
+TZ = os.environ.get("TZ", "Asia/Jakarta")
+time.tzset()
 
 # Setting Up CloudMail.ru and MEGA.nz extractor binaries,
 # and giving them correct perms to work properly.

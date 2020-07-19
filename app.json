@@ -188,6 +188,11 @@
       "description": "Input your DEEZER ARL TOKEN",
       "value": "",
       "required": false
+    },
+    "TZ": {
+      "description": "Your timezone",
+      "value": "Asia/Jakarta",
+      "required": false
     }
   },
   "addons": [
