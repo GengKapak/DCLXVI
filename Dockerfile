@@ -1,5 +1,5 @@
-# We're using Alpine
-FROM dasbastard/alpine:latest
+# We're using Debian slim buster
+FROM dasbastard/slim-buster:dclxvi
 
 #
 # Clone repo and prepare working directory

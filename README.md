@@ -8,8 +8,8 @@
     <a href="https://github.com/GengKapak/DCLXVI/graphs/contributors"> <img src="https://img.shields.io/github/contributors/GengKapak/DCLXVI?style=for-the-badge" /></a>
     <a href="https://github.com/GengKapak/DCLXVI/commits/master"> <img src="https://img.shields.io/github/last-commit/GengKapak/DCLXVI?style=for-the-badge" /></a>
     <a href="https://github.com/GengKapak/DCLXVI/issues"> <img src="https://img.shields.io/github/issues-closed/GengKapak/DCLXVI?style=for-the-badge" /></a>
-    <a href="https://hub.docker.com/r/dasbastard/alpine/tags"> <img src="https://img.shields.io/docker/v/dasbastard/alpine/latest?label=docker%20tag&style=for-the-badge" /></a>
-    <a href="https://hub.docker.com/r/dasbastard/alpine"> <img src="https://img.shields.io/docker/image-size/dasbastard/alpine/latest?label=docker%20image%20size&style=for-the-badge" /></a>
+    <a href="https://hub.docker.com/r/dasbastard/slim-buster/tags"> <img src="https://img.shields.io/docker/v/dasbastard/slim-buster/dclxvi?style=for-the-badge" /></a>
+    <a href="https://hub.docker.com/r/dasbastard/slim-buster"> <img src="https://img.shields.io/docker/image-size/dasbastard/slim-buster/dclxvi?style=for-the-badge" /></a>
     <a href="https://github.com/GengKapak/DCLXVI/network/members"> <img src="https://img.shields.io/github/forks/GengKapak/DCLXVI?style=for-the-badge" /></a>
     <img src="https://telegra.ph/file/2a7b0bd8547a80c019493.jpg" alt="Image" width="800" height="600" />
 </p>
