@@ -32,7 +32,7 @@ humanize
 jikanpy
 lxml
 oauth2client
-pendulum==2.0.5
+pendulum
 psycopg2
 psycopg2-binary
 pySmartDL
@@ -69,3 +69,4 @@ twitter_scraper
 python-dateutil
 git+https://github.com/johnwmillr/LyricsGenius.git
 pyaztro
+validators
