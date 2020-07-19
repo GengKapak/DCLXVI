@@ -29,10 +29,10 @@ async def speedtst(spd):
     result = test.results.dict()
     path = wget.download(result["share"])
     output = f"Started at `{result['timestamp']}`\n\n"
-    output += f"Client:\n\n"
+    output += "Client:\n\n"
     output += f"ISP: `{result['client']['isp']}`\n"
     output += f"Country: `{result['client']['country']}`\n\n"
-    output += f"Server:\n"
+    output += "Server:\n"
     output += f"Name: `{result['server']['name']}`\n"
     output += f"Country: `{result['server']['country']}, {result['server']['cc']}`\n"
     output += f"Sponsor: `{result['server']['sponsor']}`\n"
