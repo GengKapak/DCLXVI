@@ -27,7 +27,7 @@ DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
 @register(outgoing=True, pattern=r"^\.spc")
 async def psu(event):
     uname = platform.uname()
-    softw = f"**System Information**\n"
+    softw = "**System Information**\n"
     softw += f"`System   : {uname.system}`\n"
     softw += f"`Release  : {uname.release}`\n"
     softw += f"`Version  : {uname.version}`\n"
@@ -37,7 +37,7 @@ async def psu(event):
     bt = datetime.fromtimestamp(boot_time_timestamp)
     softw += f"`Boot Time: {bt.day}/{bt.month}/{bt.year}  {bt.hour}:{bt.minute}:{bt.second}`\n"
     # CPU Cores
-    cpuu = f"**CPU Info**\n"
+    cpuu = "**CPU Info**\n"
     cpuu += "`Physical cores   : " + \
         str(psutil.cpu_count(logical=False)) + "`\n"
     cpuu += "`Total cores      : " + \
@@ -48,14 +48,14 @@ async def psu(event):
     cpuu += f"`Min Frequency    : {cpufreq.min:.2f}Mhz`\n"
     cpuu += f"`Current Frequency: {cpufreq.current:.2f}Mhz`\n\n"
     # CPU usage
-    cpuu += f"**CPU Usage Per Core**\n"
+    cpuu += "**CPU Usage Per Core**\n"
     for i, percentage in enumerate(psutil.cpu_percent(percpu=True)):
         cpuu += f"`Core {i}  : {percentage}%`\n"
-    cpuu += f"**Total CPU Usage**\n"
+    cpuu += "**Total CPU Usage**\n"
     cpuu += f"`All Core: {psutil.cpu_percent()}%`\n"
     # RAM Usage
     svmem = psutil.virtual_memory()
-    memm = f"**Memory Usage**\n"
+    memm = "**Memory Usage**\n"
     memm += f"`Total     : {get_size(svmem.total)}`\n"
     memm += f"`Available : {get_size(svmem.available)}`\n"
     memm += f"`Used      : {get_size(svmem.used)}`\n"
@@ -63,7 +63,7 @@ async def psu(event):
     help_string = f"{str(softw)}\n"
     help_string += f"{str(cpuu)}\n"
     help_string += f"{str(memm)}\n"
-    help_string += f"**Engine Info**\n"
+    help_string += "**Engine Info**\n"
     help_string += f"`Python {sys.version}`\n"
     help_string += f"`Telethon {__version__}`"
     await event.edit(help_string)
