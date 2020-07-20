@@ -1,16 +1,20 @@
 # Copyright (C) 2019 The Raphielscape Company LLC.
 #
-# Licensed under the Raphielscape Public License, Version 1.c (the "License");
+# Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
 #
 """ Userbot module for getting information about the server. """
+import platform
+import sys
 from asyncio import create_subprocess_exec as asyncrunapp
 from asyncio.subprocess import PIPE as asyncPIPE
+from datetime import datetime
 from os import remove
 from platform import python_version, uname
 from shutil import which
 
-from telethon import version
+import psutil
+from telethon import __version__, version
 
 from userbot import ALIVE_NAME, CMD_HELP, IMG, bot
 from userbot.events import register
@@ -18,6 +22,59 @@ from userbot.events import register
 # ================= CONSTANT =================
 DEFAULTUSER = str(ALIVE_NAME) if ALIVE_NAME else uname().node
 # ============================================
+
+
+@register(outgoing=True, pattern=r"^\.spc")
+async def psu(event):
+    uname = platform.uname()
+    softw = f"**System Information**\n"
+    softw += f"`System   : {uname.system}`\n"
+    softw += f"`Release  : {uname.release}`\n"
+    softw += f"`Version  : {uname.version}`\n"
+    softw += f"`Machine  : {uname.machine}`\n"
+    # Boot Time
+    boot_time_timestamp = psutil.boot_time()
+    bt = datetime.fromtimestamp(boot_time_timestamp)
+    softw += f"`Boot Time: {bt.day}/{bt.month}/{bt.year}  {bt.hour}:{bt.minute}:{bt.second}`\n"
+    # CPU Cores
+    cpuu = f"**CPU Info**\n"
+    cpuu += "`Physical cores   : " + \
+        str(psutil.cpu_count(logical=False)) + "`\n"
+    cpuu += "`Total cores      : " + \
+        str(psutil.cpu_count(logical=True)) + "`\n"
+    # CPU frequencies
+    cpufreq = psutil.cpu_freq()
+    cpuu += f"`Max Frequency    : {cpufreq.max:.2f}Mhz`\n"
+    cpuu += f"`Min Frequency    : {cpufreq.min:.2f}Mhz`\n"
+    cpuu += f"`Current Frequency: {cpufreq.current:.2f}Mhz`\n\n"
+    # CPU usage
+    cpuu += f"**CPU Usage Per Core**\n"
+    for i, percentage in enumerate(psutil.cpu_percent(percpu=True)):
+        cpuu += f"`Core {i}  : {percentage}%`\n"
+    cpuu += f"**Total CPU Usage**\n"
+    cpuu += f"`All Core: {psutil.cpu_percent()}%`\n"
+    # RAM Usage
+    svmem = psutil.virtual_memory()
+    memm = f"**Memory Usage**\n"
+    memm += f"`Total     : {get_size(svmem.total)}`\n"
+    memm += f"`Available : {get_size(svmem.available)}`\n"
+    memm += f"`Used      : {get_size(svmem.used)}`\n"
+    memm += f"`Percentage: {svmem.percent}%`\n"
+    help_string = f"{str(softw)}\n"
+    help_string += f"{str(cpuu)}\n"
+    help_string += f"{str(memm)}\n"
+    help_string += f"**Engine Info**\n"
+    help_string += f"`Python {sys.version}`\n"
+    help_string += f"`Telethon {__version__}`"
+    await event.edit(help_string)
+
+
+def get_size(bytes, suffix="B"):
+    factor = 1024
+    for unit in ["", "K", "M", "G", "T", "P"]:
+        if bytes < factor:
+            return f"{bytes:.2f}{unit}{suffix}"
+        bytes /= factor
 
 
 @register(outgoing=True, pattern=r"^\.sysd$")
@@ -148,7 +205,9 @@ async def amireallyalivereset(ureset):
 
 
 CMD_HELP.update({"sysd": ">`.sysd`"
-                 "\nUsage: Shows system information using neofetch.",
+                 "\nUsage: Shows system information using neofetch.\n\n"
+                 ">`.spc`"
+                 "\nUsage: Show system specification.",
                  "botver": ">`.botver`"
                  "\nUsage: Shows the userbot version.",
                  "pip": ">`.pip <module(s)>`"
