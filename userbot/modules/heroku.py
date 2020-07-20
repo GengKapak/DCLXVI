@@ -3,12 +3,13 @@
 """
    Heroku manager for your userbot
 """
-import asyncio
+import codecs
 import math
 import os
 
 import aiohttp
 import heroku3
+import requests
 
 from userbot import BOTLOG, BOTLOG_CHATID, CMD_HELP, HEROKU_API_KEY, HEROKU_APP_NAME
 from userbot.events import register
@@ -192,12 +193,12 @@ async def _(dyno):
     await dyno.edit("`Getting Logs....`")
     with open("logs.txt", "w") as log:
         log.write(app.get_log())
-    await dyno.client.send_file(
-        dyno.chat_id, "logs.txt", reply_to=dyno.id, caption="`Heroku dyno logs`"
-    )
-    await dyno.edit("`Sending dyno logs ..`")
-    await asyncio.sleep(5)
-    await dyno.delete()
+    fd = codecs.open("logs.txt", "r", encoding="utf-8")
+    data = fd.read()
+    key = (requests.post("https://nekobin.com/api/documents",
+                         json={"content": data}) .json() .get("result") .get("key"))
+    url = f"https://nekobin.com/raw/{key}"
+    await dyno.edit(f"`Here the heroku logs:`\n\nPasted to: [Nekobin]({url})")
     return os.remove("logs.txt")
 
 
