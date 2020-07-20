@@ -11,6 +11,7 @@
     <a href="https://github.com/GengKapak/DCLXVI/network/members"> <img src="https://img.shields.io/github/forks/GengKapak/DCLXVI?color=red&logo=github&logoColor=red&style=for-the-badge" /></a>
     <a href="https://hub.docker.com/r/dasbastard/slim-buster/tags"> <img src="https://img.shields.io/docker/v/dasbastard/slim-buster/dclxvi?color=red&label=docker%20tag&logo=docker&logoColor=red&style=for-the-badge" /></a>
     <a href="https://hub.docker.com/r/dasbastard/slim-buster"> <img src="https://img.shields.io/docker/image-size/dasbastard/slim-buster/dclxvi?color=red&label=docker%20image%20size&logo=docker&logoColor=red&style=for-the-badge" /></a>
+    <a href="https://pypi.org/project/Telethon/"> <img src="https://img.shields.io/pypi/v/telethon?color=red&label=telethon&logo=python&logoColor=red&style=for-the-badge" /></a>
     <img src="https://telegra.ph/file/2a7b0bd8547a80c019493.jpg" alt="Image" width="800" height="600" />
 </p>
 
@@ -55,4 +56,3 @@ Deploy to Heroku:
 ## Credits
 
 Huge thanks to [everyone](https://github.com/GengKapak/DCLXVI/graphs/contributors) who have helped make this userbot awesome!!</p>
-
