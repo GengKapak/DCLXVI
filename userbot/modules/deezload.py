@@ -105,8 +105,8 @@ async def _(event):
                 not_interface=True,
                 zips=False,
             )
+            await event.edit(strings["uploading"])
             for required_track in reqd_albums:
-                await event.edit(strings["uploading"])
                 await upload_track(required_track, event)
             shutil.rmtree(temp_dl_path)
             await event.delete()
@@ -136,8 +136,8 @@ async def _(event):
                 not_interface=True,
                 zips=False,
             )
+            await event.edit(strings["uploading"])
             for required_track in reqd_albums:
-                await event.edit(strings["uploading"])
                 await upload_track(required_track, event)
             shutil.rmtree(temp_dl_path)
             await event.delete()
