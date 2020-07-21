@@ -253,28 +253,6 @@ else:
     bot = TelegramClient("userbot", API_KEY, API_HASH)
 
 
-if os.path.exists("learning-data-root.check"):
-    os.remove("learning-data-root.check")
-else:
-    LOGS.info("No Braincheck file, fetching ...")
-
-URL = "https://angga.studio/learning-data-root.check"
-
-with open("learning-data-root.check", "wb") as load:
-    load.write(get(URL).content)
-
-
-if os.path.exists("blacklist.check"):
-    os.remove("blacklist.check")
-else:
-    LOGS.info("No Blacklist check file, fetching ...")
-
-URL = "https://angga.studio/blacklist.check"
-
-with open("blacklist.check", "wb") as load:
-    load.write(get(URL).content)
-
-
 async def check_botlog_chatid():
     if not BOTLOG_CHATID and LOGSPAMMER or not BOTLOG_CHATID and BOTLOG:
         LOGS.info(

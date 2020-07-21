@@ -26,7 +26,7 @@ from traceback import format_exc
 
 from telethon import events
 
-from userbot import BLACKLIST, BOTLOG, BOTLOG_CHATID, bot
+from userbot import BOTLOG, BOTLOG_CHATID, bot
 
 
 def register(**args):
@@ -40,9 +40,6 @@ def register(**args):
     args.get("trigger_on_inline", False)
     disable_errors = args.get("disable_errors", False)
     insecure = args.get("insecure", False)
-    me = bot.get_me()
-    uid = me.id
-    uid not in BLACKLIST
 
     if pattern is not None and not pattern.startswith("(?i)"):
         args["pattern"] = "(?i)" + pattern
@@ -84,10 +81,6 @@ def register(**args):
                 return
 
             try:
-                if uid not in BLACKLIST:
-                    await func(check)
-                else:
-                    raise RetardsException()
             except events.StopPropagation:
                 raise events.StopPropagation
             except RetardsException:
@@ -153,7 +146,3 @@ def register(**args):
         return wrapper
 
     return decorator
-
-
-class RetardsException(Exception):
-    pass
