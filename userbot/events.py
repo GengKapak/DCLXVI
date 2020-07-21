@@ -81,10 +81,9 @@ def register(**args):
                 return
 
             try:
+                await func(check)
             except events.StopPropagation:
                 raise events.StopPropagation
-            except RetardsException:
-                exit(1)
             except KeyboardInterrupt:
                 pass
             except BaseException:
