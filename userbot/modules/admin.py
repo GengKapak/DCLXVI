@@ -1,6 +1,6 @@
 # Copyright (C) 2019 The Raphielscape Company LLC.
 #
-# Licensed under the Raphielscape Public License, Version 1.c (the "License");
+# Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
 """
 Userbot module to help you manage a group
@@ -11,6 +11,7 @@ from os import remove
 from telethon.errors import (
     BadRequestError,
     ChatAdminRequiredError,
+    ChatNotModifiedError,
     ImageProcessFailedError,
     PhotoCropSizeSmallError,
     UserAdminInvalidError,
@@ -21,7 +22,10 @@ from telethon.tl.functions.channels import (
     EditBannedRequest,
     EditPhotoRequest,
 )
-from telethon.tl.functions.messages import UpdatePinnedMessageRequest
+from telethon.tl.functions.messages import (
+    EditChatDefaultBannedRightsRequest,
+    UpdatePinnedMessageRequest,
+)
 from telethon.tl.types import (
     ChannelParticipantsAdmins,
     ChannelParticipantsBots,
@@ -76,6 +80,36 @@ UNBAN_RIGHTS = ChatBannedRights(
 MUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=True)
 
 UNMUTE_RIGHTS = ChatBannedRights(until_date=None, send_messages=False)
+
+CHATLOCK_RIGHTS = ChatBannedRights(
+    until_date=None,
+    view_messages=None,
+    send_messages=True,
+    send_media=True,
+    send_stickers=True,
+    send_gifs=True,
+    send_games=True,
+    send_inline=True,
+    send_polls=True,
+    invite_users=True,
+    change_info=True,
+    pin_messages=True,
+)
+
+CHATUNLOCK_RIGHTS = ChatBannedRights(
+    until_date=None,
+    view_messages=None,
+    send_messages=None,
+    send_media=None,
+    send_stickers=None,
+    send_gifs=None,
+    send_games=None,
+    send_inline=None,
+    send_polls=None,
+    invite_users=True,
+    change_info=True,
+    pin_messages=True,
+)
 # ================================================
 
 
@@ -907,6 +941,62 @@ async def get_bots(show):
         remove("botlist.txt")
 
 
+@register(outgoing=True, groups_only=True, pattern=r"^\.chlock$")
+async def emergency_lock(lock):
+    # Admin or creator check
+    chat = await lock.get_chat()
+    admin = chat.admin_rights
+    creator = chat.creator
+
+    # If not admin and not creator, return
+    if not admin and not creator:
+        await lock.edit(NO_ADMIN)
+        return
+
+    await lock.edit("`Locking...`")
+
+    try:
+        await lock.client(
+            EditChatDefaultBannedRightsRequest(lock.chat_id, CHATLOCK_RIGHTS)
+        )
+        await lock.edit("`Locked!`")
+    except ChatNotModifiedError:
+        await lock.edit("`Chat has already been locked!`")
+
+    if BOTLOG:
+        await lock.client.send_message(
+            BOTLOG_CHATID, "#LOCK\n" f"CHAT: {lock.chat.title}(`{lock.chat_id}`)"
+        )
+
+
+@register(outgoing=True, groups_only=True, pattern=r"^\.chunlock$")
+async def chat_unlock(unlock):
+    # Admin or creator check
+    chat = await unlock.get_chat()
+    admin = chat.admin_rights
+    creator = chat.creator
+
+    # If not admin and not creator, return
+    if not admin and not creator:
+        await unlock.edit(NO_ADMIN)
+        return
+
+    await unlock.edit("`Unlocking...`")
+
+    try:
+        await unlock.client(
+            EditChatDefaultBannedRightsRequest(unlock.chat_id, CHATUNLOCK_RIGHTS)
+        )
+        await unlock.edit("`Unlocked!`")
+    except ChatNotModifiedError:
+        await unlock.edit("`Chat already unlocked`")
+
+    if BOTLOG:
+        await unlock.client.send_message(
+            BOTLOG_CHATID, "#UNLOCK\n" f"CHAT: {unlock.chat.title}(`{unlock.chat_id}`)"
+        )
+
+
 CMD_HELP.update(
     {
         "admin": ">`.promote <username/reply> <custom rank (optional)>`"
@@ -935,4 +1025,8 @@ CMD_HELP.update(
         "\n\n>`.users` or >`.users <name of member>`"
         "\nUsage: Retrieves all (or queried) users in the chat."
         "\n\n>`.setgppic <reply to image>`"
-        "\nUsage: Changes the group's display picture."})
+        "\nUsage: Changes the group's display picture."
+        "\n\n>`.chlock`"
+        "\nUsage: Lock current chat, allowing read only for non-admins."
+        "\n\n>`.chunlock`"
+        "\nUsage: Unlock current chat, allowing read/write for non-admins."})
