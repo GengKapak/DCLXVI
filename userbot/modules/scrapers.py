@@ -46,6 +46,7 @@ from userbot import (
     CMD_HELP,
     IMG_LIMIT,
     TEMP_DOWNLOAD_DIRECTORY,
+    WOLFRAM_ID,
     YOUTUBE_API_KEY,
 )
 from userbot.events import register
@@ -657,6 +658,27 @@ async def download_video(v_url):
         await v_url.delete()
 
 
+@register(outgoing=True, pattern=r"^\.wolfram (.*)")
+async def wolfram(wvent):
+    if WOLFRAM_ID is None:
+        await wvent.edit(
+            "Please set your WOLFRAM_ID first !\n"
+            "Get your API KEY from [here](https://"
+            "products.wolframalpha.com/api/)",
+            parse_mode="Markdown",
+        )
+        return
+    i = wvent.pattern_match.group(1)
+    appid = WOLFRAM_ID
+    server = f"https://api.wolframalpha.com/v1/spoken?appid={appid}&i={i}"
+    res = get(server)
+    await wvent.edit(f"**{i}**\n\n" + res.text, parse_mode="Markdown")
+    if BOTLOG:
+        await wvent.client.send_message(
+            BOTLOG_CHATID, f".wolfram {i} was executed successfully"
+        )
+
+
 def deEmojify(inputString):
     """ Remove emojis and other non-safe characters from string """
     return get_emoji_regexp().sub("", inputString)
@@ -690,4 +712,6 @@ CMD_HELP.update(
         "rip": ">`.ra <url> or .rv <url>`"
         "\nUsage: Download videos and songs from YouTube "
         "(and [many other sites](https://ytdl-org.github.io/youtube-dl/supportedsites.html)).",
+        "wolfram": ">`.wolfram` <query>"
+        "\nUsage: Get answers to questions using WolframAlpha Spoken Results API",
     })

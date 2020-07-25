@@ -202,6 +202,10 @@ TEMP_DOWNLOAD_DIRECTORY = os.environ.get(
 # Terminal Alias
 TERM_ALIAS = os.environ.get("TERM_ALIAS", None)
 
+# Wolfram ID
+# Get an API KEY from products.wolframalpha.com/api/
+WOLFRAM_ID = os.environ.get("WOLFRAM_ID", None)
+
 # Zipfile module
 ZIP_DOWNLOAD_DIRECTORY = os.environ.get("ZIP_DOWNLOAD_DIRECTORY", "./zips")
 
