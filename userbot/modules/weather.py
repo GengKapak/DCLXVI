@@ -132,6 +132,13 @@ async def get_weather(weather):
     )
 
 
+@register(outgoing=True, pattern=r"^\.wtlang (.*)")
+async def setlang(wlang):
+    global DEFLANG
+    DEFLANG = wlang.pattern_match.group(1)
+    await wlang.edit(f"Language for weather set to {DEFLANG}")
+
+
 @register(outgoing=True, pattern=r"^\.wtr(?: |$)(.*)")
 async def get_wtr(wtr):
     if not wtr.pattern_match.group(1):
@@ -171,7 +178,8 @@ async def get_wtr(wtr):
         desc = weather["weatherDesc"][0]["value"]
 
     text = (
-        f"**{desc}**\n\n"
+        f"**Weather for:** `{CITY}`"
+        + f"**{desc}**\n\n"
         + f"**Temperature:** `{tempC}°C | {tempF}°F`\n"
         + f"**Min. Temp.:** `{mintempC}°C | {mintempF}°F`\n"
         + f"**Max. Temp.:** `{maxtempC}°C | {maxtempF}°F`\n"
@@ -191,6 +199,8 @@ CMD_HELP.update(
         "weather": ">`.weather <city> or .weather <city>, <country name/code>`"
         "\nUsage: Gets the weather of a city.\n\n"
         ">`.wtr <city> or .wtr <city>, <country name/code>`"
-        "\nUsage: Gets the weather of a city."
+        "\nUsage: Gets the weather of a city.\n\n"
+        ">`.wtlang` <language code>"
+        "\nUsage: Set Default language for `.wtr`"
     }
 )
