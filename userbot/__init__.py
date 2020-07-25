@@ -144,9 +144,6 @@ GOOGLE_CHROME_BIN = os.environ.get(
 OPEN_WEATHER_MAP_APPID = os.environ.get("OPEN_WEATHER_MAP_APPID", None)
 WEATHER_DEFCITY = os.environ.get("WEATHER_DEFCITY", None)
 
-# Lydia API
-LYDIA_API_KEY = os.environ.get("LYDIA_API_KEY", None)
-
 # Anti Spambot
 ANTI_SPAMBOT = sb(os.environ.get("ANTI_SPAMBOT", "False"))
 ANTI_SPAMBOT_SHOUT = sb(os.environ.get("ANTI_SPAMBOT_SHOUT", "False"))
@@ -210,9 +207,6 @@ ZIP_DOWNLOAD_DIRECTORY = os.environ.get("ZIP_DOWNLOAD_DIRECTORY", "./zips")
 
 # Genius Lyrics API
 GENIUS = os.environ.get("GENIUS_ACCESS_TOKEN", None)
-
-# Quote
-QUOTES_API_TOKEN = os.environ.get("QUOTES_API_TOKEN", None)
 
 # Inline bot
 BOT_TOKEN = os.environ.get("BOT_TOKEN", None)
