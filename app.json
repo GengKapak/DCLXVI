@@ -136,6 +136,11 @@
       "description": "Set the default city for the userbot's weather module.",
       "required": false
     },
+    "WEATHER_DEFLANG": {
+      "description": "Set the default language for the userbot's weather module.",
+      "value": "en",
+      "required": false
+    },
     "TERM_ALIAS": {
       "description": "Leave if u don't know",
       "value": "",

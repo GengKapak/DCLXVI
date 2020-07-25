@@ -140,9 +140,10 @@ GOOGLE_CHROME_BIN = os.environ.get(
     "GOOGLE_CHROME_BIN",
     "/usr/bin/google-chrome")
 
-# OpenWeatherMap API Key
+# Weather stuff
 OPEN_WEATHER_MAP_APPID = os.environ.get("OPEN_WEATHER_MAP_APPID", None)
 WEATHER_DEFCITY = os.environ.get("WEATHER_DEFCITY", None)
+WEATHER_DEFLANG = os.environ.get("WEATHER_DEFLANG", None)
 
 # Anti Spambot
 ANTI_SPAMBOT = sb(os.environ.get("ANTI_SPAMBOT", "False"))
