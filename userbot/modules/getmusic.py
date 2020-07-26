@@ -3,6 +3,7 @@ import glob
 import os
 import subprocess
 import time
+from asyncio.exceptions import TimeoutError
 
 import requests
 from bs4 import BeautifulSoup
@@ -194,27 +195,32 @@ async def _(event):
         song = event.pattern_match.group(3)
     track = str(artist) + " - " + str(song)
     chat = "@SpotifyMusicDownloaderBot"
-    await event.edit("`Getting Your Music`")
-    async with bot.conversation(chat) as conv:
-        await asyncio.sleep(2)
-        await event.edit("`Downloading...`")
-        try:
-            response = conv.wait_event(
-                events.NewMessage(incoming=True, from_users=752979930)
-            )
-            msg = await bot.send_message(chat, track)
-            respond = await response
-            res = conv.wait_event(
-                events.NewMessage(incoming=True, from_users=752979930)
-            )
-            r = await res
-            await bot.send_read_acknowledge(conv.chat_id)
-        except YouBlockedUserError:
-            await event.reply("`Unblock `@SpotifyMusicDownloaderBot` and retry`")
-            return
-        await bot.forward_messages(event.chat_id, respond.message)
-    await event.client.delete_messages(conv.chat_id, [msg.id, r.id, respond.id])
-    await event.delete()
+    try:
+        await event.edit("`Getting Your Music`")
+        async with bot.conversation(chat) as conv:
+            await asyncio.sleep(2)
+            await event.edit("`Downloading...`")
+            try:
+                response = conv.wait_event(
+                    events.NewMessage(incoming=True, from_users=752979930)
+                )
+                msg = await bot.send_message(chat, track)
+                respond = await response
+                res = conv.wait_event(
+                    events.NewMessage(incoming=True, from_users=752979930)
+                )
+                r = await res
+                await bot.send_read_acknowledge(conv.chat_id)
+            except YouBlockedUserError:
+                await event.reply("`Unblock `@SpotifyMusicDownloaderBot` and retry`")
+                return
+            await bot.forward_messages(event.chat_id, respond.message)
+        await event.client.delete_messages(conv.chat_id, [msg.id, r.id, respond.id])
+        await event.delete()
+    except TimeoutError:
+        return await event.edit(
+            "`Error: `@SpotifyMusicDownloaderBot` is not responding or Song not found!.`"
+        )
 
 
 @register(outgoing=True, pattern=r"^\.net (?:(now)|(.*) - (.*))")
@@ -234,22 +240,29 @@ async def _(event):
     chat = "@WooMaiBot"
     link = f"/netease {track}"
     await event.edit("`Searching...`")
-    async with bot.conversation(chat) as conv:
-        await asyncio.sleep(2)
-        await event.edit("`Downloading...Please wait`")
-        try:
-            msg = await conv.send_message(link)
-            response = await conv.get_response()
-            respond = await conv.get_response()
-            await bot.send_read_acknowledge(conv.chat_id)
-        except YouBlockedUserError:
-            await event.reply("`Please unblock @WooMaiBot and try again`")
-            return
-        await event.edit("`Sending Your Music...`")
-        await asyncio.sleep(3)
-        await bot.send_file(event.chat_id, respond)
-    await event.client.delete_messages(conv.chat_id, [msg.id, response.id, respond.id])
-    await event.delete()
+    try:
+        async with bot.conversation(chat) as conv:
+            await asyncio.sleep(2)
+            await event.edit("`Processing... Please wait`")
+            try:
+                msg = await conv.send_message(link)
+                response = await conv.get_response()
+                respond = await conv.get_response()
+                await bot.send_read_acknowledge(conv.chat_id)
+            except YouBlockedUserError:
+                await event.reply("`Please unblock @WooMaiBot and try again`")
+                return
+            await event.edit("`Sending Your Music...`")
+            await asyncio.sleep(3)
+            await bot.send_file(event.chat_id, respond)
+        await event.client.delete_messages(
+            conv.chat_id, [msg.id, response.id, respond.id]
+        )
+        await event.delete()
+    except TimeoutError:
+        return await event.edit(
+            "`Error: `@WooMaiBot` is not responding or Song not found!.`"
+        )
 
 
 @register(outgoing=True, pattern=r"^\.sdd(?: |$)(.*)")
@@ -260,24 +273,29 @@ async def _(event):
     if ".com" not in d_link:
         await event.edit("`Enter a valid link to download from`")
     else:
-        await event.edit("`Downloading...`")
+        await event.edit("`Processing...`")
     chat = "@MusicHuntersBot"
-    async with bot.conversation(chat) as conv:
-        try:
-            msg_start = await conv.send_message("/start")
-            response = await conv.get_response()
-            msg = await conv.send_message(d_link)
-            details = await conv.get_response()
-            song = await conv.get_response()
-            await bot.send_read_acknowledge(conv.chat_id)
-        except YouBlockedUserError:
-            await event.edit("`Unblock `@MusicHuntersBot` and retry`")
-            return
-        await bot.send_file(event.chat_id, song, caption=details.text)
-        await event.client.delete_messages(
-            conv.chat_id, [msg_start.id, response.id, msg.id, details.id, song.id]
+    try:
+        async with bot.conversation(chat) as conv:
+            try:
+                msg_start = await conv.send_message("/start")
+                response = await conv.get_response()
+                msg = await conv.send_message(d_link)
+                details = await conv.get_response()
+                song = await conv.get_response()
+                await bot.send_read_acknowledge(conv.chat_id)
+            except YouBlockedUserError:
+                await event.edit("`Unblock `@MusicHuntersBot` and retry`")
+                return
+            await bot.send_file(event.chat_id, song, caption=details.text)
+            await event.client.delete_messages(
+                conv.chat_id, [msg_start.id, response.id, msg.id, details.id, song.id]
+            )
+            await event.delete()
+    except TimeoutError:
+        return await event.edit(
+            "`Error: `@MusicHuntersBot` is not responding or Song not found!.`"
         )
-        await event.delete()
 
 
 CMD_HELP.update(
