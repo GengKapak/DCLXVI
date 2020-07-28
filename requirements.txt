@@ -69,3 +69,4 @@ validators
 wget
 wikipedia
 youtube-dl
+youtube_search
