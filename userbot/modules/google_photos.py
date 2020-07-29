@@ -1,3 +1,16 @@
+#!/usr/bin/env python3
+#  -*- coding: utf-8 -*-
+#  UniBorg Telegram UseRBot
+#  Copyright (C) 2020 @UniBorg
+#
+# This code is licensed under
+# the "you can't use this for anything - public or private,
+# unless you know the two prime factors to the number below" license
+#
+# 114994699218449095458463470499996630
+#
+# വിവരണം അടിച്ചുമാറ്റിക്കൊണ്ട് പോകുന്നവർ ക്രെഡിറ്റ് വെച്ചാൽ സന്തോഷമേ ഉള്ളു..!
+
 import asyncio
 import logging
 import os
