@@ -94,5 +94,5 @@ def resize_image(image):
     im.save(image, "PNG")
 
 
-CMD_HELP.update({"telegraph": ">`.tg` <m|t>"
+CMD_HELP.update({"telegraph": ">`.tg`<m|t>"
                  "\nUsage: Upload t(text) or m(media) on Telegraph."})
