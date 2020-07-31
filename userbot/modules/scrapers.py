@@ -1,6 +1,6 @@
 # Copyright (C) 2019 The Raphielscape Company LLC.
 #
-# Licensed under the Raphielscape Public License, Version 1.c (the "License");
+# Licensed under the Raphielscape Public License, Version 1.d (the "License");
 # you may not use this file except in compliance with the License.
 #
 """ Userbot module containing various scrapers. """
@@ -15,6 +15,7 @@ from re import findall
 from urllib.error import HTTPError
 from urllib.parse import quote_plus
 
+import wikipedia
 from bs4 import BeautifulSoup
 from emoji import get_emoji_regexp
 from googletrans import LANGUAGES, Translator
@@ -38,8 +39,6 @@ from youtube_dl.utils import (
     XAttrMetadataError,
 )
 
-from youtube_search import YoutubeSearch
-
 from userbot import (
     BOTLOG,
     BOTLOG_CHATID,
@@ -50,10 +49,12 @@ from userbot import (
 )
 from userbot.events import register
 from userbot.utils import chrome, googleimagesdownload, progress
+from youtube_search import YoutubeSearch
 
 CARBONLANG = "auto"
 TTS_LANG = "id"
 TRT_LANG = "id"
+WIKI_LANG = "id"
 
 
 @register(outgoing=True, pattern=r"^\.crblang (.*)")
@@ -197,6 +198,14 @@ async def gsearch(q_event):
             BOTLOG_CHATID,
             "Google Search query `" + match + "` was executed successfully",
         )
+
+
+@register(outgoing=True, pattern=r"^\.wklang (.*)")
+async def setlang(wklang):
+    global WIKI_LANG
+    WIKI_LANG = wklang.pattern_match.group(1)
+    wikipedia.set_lang(f"{WIKI_LANG}")
+    await wklang.edit(f"Language for wikipedia set to {WIKI_LANG}")
 
 
 @register(outgoing=True, pattern=r"^\.wiki (.*)")
@@ -676,15 +685,17 @@ CMD_HELP.update(
         "google": ">`.google <query>`"
         "\nUsage: Does a search on Google.",
         "wiki": ">`.wiki <query>`"
-        "\nUsage: Does a search on Wikipedia.",
+        "\nUsage: Does a search on Wikipedia.\n"
+        ">`.wklang` <language code> (Default is Indonesian)"
+        "\nUsage: Set language for wikipedia.",
         "ud": ">`.ud <query>`"
         "\nUsage: Does a search on Urban Dictionary.",
         "tts": ">`.tts <text> [or reply]`"
         "\nUsage: Translates text to speech for the language which is set."
-        "\nUse >`.lang tts <language code>` to set language for tts. (Default is English.)",
+        "\nUse >`.lang tts <language code>` to set language for tts. (Default is Indonesian.)",
         "trt": ">`.trt <text> [or reply]`"
         "\nUsage: Translates text to the language which is set."
-        "\nUse >`.lang trt <language code>` to set language for trt. (Default is English)",
+        "\nUse >`.lang trt <language code>` to set language for trt. (Default is Indonesian)",
         "yt": ">`.yt <count> <query>`"
         "\nUsage: Does a YouTube search."
         "\nCan specify the number of results needed (default is 3).",
