@@ -1,6 +1,5 @@
 from asyncio.exceptions import TimeoutError
 
-from telethon import events
 from telethon.errors.rpcerrorlist import YouBlockedUserError
 
 from userbot import CMD_HELP, bot
@@ -8,37 +7,41 @@ from userbot.events import register
 
 
 @register(outgoing=True, pattern=r"^\.sg(?: |$)(.*)")
-async def _(event):
-    if event.fwd_from:
+async def lastname(steal):
+    if steal.fwd_from:
         return
-    if not event.reply_to_msg_id:
-        await event.edit("`Reply to any user message.`")
+    if not steal.reply_to_msg_id:
+        await steal.edit("`Reply to any user message.`")
         return
-    reply_message = await event.get_reply_message()
-    if not reply_message.text:
-        await event.edit("```reply to text message```")
-        return
+    message = await steal.get_reply_message()
     chat = "@SangMataInfo_bot"
-    await event.edit("`Processing`")
+    user_id = message.sender.id
+    id = f"/search_id {user_id}"
+    if message.sender.bot:
+        await steal.edit("`Reply to actual users message.`")
+        return
+    await steal.edit("`Sit tight while I steal some data from NASA`")
     try:
         async with bot.conversation(chat) as conv:
             try:
-                response = conv.wait_event(
-                    events.NewMessage(incoming=True, from_users=461843263)
-                )
-                await bot.forward_messages(chat, reply_message)
-                response = await response
-                await bot.send_read_acknowledge(conv.chat_id)
+                msg = await conv.send_message(id)
+                r = await conv.get_response()
+                response = await conv.get_response()
             except YouBlockedUserError:
-                await event.reply("`Please unblock @sangmatainfo_bot and try again`")
+                await steal.reply("`Please unblock @sangmatainfo_bot and try again`")
                 return
-            if response.text.startswith("Forward"):
-                await event.edit(
-                    "`Can you kindly disable your forward privacy settings for good?`"
+            if response.text.startswith("No records found"):
+                await steal.edit("`No records found for this user`")
+                await steal.client.delete_messages(
+                    conv.chat_id, [msg.id, r.id, response.id]
                 )
+                return
             else:
-                await event.edit(f"{response.message.message}")
-                await bot.send_read_acknowledge(conv.chat_id)
+                respond = await conv.get_response()
+                await steal.edit(f"{response.message}")
+            await steal.client.delete_messages(
+                conv.chat_id, [msg.id, r.id, response.id, respond.id]
+            )
     except TimeoutError:
         return await event.edit("`Error: `@SangMataInfo_bot` is not responding!.`")
 
