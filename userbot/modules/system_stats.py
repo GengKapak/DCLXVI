@@ -199,7 +199,7 @@ async def pipcheck(pip):
         await pip.edit("`Use .help pip to see an example`")
 
 
-@register(outgoing=True, pattern=r"^\.alive$")
+@register(outgoing=True, pattern=r"^\.(?:alive|on)\s?(.)?")
 async def amireallyalive(alive):
     """ For .on command, check if the bot is running.  """
     uptime = await get_readable_time((time.time() - StartTime))
