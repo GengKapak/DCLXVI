@@ -1,21 +1,10 @@
-# Copyright (C) 2020 TeamDerUntergang.
+# Copyright (C) 2019 The Raphielscape Company LLC.
 #
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
+# Licensed under the Raphielscape Public License, Version 1.d (the "License");
+# you may not use this file except in compliance with the License.
 #
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
-#
-
-""" UserBot module to manage events.
- One of the main components of UserBot """
+""" Userbot module for managing events.
+ One of the main components of the userbot. """
 
 import sys
 from asyncio import create_subprocess_shell as asyncsubshell
@@ -26,7 +15,7 @@ from traceback import format_exc
 
 from telethon import events
 
-from userbot import BOTLOG, BOTLOG_CHATID, bot
+from userbot import BOTLOG_CHATID, LOGSPAMMER, bot
 
 
 def register(**args):
@@ -36,10 +25,10 @@ def register(**args):
     ignore_unsafe = args.get("ignore_unsafe", False)
     unsafe_pattern = r"^[^/!#@\$A-Za-z]"
     groups_only = args.get("groups_only", False)
-    args.get("trigger_on_fwd", False)
-    args.get("trigger_on_inline", False)
+    trigger_on_fwd = args.get("trigger_on_fwd", False)
     disable_errors = args.get("disable_errors", False)
     insecure = args.get("insecure", False)
+    trigger_on_inline = args.get("trigger_on_inline", False)
 
     if pattern is not None and not pattern.startswith("(?i)"):
         args["pattern"] = "(?i)" + pattern
@@ -59,11 +48,11 @@ def register(**args):
     if "trigger_on_fwd" in args:
         del args["trigger_on_fwd"]
 
-    if "trigger_on_inline" in args:
-        del args["trigger_on_inline"]
-
     if "insecure" in args:
         del args["insecure"]
+
+    if "trigger_on_inline" in args:
+        del args["trigger_on_inline"]
 
     if pattern:
         if not ignore_unsafe:
@@ -72,21 +61,46 @@ def register(**args):
     def decorator(func):
         async def wrapper(check):
             if check.edit_date and check.is_channel and not check.is_group:
+                # Messages sent in channels can be edited by other users.
+                # Ignore edits that take place in channels.
+                return
+            if not LOGSPAMMER:
+                send_to = check.chat_id
+            else:
+                send_to = BOTLOG_CHATID
+
+            if not trigger_on_fwd and check.fwd_from:
                 return
 
             if groups_only and not check.is_group:
-                await check.respond("`Are you sure this is a group?`")
+                await check.respond("`I don't think this is a group.`")
                 return
+
             if check.via_bot_id and not insecure and check.out:
+                return
+
+            if check.via_bot_id and not trigger_on_inline:
                 return
 
             try:
                 await func(check)
+
+            # Thanks to @kandnub for this HACK.
+            # Raise StopPropagation to Raise StopPropagation
+            # This needed for AFK to working properly
+
             except events.StopPropagation:
                 raise events.StopPropagation
+            # This is a gay exception and must be passed out. So that it doesnt
+            # spam chats
             except KeyboardInterrupt:
                 pass
             except BaseException:
+
+                # Check if we have to disable it.
+                # If not silence the log spam on the console,
+                # with a dumb except.
+
                 if not disable_errors:
                     date = strftime("%Y-%m-%d %H:%M:%S", gmtime())
 
@@ -128,16 +142,19 @@ def register(**args):
 
                     ftext += result
 
-                    file = open("crash.txt", "w+")
-                    file.write(ftext)
-                    file.close()
+                    with open("crash.txt", "w+") as file:
+                        file.write(ftext)
 
-                    await check.client.send_file(
-                        BOTLOG_CHATID if BOTLOG else check.chat_id,
-                        "crash.txt",
-                        caption=text,
-                    )
+                    if LOGSPAMMER:
+                        await check.respond(
+                            "`Sorry, my userbot has crashed.\
+                        \nThe error logs are stored in the userbot's log chat.`"
+                        )
+
+                    await check.client.send_file(send_to, "crash.txt", caption=text)
                     remove("crash.txt")
+            else:
+                pass
 
         if not disable_edited:
             bot.add_event_handler(wrapper, events.MessageEdited(**args))
