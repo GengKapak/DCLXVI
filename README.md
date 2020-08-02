@@ -9,8 +9,8 @@
     <a href="https://github.com/GengKapak/DCLXVI/commits/master"> <img src="https://img.shields.io/github/last-commit/GengKapak/DCLXVI?color=blue&logo=github&style=for-the-badge" /></a>
     <a href="https://github.com/GengKapak/DCLXVI/issues"> <img src="https://img.shields.io/github/issues/GengKapak/DCLXVI?color=blue&logo=github&style=for-the-badge" /></a>
     <a href="https://github.com/GengKapak/DCLXVI/network/members"> <img src="https://img.shields.io/github/forks/GengKapak/DCLXVI?logo=github&style=for-the-badge" /></a>
-    <a href="https://hub.docker.com/r/gengkapak/groovygorilla"> <img src="https://img.shields.io/docker/image-size/gengkapak/groovygorilla/latest?label=docker%20image%20size&logo=docker&style=for-the-badge" /></a>
-    <a href="https://hub.docker.com/r/gengkapak/groovygorilla/tags"> <img src="https://img.shields.io/docker/v/gengkapak/groovygorilla/latest?label=docker%20version&logo=docker&style=for-the-badge" /></a>
+    <a href="https://hub.docker.com/r/gengkapak/archlinux"> <img src="https://img.shields.io/docker/image-size/gengkapak/archlinux/latest?label=docker%20image%20size&logo=docker&style=for-the-badge" /></a>
+    <a href="https://hub.docker.com/r/gengkapak/archlinux/tags"> <img src="https://img.shields.io/docker/v/gengkapak/archlinux/latest?label=docker%20version&logo=docker&style=for-the-badge" /></a>
     <a href="https://pypi.org/project/Telethon/"> <img src="https://img.shields.io/pypi/v/telethon?label=telethon&logo=pypi&logoColor=white&style=for-the-badge" /></a>
     <img src="https://telegra.ph/file/2a7b0bd8547a80c019493.jpg" alt="Image" width="800" height="600" />
 </p>
