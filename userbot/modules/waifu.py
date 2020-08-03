@@ -1,6 +1,7 @@
 # Imported from ppe-remix
 import random
 import re
+from asyncio import sleep
 
 from userbot import CMD_HELP, bot
 from userbot.events import register
@@ -39,12 +40,18 @@ async def waifu(animu):
     sticcers = await bot.inline_query(
         "stickerizerbot", f"#{random.choice(animus)}{(deEmojify(text))}"
     )
-    await sticcers[0].click(
-        animu.chat_id,
-        reply_to=animu.reply_to_msg_id,
-        silent=True if animu.is_reply else False,
-        hide_via=True,
-    )
+    try:
+        await sticcers[0].click(
+            animu.chat_id,
+            reply_to=animu.reply_to_msg_id,
+            silent=True if animu.is_reply else False,
+            hide_via=True,
+        )
+    except Exception:
+        return await animu.edit(
+            "`You cannot send inline results in this chat (caused by SendInlineBotResultRequest)`"
+        )
+    await sleep(5)
     await animu.delete()
 
 
